@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>出售商品状态</title>
+    <link rel="stylesheet" href="../css/public.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.css">
+    <script src="../axios/axios.js"></script>
+    <script src="../jquery/jquery-1.12.4.js">
+
+    </script>
+    <script src="../js/vue.js">
+    </script>
+    <style>
+        .logodiv {
+            border: 1px solid silver;
+        }
+
+        #shoping .shopcar {}
+
+        td {
+            text-align: center;
+
+        }
+        .pageul input{
+        width: 50px;
+        height:45px;
+        text-align: center;
+        line-height: 40px;
+    }
+    .pageul li{
+        width: 50px;
+        height:50px;
+        border-right:1px solid silver;
+        border-top:1px solid silver;
+        border-bottom:1px solid silver;
+        text-align: center;
+        line-height: 50px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="foodsStatus">
+        <header id="header" class="header">
+            <div class="container header_fastPages">
+                <div style="overflow:hidden">
+                    <span class="welcome lf mainColor">欢迎您，登陆乐淘淘，淘你喜欢</span>
+                    <nav class="rf a_style">
+                        <span id="foods-people">
+
+                        </span>
+                        <a href="#">关注乐淘淘</a>
+                        <a href="#">手机乐淘淘</a>
+                    </nav>
+                </div>
+                <!--关注乐淘淘的二维码-->
+                <div class="le_code">
+                </div>
+                <!--乐淘淘的手机二维码-->
+                <div class="mobile"></div>
+
+                <!--，logo，搜索框-->
+
+            </div>
+
+        </header>
+        <div class="logodiv container">
+            <div class="row">
+                <div class="logo col-md-6">
+                    <img src="../images/letaotao.png" alt="淘淘乐" title="淘淘乐" />
+                    <span style="font-size:28px;">商品状态管理</span>
+                </div>
+                <div class="serachbtn col-md-4 text-center col-md-offset-2">
+                    <input type="text" class="search" name="search" placeholder="发货状态" v-model="foods">
+                    <button class=" btn btn-success" @click="getfoodStatus(1) ">搜索</button>
+                </div>
+
+
+            </div>
+        </div>
+        
+        <div id="shoping" class="container">
+                <span style="color:red">注意：这里展示的是正在进行中的订单交易</span>
+            <table class="shopcar table table-bordered table-hover">
+                <thead style="text-align: center">
+                    <th>用户名称</th>
+                    <th>商品名称</th>
+                    <th>价格</th>
+                    <th>数量</th>
+                    <th>总价</th>
+                    <th>购买时间</th>
+                    <th>联系方式</th>
+                    <th>发货地址</th>
+                    <th>
+                        操作
+                    </th>
+                    <th>状态</th>
+                </thead>
+                <tbody>
+                    <tr v-for="item in lists" >
+                        <td style="display:none">{{item.id}}</td>
+                        <td>{{item.username}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.price}}</td>
+                        <td>{{item.num}}</td>
+                        <td>{{item.total}}</td>
+                        <td>{{item.time}}</td>
+                        <td>{{item.phone}}</td>
+                        <td>{{item.address}}</td>
+                        <td>
+
+                            <button class="btn btn-primary" ref="puchse"
+                                :disabled="item.transportStatus=='已签收'||item.transportStatus=='已发货'||item.foodsStatus=='购买'?true:false"
+                                @click=DliverGoods(item.id)>{{item.transportStatus=='已发货'||item.transportStatus=='已签收'?'已发货':'发货'}}</button>
+                        </td>
+                        <td :style="item.transportStatus=='null'?colorobject:''">
+                            {{item.transportStatus=='null'?'未购买':item.transportStatus}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+                <ul style="display:flex;list-style:none" class="pageul container">
+                    <li style="border-left:1px solid silver;width:70px">共<span style="font-size: 18px;font-weight:bold">{{num}}</span>页</li>
+                    <li style="width:90px;">当前第<span style="font-size: 18px;font-weight:bold">{{currentpage}}</span>页</li>
+                        <li @click="getfoodStatus(ss)">首页</li>
+                        <li @click="getfoodStatus(--currentpage)">上一页</li>
+                        <li @click="getfoodStatus(++currentpage)">下一页</li>
+                        <li @click="getfoodStatus(num)">尾页</li>
+                        <li>
+                            <input type="number" v-model="redictivepage">
+                        </li>
+                        <li class="btn btn-primary" style="line-height:30px"@click="getfoodStatus(redictivepage)">跳转</li>
+                    </ul>
+           </div>
+    </div>
+</body>
+<script>
+    function funcGetSession() {
+        let localItem = localStorage.getItem('name');
+        console.log(localItem)
+        if (localItem == null) {
+            return
+        } else {
+            $("#land").css({
+                'display': 'none'
+            });
+            $("#foods-people").text('欢迎' + localItem + '登陆系统')
+            $("#foods-people").css({
+                'display': 'inline-block'
+            })
+        }
+    }
+    funcGetSession();
+    new Vue({
+        el: "#foodsStatus",
+        data: {
+            foods:"",
+            ss:1,
+            lists: [],
+            colorobject:{
+                color:"red"
+            },
+            num:1,
+            pageNo:1,
+            pages:Math.ceil(this.num),
+        currentpage:1,
+        redictivepage:1
+        },
+        created() {
+            this.getfoodStatus(1);
+        },
+        methods: {
+   
+
+
+
+            getfoodStatus(curPage) {
+                console.log(this.foods)
+                if(this.foods!='已发货'&&this.foods!='待发货'&&this.foods!="已签收"){
+                    console.log('dfds');
+                    this.foods=""
+                }else{
+                
+                }
+                console.log(curPage)
+                this.currentpage=curPage;
+              console.log('ssssssss')
+              console.log(curPage,this.num)
+                if(curPage>this.num){
+                    this.currentpage=curPage-1;
+                   alert("目标页不存在哟！请重新选择")
+                    return;
+                }
+                if(curPage<=0){
+                    this.currentpage=1;
+                   alert("目标页不存在哟！请重新选择")
+                    return;
+                }
+                axios({
+                    method: 'post',
+                    url: '../phps/getfoodStatus.php',
+                    data:{
+                        page:curPage,
+                        num:7,
+                        foodstatus:this.foods
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                }).then((res) => {
+                    console.log(res.data);
+                   /*  let arr = [];
+                    for (let i = 0; i < res.data.list.length; i++) {
+                        if (res.data.list[i].transportStatus != "null" && res.data.list[i].transportStatus !=
+                            "已签收") {
+                            arr.push(res.data.list[i])
+                        }
+                    }
+                    this.lists = arr; */
+                    this.num=Math.ceil(res.data.total/7);
+                    this.lists=res.data.list;
+                })
+            },
+            //发货的时候的数据改变
+            DliverGoods(ids) {
+                console.log(ids)
+                axios({
+                    method: 'post',
+                    data: {
+                        id: ids
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    url: '../phps/DliverGoods.php'
+                }).then((res) => {
+                    console.log(res.data)
+                    if (res.data == 'success') {
+                        this.getfoodStatus(1);
+                    }
+                })
+            }
+
+        }
+    })
+</script>
+
+</html>

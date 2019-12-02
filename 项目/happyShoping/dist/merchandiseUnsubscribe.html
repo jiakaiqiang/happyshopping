@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>商品退订平台</title>
+    <link rel="stylesheet" href="../css/public.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap.css" />
+
+</head>
+<script src="../axios/axios.js"></script>
+<script src="../js/vue.js">
+</script>
+<script src="../jquery/jquery-1.12.4.js">
+</script>
+<style>
+     [v-cloak] {
+   display: none;
+ }
+    .logodiv {
+        border: 1px solid silver;
+    }
+
+    #shoping .shopcar {}
+
+    td {
+        text-align: center;
+
+    }
+    [v-cloak] {
+   display: none;
+ }
+</style>
+
+<body>
+    <div id="shoppingcar">
+        <header id="header" class="header">
+            <div class="container header_fastPages">
+                <div style="overflow:hidden">
+                    <span class="welcome lf mainColor">欢迎您，登陆乐淘淘，淘你喜欢</span>
+                    <nav class="rf a_style">
+                        <span id="foods-people">
+
+                        </span><a href="#">关注乐淘淘</a>
+                        <a href="#">手机乐淘淘</a>
+                       
+                    </nav>
+                </div>
+                <!--关注乐淘淘的二维码-->
+                <div class="le_code">
+                </div>
+                <!--乐淘淘的手机二维码-->
+                <div class="mobile"></div>
+
+                <!--，logo，搜索框-->
+
+            </div>
+
+        </header>
+        <div class="logodiv container" >
+            <div class="row">
+                <div class="logo col-md-5">
+                    <img src="../images/letaotao.png" alt="淘淘乐" title="淘淘乐" />
+                    <span style="font-size:28px;">商品退订</span>
+                </div>
+                <div class="col-md-4 col-md-offset-3" >
+                <input type="text" placeholder="请输入发货状态" style="height:30px;border:1px solid silver" v-model="foodState">
+                    <input class=" btn btn-success" type="button" value="搜索" />
+
+                </div>
+                <!--  <div class="serachbtn col-md-4 text-center ">
+                    
+                    <input type="text" class="search" name="search" placeholder="请输入搜索词">
+                    
+                </div> -->
+
+
+            </div>
+        </div>
+           <div class="container">
+           <button class="btn btn-primary" style="margin-left:1016px"v-on:click="showFoodExit">商品退订单填写</button>
+           </div>
+
+        <div id="shoping" class="container">
+      
+            <table class="shopcar table table-bordered">
+                <thead style="text-align: center">
+                    <th>商品名称</th>
+                    <th>总价</th>
+                    <th>数量</th>
+                    <th style="text-align: center"> 退货缘由</th>
+                    <th>收货地址</th>
+                    
+                <th>收货人手机号</th>
+                    <th>
+                        退货时间
+                    </th>
+                    <th>
+                        操作
+                    </th>
+                    <th>状态</th>
+                </thead>
+                <tbody>
+                    <tr v-for="item in shopingDataList">
+                        <td style="display:none">{{item.id}}</td>
+                        <td v-cloak>{{item.foodname}}</td>
+                        <td v-cloak>{{item.total}}</td>
+                        <td v-cloak>{{item.num}}</td>
+                        <td v-cloak>{{item.content}}</td>
+                        <td v-cloak>{{item.address}}</td>
+                        <td v-text="item.phone"></td>
+                        <td v-cloak>{{item.time}}</td>
+                        <td v-cloak>
+                            <button v-if="item.foodstatus!='已退货'" class="btn btn-danger"
+                                @click=deletefoods(item.id)>删除商品</button>
+                            <button v-if="item.foodstatus=='已退货'" class="btn btn-info" @click=getfoods(item.id)
+                                :disabled="item.transportSatus!='已签收'">{{item.transportSatus=='已签收'?'已签收':'待签收'}}</button>
+                            <button class="btn btn-primary" ref="puchse" @click=puchaseFood(item.id)
+                                :disabled="item.foodstatus=='已退货'" v-text="item.foodstatus"></button>
+                        </td>
+                        <td v-cloak>
+                           
+                            {{item.transportSatus=='null'?'信息已填写':item.transportSatus}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- 退货的form表单 -->
+        <div class="container"v-cloak style="position: absolute;top:0px;width:100%;height:120%;background-image: url(../images/editfoods.jpg
+        );background-size:100% 100%;background-repeat: no-repeat;;padding-top:20px;color:#333;":style="{'display':showFoodstatus}">
+            <div class="row">
+                <form class="col-md-offset-4 col-md-4" action="../phps/exitfood/exitfoods.php" method="post">
+                    <!-- 传入username -->
+                    <input type="text"  name="username" hidden="true" v-model="people">
+                    <div class="form-group">
+                        <label for="name" class="loginFont"><span >商品名称：</span>
+                        </label>
+                        <input type="text" id="name" name="name" class="form-control input-md" />
+                    </div>
+                    <div class="form-group">
+
+                        <label for="total" class="loginFont"><span >单价：</span>
+                        </label>
+                        <input type="number" id="total" name="total" class="form-control input-md" />
+                    </div>
+                    <div>
+                        <label class="loginFont"><span > 退货缘由：</span>
+                        </label>
+                        <textarea rows="5" cols="6" class="form-control input-md" name="describe" v-model="describe"
+                            style="resize:none"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="numbe" class="loginFont"><span >数量：</span>
+                        </label>
+                        <input type="number" id="numbe" name="num" class="form-control input-md" />
+                    </div>
+                    <div>
+                        <label class="loginFont"><span >收货人地址：</span>
+                        </label>
+                        <textarea rows="3" cols="2" class="form-control input-md" name="address"v-model="address"
+                            style="resize:none"></textarea>
+                    </div>
+                     <div class="form-group">
+                        <label for="phone" class="loginFont"><span >收货人手机号：</span>
+                        </label>
+                        <input type="text" id="phone" name="phone" class="form-control input-md" />
+                    </div>
+                    <div class="form-group">
+                        <label for="time" class="loginFont"><span >退货时间：</span>
+                        </label>
+                        <input type="date" id="time" name="time" class="form-control input-md" />
+                    </div>
+
+                   <div>
+                        <input type="button" value="取消" style="width:48%;" @click="showFoodstatus='none'"class="form-control btn btn-danger" />
+                        <input type="submit" value="添加" style="width:50%;" class="form-control btn btn-success" />
+                   </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</body>
+<script>
+    function funcGetSession() {
+        let localItem = localStorage.getItem('name');
+        //将用户信息传到data、中
+       
+        console.log(localItem)
+        if (localItem == null) {
+            return
+        } else {
+            $("#land").css({
+                'display': 'none'
+            });
+            $("#foods-people").text('欢迎' + localItem + '登陆系统')
+            $("#foods-people").css({
+                'display': 'inline-block'
+            })
+        }
+    }
+    funcGetSession();
+    //获取地址中的foodsname
+    //获取人员信息
+    let userName = localStorage.getItem('name');
+    Vue.prototype.username = userName;
+    let data={
+        foodState:'',
+            shopingDataList: [],
+            isPurchase: false,
+           // username:this.username,
+            people:'',
+           
+            showFoodstatus:'none',
+            describe:'',
+            address:''
+           
+        }
+    vm=new Vue({
+        el: "#shoppingcar",
+       data:data,
+        created() {
+            console.log(this.username)
+            //将登陆系统的人员信息进行存储
+            this.people=this.username;
+            this.getfoodsData();
+
+        },
+        
+        methods: {
+            showFoodExit(){
+                
+                //改变变量的值
+                //Vue.set(data,'showFoodstatus',false)
+                this.showFoodstatus='inline-block';
+
+                console.log(this.showFoodstatus)
+
+            },
+            //根据搜索的条件进行数据发送
+            getsearchdatasss() {
+                console.log('ss', this.states);
+                console.log(this.paixus);
+                console.log(this.puserchstate)
+                axios({
+                    method: 'post',
+                    url: '../phps/shera.php',
+                    data: {
+                        foodname: this.puserchstate,
+                        state: this.states,
+                        paisong: this.paixus,
+                        username: this.username,
+
+
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                }).then((res) => {
+                    if (typeof (res.data) == 'object') {
+                        this.shopingDataList = res.data;
+                    } else {
+                        this.shopingDataList = [];
+                        alert('暂无退订商品！')
+                    }
+
+                }).catch((res) => {
+                    console.log(res.data)
+                })
+
+            },
+        //页面初始的时候进行数据的获取
+            getfoodsData() {
+                console.log(this.username)
+
+                //发送请求
+                axios({
+                    method: 'post',
+                    url: '../phps/exitfood/getexitfood.php',
+                    data: {
+                        username: this.username
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                }).then((res) => {
+
+                    console.log(res.data)
+                    if (typeof (res.data) == 'object') {
+                        this.shopingDataList = res.data;
+                    } else {
+                        this.shopingDataList = [];
+                    }
+
+                }).catch((res) => {
+                    console.log('sss', res.data)
+                })
+            },
+
+           
+            //签收商品
+        /*     getfoods(id) {
+                axios({
+                    method: 'post',
+                    url: '../phps/getfoods.php',
+                    data: {
+                        id: id,
+
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                }).then((res) => {
+                    if (res.data == 'success') {
+                        this.getfoodsData();
+                    }
+                })
+
+            }, */
+            myformatter() {
+                let date = new Date()
+                let year = date.getFullYear();
+                let month = date.getMonth() + 1;
+                let day = date.getDate();
+                let hours = date.getHours();
+                let mintues = date.getMinutes();
+                let seconds = date.getSeconds();
+                if (month < 10) {
+                    month = '0' + month
+                } else {
+                    month = month
+                }
+                if (day < 10) {
+                    day = '0' + day
+                } else {
+                    day = day
+                }
+                if (hours < 10) {
+                    hours = '0' + hours
+                } else {
+                    hours = hours
+                }
+                if (mintues < 10) {
+                    mintues = '0' + mintues
+                } else {
+                    mintues = mintues
+                }
+                if (seconds < 10) {
+                    seconds = '0' + seconds
+                } else {
+                    seconds = seconds
+                }
+
+
+
+
+
+                return year + '-' + month + '-' + day + ' ' + hours + ':' + mintues + ':' + seconds;
+            },
+            //删除商品
+            deletefoods:(id) => {
+                console.log(id)
+                axios({
+                    method: 'post',
+                    url: '../phps/ideleteFoodByCar.php',
+                    data: {
+                        id: id
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[
+                                it]) + '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                }).then((res) => {
+                    console.log(res.data)
+                    this.shopingDataList = res.data;
+                })
+            },
+            puchaseFood(id) {
+                this.isPurchase = true;
+                axios({
+                    method: 'post',
+                    url: '../phps/exitfood/foodsexitclick.php',
+                    data: {
+                        id: id,
+                       
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                }).then((res) => {
+                    console.log(res.data)
+                    if (res.data == 'success') {
+                        this.getfoodsData();
+                    }
+                })
+
+            }
+
+
+
+        },
+
+    })
+</script>
+
+</html>

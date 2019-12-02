@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>库存管理平台</title>
+    <link rel="stylesheet" href="../css/public.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.css">
+    <script src="../axios/axios.js"></script>
+    <script src="../js/vue.js">
+    
+    </script>
+    <script src="../jquery/jquery-1.12.4.js">
+
+    </script>
+    <style>
+        .logodiv {
+            border: 1px solid silver;
+        }
+
+        #shoping .shopcar {}
+
+        td,
+        th {
+            text-align: center;
+
+        }
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="foodsStatus" style="width:100%;height:100%;">
+        <header id="header" class="header">
+            <div class="container header_fastPages">
+                <div style="overflow:hidden">
+                    <span class="welcome lf mainColor">欢迎您，登陆乐淘淘，淘你喜欢</span>
+                    <nav class="rf a_style">
+                            <span id="foods-people">
+
+                                </span><a
+                            href="#">关注乐淘淘</a>
+                        <a href="#">手机乐淘淘</a>
+                    </nav>
+                </div>
+                <!--关注乐淘淘的二维码-->
+                <div class="le_code">
+                </div>
+                <!--乐淘淘的手机二维码-->
+                <div class="mobile"></div>
+
+                <!--，logo，搜索框-->
+
+            </div>
+
+        </header>
+        <div class="logodiv container">
+            <div class="row">
+                <div class="logo col-md-6">
+                    <img src="../images/letaotao.png" alt="淘淘乐" title="淘淘乐" />
+                    <span style="font-size:28px;">商品库存管理平台</span>
+                </div>
+                <div class="serachbtn col-md-4 text-center col-md-offset-2">
+                   
+                </div>
+
+
+            </div>
+        </div>
+        <div id="shoping" class="container">
+            <span style="color:red">
+                提示信息：安全库存为10，请及时进行库存商品的添加
+            </span>
+            <table class="shopcar table table-bordered">
+                <thead style="text-align: center">
+
+                    <th>商品名称</th>
+                    <th>价格</th>
+                    <th>数量</th>
+                    <th>
+                        操作
+                    </th>
+                </thead>
+                <tbody>
+                    <tr v-for="item in list" v-cloak>
+                        <td style="display:none">{{item.id}}</td>
+
+                        <td>{{item.name}}</td>
+                        <td >{{item.price}}</td>
+                        <td style="color:red">{{item.num}}</td>
+
+
+                        <td>
+                            <button class="btn btn-info" @click="addfoodsnum(item.id)">补货</button>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="width:100%;height:100%;position: absolute;top:0;background-color:rgba(192,192,192,0.7);" :hidden="showmotai">
+            <div style="width:100%;height:100%;display: flex;justify-content:center;align-items: center">
+                <div style="width:300px;background-color:white;border-radius:10px;height:170px;text-align: center">
+                    <h2>库存数量更新</h2>
+                    <hr>
+                   <h4>库存添加数量</h4>
+                   <input type="num" id="num" name="addnum" class="form-control input-md" v-model="numcontent" style="width:100px;margin:10px auto">
+                   <div style="width:100%;margin-top:10px">
+                        <button class="btn btn-danger" style="width:50%;height:50px"  @click="quxiao">取消</button><button @click="updatanum" style="width:50%;height:50px" class="btn btn-primary
+                        ">添加    </button>
+                   </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+</body>
+<script>
+    $(function(){
+    //获取url地址
+    
+  
+   function funcGetSession(){
+         let localItem=localStorage.getItem('name');
+         console.log(localItem)
+         if(localItem==null){
+             return
+         }else{
+             $("#land").css({'display':'none'});
+             $("#foods-people").text('欢迎'+localItem+'登陆系统')
+             $("#foods-people").css({'display':'inline-block'})
+         }
+    }
+    funcGetSession();
+    //获取地址中的foodsname
+});
+     let data={
+            list: [],
+            showmotai:true,
+            numcontent:0
+        }
+    new Vue({
+        el: "#foodsStatus",
+        data: data,
+        created() {
+
+            this.getAllfood();
+
+
+            //this.getfoodStatus();
+        },
+        methods: {
+        quxiao(){
+            this.showmotai=true
+        },
+
+            getAllfood() {
+                axios({
+                    method: 'get',
+                    url: '../phps/getalldata/getfoodsdata.php'
+                }).then((res) => {
+                    console.log(res.data);
+                    this.list = res.data;
+                })
+
+            },
+            addfoodsnum(id) {
+                this.aa=id;
+               Vue.set(data,'showmotai',false)
+            },
+            updatanum(){
+            axios({
+                method:'post',
+                url:'../phps/addfoodsnum.php',
+                data:{
+                    ids:this.aa,
+                    numcontent:this.numcontent
+                },
+                transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+
+            }).then((res)=>{
+       if(res.data){
+           alert("更新库存成功");
+           Vue.set(data,'showmotai',true)
+           window.location="/happyShoping/dist/foodnummanager.html"
+
+       }
+            })
+
+        } 
+        },
+        
+    })
+</script>
+
+</html>

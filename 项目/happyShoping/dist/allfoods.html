@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>商品管理</title>
+    <link rel="stylesheet" href="../css/public.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.css">
+    <script src="../axios/axios.js"></script>
+    <script src="../jquery/jquery-1.12.4.js">
+
+    </script>
+    <script src="../js/vue.js">
+    </script>
+    <style>
+        .logodiv {
+            border: 1px solid silver;
+        }
+
+        #shoping .shopcar {}
+
+        td {
+            text-align: center;
+
+        }
+        .pageul input{
+        width: 50px;
+        height:45px;
+        text-align: center;
+        line-height: 40px;
+    }
+    .pageul li{
+        width: 50px;
+        height:50px;
+        border-right:1px solid silver;
+        border-top:1px solid silver;
+        border-bottom:1px solid silver;
+        text-align: center;
+        line-height: 50px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="backGroundSystem">
+        <header id="header" class="header">
+            <div class="container header_fastPages">
+                <div style="overflow:hidden">
+                    <span class="welcome lf mainColor">欢迎您，登陆乐淘淘，淘你喜欢</span>
+                    <nav class="rf a_style">
+                        <span id="foods-people">
+
+                        </span>
+                        <a href="#">关注乐淘淘</a>
+                        <a href="#">手机乐淘淘</a>
+                    </nav>
+                </div>
+                <!--关注乐淘淘的二维码-->
+                <div class="le_code">
+                </div>
+                <!--乐淘淘的手机二维码-->
+                <div class="mobile"></div>
+
+                <!--，logo，搜索框-->
+
+            </div>
+
+        </header>
+        <div class="logodiv container">
+            <div class="row">
+                <div class="logo col-md-6">
+                    <img src="../images/letaotao.png" alt="淘淘乐" title="淘淘乐" />
+                    <span style="font-size:28px;">商品管理</span>
+                </div>
+                <div class="serachbtn col-md-4 text-center col-md-offset-2">
+                    <input type="text" class="search" name="search" placeholder="商品名称" v-model="foodname">
+                    <button class=" btn btn-success" @click="msgListView(1)">搜索</button>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="container" >
+                
+                <a href="../dist/addfoods.html" class="btn btn-primary" target="_blank">添加商品</a>
+               
+                <table class="table table-bordered table-hover">
+                    <thead class="text-center">
+                    
+                    <th>名称</th>
+                    <th>价格</th>
+                    <th>描述</th>
+                    <th>数量</th>
+                    <th>类别</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                    </thead>
+                    <tbody>
+               
+                    <tr v-for="item in list.list" >
+                        <td style="display:none"id="foodid" v-text="item.id"></td>
+                        <td v-text="item.name"></td>
+                        <td v-text="item.price"></td>
+                        <td v-text="item.describe"></td>
+                        <td v-text="item.num"></td>
+                        <td v-text="item.fenlei"></td>
+                        <td v-text="item.state"></td>
+                     
+                        <td>
+                            <button class="btn btn-primary"style="color:white" @click="funEdit(item.id)">编辑</button><button class="btn btn-danger" @click="deletedFoods(item.id)">删除
+                            </button>
+                        </td>
+                    </tr>
+                   
+                    </tbody>
+            
+                </table>
+               <div :hidden="showhidden">
+                    <ul style="display:flex;list-style:none" class="pageul">
+                        <li style="border-left:1px solid silver;">共<span style="font-size: 18px;font-weight:bold">{{num}}</span>页</li>
+                        <li style="width:80px;">当前第<span style="font-size: 18px;font-weight:bold">{{currentpage}}</span>页</li>
+                            <li @click="msgListView(1)">首页</li>
+                            <li @click="msgListView(--currentpage)">上一页</li>
+                            <li @click="msgListView(++currentpage)">下一页</li>
+                            <li @click="msgListView(num)">尾页</li>
+                            <li>
+                                <input type="number" v-model="redictivepage">
+                            </li>
+                            <li class="btn btn-primary" style="line-height:30px"@click="msgListView(redictivepage)">跳转</li>
+                        </ul>
+               </div>
+            </div>
+    </div>
+</body>
+<script>
+    function funcGetSession() {
+        let localItem = localStorage.getItem('name');
+        console.log(localItem)
+        if (localItem == null) {
+            return
+        } else {
+            $("#land").css({
+                'display': 'none'
+            });
+            $("#foods-people").text('欢迎' + localItem + '登陆系统')
+            $("#foods-people").css({
+                'display': 'inline-block'
+            })
+        }
+    }
+    funcGetSession();
+    $(".pageui>li").click(function(){
+        $(this).css({'color':'red'}) });
+
+
+
+   let  vm=new Vue({
+       el:'#backGroundSystem',
+       data:{
+        showhidden:false,
+           num:0,
+           list:[],
+           pageNo: 1,
+        pages:Math.ceil(this.num),
+        currentpage:1,
+        redictivepage:1,
+        foodname:""
+       },
+       created() {
+          //发送请求 
+          axios({
+              method:'post',
+              url:'/happyShoping/phps/backfoodsxitong.php',
+              dataType:'json',
+              transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    data:{
+                        page:1,
+                        num:100,
+                        name:this.foodname
+                        
+                    }
+              
+          }).then((res)=>{
+             console.log(res.data);
+             console.log('ss',res.data.totalsum);
+                //遍历结果结果集
+               this.num=Math.ceil(res.data.totalsum/7);
+               console.log(Math.ceil(res.data.totalsum/7))
+               //console.log(res.data)
+               this.msgListView(1);
+          }).catch((res)=>{
+              console.log(res)
+          })
+          
+       },
+       methods: {
+           //点击搜索进行商品的搜索
+          
+        deletedFoods(id){
+console.log(id)
+axios({
+              method:'post',
+              url:'/happyShoping/phps/delete.php',
+              dataType:'json',
+              data:{
+               id:id
+              },
+              transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+              
+          }).then((res)=>{
+              console.log(res.data)
+              if(res.data){
+                  window.location="/happyShoping/dist/allfoods.html"
+              }
+          })
+        },
+          msgListView(curPage){
+              this.currentpage=curPage;
+              console.log('ssssssss')
+              console.log(curPage,this.num)
+                if(curPage>this.num){
+                    this.currentpage=curPage-1;
+                   alert("目标页不存在哟！请重新选择")
+                    return;
+                }
+                if(curPage<=0){
+                    this.currentpage=1;
+                   alert("目标页不存在哟！请重新选择")
+                    return;
+                }
+            //根据当前页获取数据
+            axios({
+              method:'post',
+              url:'/happyShoping/phps/backfoodsxitong.php',
+              dataType:'json',
+              data:{
+                  name:this.foodname,
+            num:6,
+           page:curPage
+              },
+              transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+              
+          }).then((res)=>{
+              //将循环出来的数据进行遍历进行，输出
+              res.data.list.forEach((item)=>{
+                  switch(item.state){
+                      case '1':item.state="促销商品"
+                      break;
+                      case '2':item.state="新品"
+                      break;
+                      case '3':item.state="惠农商品"
+                      break;
+                      default:item.state="特产" 
+                  }
+                  switch(item.fenlei){
+                      case '1':item.fenlei="水果"
+                      break;
+                      case '2':item.fenlei="蔬菜"
+                      break;
+                      case '3':item.fenlei="禽类蛋品"
+                      break;
+                      case '4':item.fenlei="干货"
+                      break;
+                      default:item.fenlei="特产" 
+                  }
+              });
+              this.num=Math.ceil(res.data.totalsum/7);
+               console.log(Math.ceil(res.data.totalsum/7));
+            this.list=res.data;
+          
+          })
+
+
+                    //根据当前页获取数据
+                    this.pageNo = curPage;
+                },
+           //点击编辑
+           funEdit(id){
+               let ids=escape(id);
+              window.open("../dist/updata.html?id="+ids,"_blank")
+
+           }
+       },
+       //创建组件
+       comments:{
+           'paging':{
+
+           }
+       }
+   })
+
+</script>
+
+</html>

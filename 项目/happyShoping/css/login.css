@@ -1,0 +1,44 @@
+.loginForm{
+    display:flex;
+    flex-direction:row;
+    justify-content: center;
+    align-items: center;
+    background-color:silver;
+
+}
+/*登陆页的图片*/
+.loginImg{
+    margin-left:30px;
+    margin-top:10px;
+}
+/*登陆的文字*/
+.loginText{
+    display:inline-block;
+    font-family:"sans serif";
+    font-size:26px;
+    color:snow;
+    text-shadow:10px 3px 5px black;
+    animation: loginanimate 3s linear infinite alternate;
+}
+@keyframes loginanimate {
+    from{
+        transform:translate(800px);
+    }to{
+    transform:translate(200px);
+         }
+
+}
+/*字体*/
+.loginFont{
+    font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Nanum Gothic", Dotum, sans-serif;
+    font-size:20px;
+}
+/*登陆的背景图片*/
+.loginBgi{
+    background-color:#8dbe52;
+    background-image: url(../images/loginBanner.jpg);
+    background-repeat:no-repeat;
+    background-position: center 0;
+}
+/*定义一个动画当加载的时候登陆框飘过来*/
+

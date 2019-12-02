@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品添加</title>
+    <meta http-equiv="content-type" charset="utf-8"/>
+    <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="../css/addfoods.css"/>
+</head>
+<body>
+    <div style="background-image: url(../images/addfood.jpg);background-size:100% 100%;background-repeat: no-repeat;padding-top:20px;padding-bottom:20px">
+        <div class="container">
+                <div class="row">
+                    <form class="col-md-offset-4 col-md-4" action="../phps/addfoods.php" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="name" class="loginFont">商品名称：
+                            </label>
+                            <input type="text" id="name" name="name"class="form-control input-lg" />
+                        </div>
+                        <div class="form-group">
+                            <label for="price" class="loginFont">价格：
+                            </label>
+                            <input type="number" id="price" name="price"class="form-control input-lg" />
+                        </div>
+                        <div >
+                            <label  class="loginFont">商品简介：
+                            </label>
+                            <textarea rows="5" cols="6"   class="form-control input-lg"  name="describe"style="resize:none"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="numbe" class="loginFont">数量：
+                            </label>
+                            <input type="number" id="numbe" name="num"class="form-control input-lg" />
+                        </div>
+                        <div class="form-group">
+                            <label for="poto" class="loginFont">商品图片：
+                            </label>
+                            <input type="file" id="poto" name="picture"class="form-control input-lg" />
+                        </div>
+                        <div class="form-group">
+                            <label name="state"class="loginFont">商品状态：
+                            </label>
+                            <select name="state">
+                                <option value="1" selected>促销商品</option>
+                                <option value="2">新品</option>
+                                <option value="3">惠农商品</option>
+                                <option value="4">特产</option>
+                               
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label name="fenlei"class="loginFont">商品分类：
+                            </label>
+                            <select name="fenlei">
+                                <option value="1" selected>水果</option>
+                                <option value="2">蔬菜</option>
+                                <option value="3">禽类蛋品</option>
+                                <option value="4">干货</option>
+                                <option value="5">特产</option>
+                            </select>
+                        </div>
+                        <input type="submit" value="添加" class="form-control btn btn-success" />
+                    </form>
+                </div>
+            </div>
+    </div>
+
+</body>
+</html>

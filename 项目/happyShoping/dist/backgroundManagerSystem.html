@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>商品后天管理平台</title>
+    <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap.css" />
+    <script src="../js/vue.js"></script>
+    <script src='../axios/axios.js'></script>
+    <script src="../jquery/jquery-1.12.4.js"></script>
+
+    <script src="../js/page.js">
+
+    </script>
+
+
+</head>
+<style>
+    th,
+    td {
+        text-align: center;
+    }
+
+    .pageul input {
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        line-height: 40px;
+    }
+
+    .pageul li {
+        width: 50px;
+        height: 50px;
+        border-right: 1px solid silver;
+        border-top: 1px solid silver;
+        border-bottom: 1px solid silver;
+        text-align: center;
+        line-height: 50px;
+    }
+</style>
+
+<body style="background-image: url('../images/background.jpg');background-repeat: no-repeat;background-size:100% 100%; ">
+
+
+    <div class="container" id="backGroundSystem">
+        <h1 class="display-2">商品管理后台</h1>
+        <!--  <a href="../dist/addfoods.html" class="btn btn-primary" target="_blank">添加商品</a> -->
+        <a href="../dist/foodStatus.html" class="btn btn-primary" target="_blank">出售商品状态</a>
+        <a href="/happyShoping/dist/backmerchandiseUnsubscribe.html" class="btn btn-primary" target=_blank>商品退订信息</a>
+        <a href="../dist/foodnummanager.html" class="btn btn-primary" target="_blank">商品安全库存管理</a>
+        <a href="../dist/allfoods.html" class="btn btn-primary" target="_blank">商品管理</a>
+        <span class="btn btn-info" style="color:white">昨天销售物品数<span id="pursechpeople" style="font-size: 18px;font-weight: 700;padding:0 5px;color:red"></span>件</span>
+        <div style="border:1px solid #e0e0e0;width:150px;height:50px;position: absolute;right:75px;top:40px;border-radius: 10px">
+            <div class="text-center" style="color:white">昨日营业额: <span id="yestotal" style="color:red;font-size: 18px"></span>元</div>
+            <div class="text-center" style="color:white">总的营业额: <span   id="sumtotal" style="color:red;font-size: 18px"></span>元</div>
+        </div>
+
+    </div>
+    <hr>
+    <div style="display:flex">
+        
+        <div style="text-align: center;margin-left:42px">
+            <h4 style="font-weight: 700;color:white">商品各专区销售情况</h4>
+                <div id="container" style="width:390px;height:500px"></div>
+        </div>
+      <div style="text-align: center;">
+          <h4 style="font-weight: 700;color:white">商品销售排名（件）</h4>
+          <div id="container1" style="width:450px;height:400px"></div>
+      </div>
+        <div  style="text-align: center">
+
+            <h4 style="font-weight: 700;color:white">商品月销售趋势（件）</h4>
+            <div id="container2" style="width:450px;height:400px"></div>
+    </div>
+        </div>
+</body>
+
+<script src="../js/echart.js">
+
+</script>
+
+<script language="JavaScript" src="./tongji/"></script>
+<script type="text/javascript">
+
+//格式化时间
+Date.prototype.Format = function (formatStr) {
+    var str = formatStr;
+    var Week = ['日', '一', '二', '三', '四', '五', '六'];
+
+    str = str.replace(/yyyy|YYYY/, this.getFullYear());
+    str = str.replace(/yy|YY/, (this.getYear() % 100) > 9 ? (this.getYear() % 100).toString() : '0' + (this.getYear() % 100));
+    var month = this.getMonth() + 1;
+    str = str.replace(/MM/, month > 9 ? month.toString() : '0' + month);
+    str = str.replace(/M/g, month);
+
+    str = str.replace(/w|W/g, Week[this.getDay()]);
+
+    str = str.replace(/dd|DD/, this.getDate() > 9 ? this.getDate().toString() : '0' + this.getDate());
+    str = str.replace(/d|D/g, this.getDate());
+
+    str = str.replace(/hh|HH/, this.getHours() > 9 ? this.getHours().toString() : '0' + this.getHours());
+    str = str.replace(/h|H/g, this.getHours());
+    str = str.replace(/mm/, this.getMinutes() > 9 ? this.getMinutes().toString() : '0' + this.getMinutes());
+    str = str.replace(/m/g, this.getMinutes());
+
+    str = str.replace(/ss|SS/, this.getSeconds() > 9 ? this.getSeconds().toString() : '0' + this.getSeconds());
+    str = str.replace(/s|S/g, this.getSeconds());
+    return str;
+}
+let aa=new Date().Format('yyyy-MM-dd');
+console.log(aa);
+    //获取数据
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate() - 1;
+    if (month < 10) {
+        month = '0' + month
+    }
+    if (day < 10) {
+        day = "0" + day;
+    }
+    let yesday = year + '-' + month + '-' + day;
+    getchartsdata = function (time) {
+        $.ajax({
+            type: 'post',
+            url: '../phps/charts.php',
+            data: {
+
+                time: time
+
+            },
+            dataType:'json',
+            success: (res) => {
+                console.log(res.yestotals[0].total);
+                if(res.yestotals[0].total!=null){
+                    $('#yestotal').text(res.yestotals[0].total)
+                }else{
+                    $('#yestotal').text(0)
+                }
+                $('#sumtotal').text(res.sumtotal[0].total)
+                if(res.yesdayperch[0].yesnum!=null){
+                    $('#pursechpeople').text(res.yesdayperch[0].yesnum)
+                }else{
+                    $('#pursechpeople').text(0)
+                }
+               
+                //获取销售数据
+                var statefood = [];
+                res.sumallfood.forEach((item) => {
+                    switch (item.name) {
+                        case '1':
+                            item.name = "促销商品"
+                            break;
+                        case '2':
+                            item.name = "新品"
+                            break;
+                        case '3':
+                            item.name = "惠农商品"
+                            break;
+                        default:
+                            item.name = "特产"
+                    }
+                    item.value=parseInt(item.value);
+                    statefood.push(item);
+
+                }); 
+                //格式化数据
+                let paihangs=[];
+                res.paihang.forEach((item)=>{
+                    let arr=[]
+                    arr.push(parseInt(item.score));
+                    arr.push(item.name);
+                    paihangs.push(arr);
+
+                });
+                //将时间格式化
+                res.yuefentongji.forEach((item)=>{
+                    item.num=parseInt(item.num)
+                    item.time=new Date(item.time).Format('yyyy-MM-dd');
+
+
+                })
+                console.log(res.yuefentongji);
+                let nums=[];
+                let xaxis=[];
+                res.yuefentongji.forEach((item)=>{
+                    nums.push(item.num);
+                    xaxis.push(item.time);
+
+                })
+qushi(xaxis,nums)
+                //调用饼图函数
+                getbar(statefood);
+                console.log(paihangs)
+                paihang(paihangs);
+            }
+
+        })
+    }
+    getchartsdata(yesday)
+
+
+
+
+    
+
+   getbar=function(data){
+       console.log(data)
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    app.title = '环形图';
+
+    option = {
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a}<br/>{b}: {c}件 ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            x: 'left',
+
+        },
+        series: [{
+            name:'商品销售情况',
+            type: 'pie',
+            radius: ['50%', '70%'],
+            avoidLabelOverlap: false,
+            label: {
+                normal: {
+                    show: false,
+                    position: 'center',
+                    textStyle: {
+                color: 'white'  // 改变标示文字的颜色
+          }
+
+                },
+                emphasis: {
+                    show: true,
+                    textStyle: {
+                        fontSize: '30',
+                        fontWeight: 'bold'
+                    }
+                }
+            },
+            labelLine: {
+                normal: {
+                    show: false
+                }
+            },
+       data:data
+        }]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+   }
+ 
+
+
+
+
+   paihang=function(data){
+    var dom = document.getElementById("container1");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    var option = {
+        title:{
+
+
+        },
+        dataset: {
+            source:data
+        },
+        tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+       
+        xAxis: {
+            name: '销量',
+            axisLine:{
+                lineStyle:{
+                    color:'white',
+                }
+            }
+        },
+        yAxis: {
+            type: 'category',
+            axisLine:{
+                lineStyle:{
+                    color:'black',
+                }
+            },
+        },
+        visualMap: {
+            top:10,
+            orient: 'horizontal',
+            left: 'center',
+            min: 10,
+            max: 100,
+            text: ['最大值', '最小值'],
+            // Map the score column to color
+            dimension: 0,
+            inRange: {
+                color: ['#D7DA8B', '#E15457']
+            },
+          color:"white"
+        },
+        series: [{
+            type: 'bar',
+            encode: {
+                // Map the "amount" column to X axis.
+                x: 'score',
+                // Map the "product" column to Y axis
+                y: 'amount'
+            }
+        }]
+    };;
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+   }
+
+
+    qushi=function(datas,num){
+        var dom = document.getElementById("container2");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    option = {
+        tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+        xAxis: {
+            type: 'category',
+            data: datas,
+            axisLine:{
+                lineStyle:{
+                    color:'white',
+                }
+            },
+        },
+        
+        yAxis: {
+            type: 'value',
+            axisLine:{
+                lineStyle:{
+                    color:'black',
+                }
+            },
+        },
+        series: [{
+            data: num,
+            type: 'line'
+        }]
+    };;
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+    }
+</script>
+
+</html>

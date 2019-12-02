@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>商品页面</title>
+
+    <link rel="stylesheet" href="../css/public.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap.css" />
+    <script src='../../vue/vue.js'>
+
+    </script>
+</head>
+<style>
+    .top {
+
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+    }
+
+    .project-content {
+        /*height:300px;*/
+        width: 100%;
+        flex-basis: 24%;
+
+    }
+
+    .project-content>span {
+
+        color: red;
+        font-size: 23px;
+        /* text-align: center; */
+        margin-left: 53px;
+        margin-top: 25px;
+        display: inline-block;
+    }
+
+    .project-content .pr-p {
+
+        font-size: 14px;
+        color: silver;
+        text-align: center;
+        height: 56px;
+    }
+
+    .project-content .pr-num {
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        font-size: 18px;
+    }
+
+    .project-content .pr-num button {
+        width: 50px;
+        font-size: 30px;
+    }
+
+    .project-content .pr-num span {
+        margin: 15px 20px;
+    }
+
+    .pr-img {
+        height: 200px;
+        text-align: center;
+
+    }
+
+    .project-content .pr-add {
+        margin-top: 20px;
+        margin-left: 80px;
+        text-align: center;
+    }
+
+    .project-content .oldMoney {
+        font-size: 16px;
+        color: silver;
+        margin-left: 10px;
+    }
+
+    .project-content .foodscontent {
+        text-align: center;
+
+    }
+
+    .project-content:hover {
+        width: 290px;
+        height: 384px;
+        box-shadow: 10px 10px 5px greenyellow;
+    }
+</style>
+<script src="../jquery/jquery-1.12.4.js
+">
+
+</script>
+<script src="../axios/axios.js">
+
+</script>
+
+<body>
+    <header id="header" class="header">
+        <div class="container header_fastPages">
+            <div>
+                <span class="welcome lf mainColor">欢迎您，登陆乐淘淘，淘你喜欢</span>
+                <nav class="rf a_style">
+                    <span id="land">
+                        <a href="dist/login.html">登陆</a><a href="dist/resigter.html">快速注册</a>
+                    </span>
+                    <span id="foods-people">
+
+                    </span>
+                    <a href="#"></a><a href="#">关注乐淘淘</a>
+                    <a href="#">手机乐淘淘</a><a href="/happyShoping/index.html" target="_blank">返回首页</a>
+                </nav>
+            </div>
+            <!--关注乐淘淘的二维码-->
+            <div class="le_code">
+            </div>
+            <!--乐淘淘的手机二维码-->
+            <div class="mobile"></div>
+
+            <!--，logo，搜索框-->
+
+        </div>
+
+    </header>
+    <div id="app">
+    <div class="logodiv container">
+        <div class="row" style="border:1px solid silver;width:1150px">
+            <div class="logo col-md-3">
+                <img src="../images/letaotao.png" alt="淘淘乐" title="淘淘乐" />
+            </div>
+            <div class="col-md-3">
+                <h3 style="margin-top:40px">商品的列表</h3>
+            </div>
+            <div class="serachbtn col-md-6 text-center">
+                <input type="text" class="search" name="search" v-model="foodsname" placeholder="商品名称">
+                <button class=" btn btn-success" @click="searchdata">搜索</button>
+            </div>
+
+
+        </div>
+    </div>
+    
+        <div class="container">
+            <div class="row top" style="height:100%;width:100%">
+                <div class="project-content" style="border:1px solid red;margin-bottom:10px" v-for="item in foodList"
+                    @click="getfoodsname(item.foodName,item.id)">
+
+                    <div class="pr-img"><img :src="'../'+item.picture" width="270" height="210"></div>
+
+                    <span>￥{{item.price}}</span><span
+                        class="oldMoney">原价：<del>￥{{(item.price*1.2).toFixed(2)}}</del></span>
+
+
+                    <p class="pr-p" style="width:270px;height:83px;display: -webkit-box;
+
+            -webkit-box-orient: vertical;
+            
+            -webkit-line-clamp: 4;
+            
+            overflow: hidden;">{{item.describe}}</p>
+                    <p class="foodscontent">
+                        <span
+                            style="font-size:16px;color:green;font-weight: 600;font-family: Verdana, Geneva, Tahoma, sans-serif">进入商品的详情页</span>
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+</body>
+<script>
+    //页面加载的时候进行数据的获取
+    let status = window.location.href.split('?')[1].split('=')[1];
+    Vue.prototype.ss = unescape(status);
+    $(function () {
+        //获取url地址
+
+
+        function funcGetSession() {
+            let localItem = localStorage.getItem('name');
+            console.log(localItem)
+            if (localItem == null) {
+                return
+            } else {
+                $("#land").css({
+                    'display': 'none'
+                });
+                $("#foods-people").text('欢迎' + localItem + '登陆系统')
+                $("#foods-people").css({
+                    'display': 'inline-block'
+                })
+            }
+        }
+        funcGetSession();
+        //获取地址中的foodsname
+    })
+    let app = new Vue({
+        el: '#app',
+        data: {
+            state: '',
+            foodList: [],
+            foodsname:"",
+            sds:[]
+        },
+        created() {
+            //将url中的值添加到data中
+            this.state = this.ss.trim()
+
+            //发送数据库
+            axios({
+                method: 'post',
+                url: '../phps/speicalArea.php',
+                data: {
+                    state: this.state
+                },
+                transformRequest: [function (data) {
+                    // Do whatever you want to transform the data
+                    let ret = ''
+                    for (let it in data) {
+                        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                    }
+                    return ret
+                }],
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+
+            }).then((res) => {
+                console.log(res.data)
+                //将数据的格式转换
+                this.foodList = res.data;
+                this.sds=res.data;
+
+            }).catch((res) => {
+
+                console.log('ss', res.data)
+            })
+
+        },
+        methods: {
+            //进行商品的搜索
+            searchdata() {
+              
+                //获取搜索的商品的名称
+                axios({
+                    method: 'get',
+                    url: "../phps/getsearchdata.php",
+                    params: {
+                        state: this.state,
+                        name: this.foodsname
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+
+
+
+                }).then((res) => {
+                    console.log(typeof res.data);
+                    if(typeof res.data=='string'){
+                        this.foodList = this.sds;
+                        alert('暂无搜索数据！');
+                       
+                       
+                    }else{
+                        this.foodList =res.data;
+                    }
+                })
+
+            },
+            getfoodsname: (name, id) => {
+                console.log(name)
+                window.location.href = '/happyShoping/dist/foodsConts.html?foodName=' + escape(name) +
+                    '&id=' + id
+            }
+        },
+    })
+</script>
+
+</html>

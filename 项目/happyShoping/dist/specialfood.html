@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>商品的详情页</title>
+    <link rel="stylesheet" href="../css/public.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.css">
+
+</head>
+<script src="../../vue/vue.js"></script>
+<script src="../axios/axios.js"></script>
+<script src="../jquery/jquery-1.12.4.js"></script>
+<style>
+    .logodiv {
+        border: 1px solid silver;
+    }
+
+    .main {
+        margin-top: 30px;
+        height: 100%;
+        border: 1px solid silver;
+    }
+</style>
+
+<body>
+    <div id="foods-content">
+        <header id="header" class="header">
+            <div class="container header_fastPages">
+                <div style="overflow:hidden">
+                    <span class="welcome lf mainColor">欢迎您，登陆乐淘淘，淘你喜欢</span>
+                    <nav class="rf a_style">
+                        <span id="foods-people">
+
+                        </span>
+                        <a href="#">关注乐淘淘</a>
+                        <a href="#">手机乐淘淘</a>
+                    </nav>
+                </div>
+                <!--关注乐淘淘的二维码-->
+                <div class="le_code">
+                </div>
+                <!--乐淘淘的手机二维码-->
+                <div class="mobile"></div>
+
+                <!--，logo，搜索框-->
+
+            </div>
+
+        </header>
+        <div class="logodiv container">
+            <div class="row">
+                <div class="logo col-md-5">
+                    <img src="../images/letaotao.png" alt="淘淘乐" title="淘淘乐" />
+                    <span style="font-size:28px;">商品详情页</span>
+                </div>
+
+                <div class="serachbtn col-md-3 text-center col-md-offset-4">
+                    <input type="text" class="search" name="search" placeholder="请输入搜索词">
+                    <button class=" btn btn-success">搜索</button>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="container main" id="foods-content">
+            <div style="height:340px">
+                <div class="col-md-4" style="border:1px solid silver;height:300px;margin-top:30px;">
+                   <div v-for="items in foodList">
+                    <img :src="'../'+items.picture"width='340'  height="280"alt="图片">
+                   </div>
+                </div>
+                <div class="col-md-7" style=" margin-left:50px;border:1px solid silver;height:300px;margin-top:30px">
+                    <div v-for="item in foodList" style="padding-top:5px;">
+                        <p v-text="item.text" style="font-size:20px;color:silver;text-align: center"></p>
+                        <div
+                            style="height:60px;width:90%;background:rgba(0,255,0,0.3);margin:0 auto;display:flex;padding-left:50px;flex-direction: column">
+                            <div> <span>商品名称：</span> <span v-text="item.name"></span><span
+                                    style="margin-left:100px;font-size:18px;font-weight: bold">库存<span v-text="item.num"
+                                        style="padding-left:10px"></span></span></div>
+
+                            <div> <span>现在的价格：</span> <span style="font-size:24px;color:red">￥{{item.price}}</span>
+                            </div>
+                        </div>
+                        <div style="width:90%;height:100px;border:1px solid greenyellow;margin:6px auto;">
+                            <div>
+                                <span style="font-size:18px;font-weight:bold">商品简介：</span>
+                                <p v-text="item.describe"></p>
+                            </div>
+                        </div>
+                        <div
+                            style="width:90%;display:flex;margin:0 auto;height:50px;line-height: 50px;justify-content: space-between">
+                            <div style="width:50%;">
+                                <button style="width:50px" @click="addfoods(addfoodsNum--)">-</button>
+                                <span style="display:inline-block;width:50px;text-align: center">{{number}}</span>
+                                <button style="width:50px" @click="addfoods(addfoodsNum++)">+</button>
+                            </div>
+                            <div style="width:50%;display: flex;justify-content: end">
+                                <button @click="addShoppingCar"> 添加购物车</button>
+                                <button style="width:50px;text-align: center;margin-left:3px"
+                                    @click="purshfoods">购买</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div class="container" style="padding:0">
+            <div style="height:20px" class="h3">
+                热门评论
+            </div>
+            <div style='border:1px solid silver;height:300px'>
+                <div style="border:1px solid red;display: flex" v-for="item in messageList">
+                    <div>
+                        <span>用户名：</span>
+                        <span v-text="item.userName"></span>
+
+                    </div>
+                    <div>
+
+                        <p v-text="item.userContent"></p>
+
+                    </div>
+                    <div>
+                        <span v-text="item.userTime"></span>
+                    </div>
+                    <div>
+                        <button>回复评论</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='motai'>
+
+        </div>
+
+
+
+
+    </div>
+
+</body>
+<script>
+$(function(){
+    //获取url地址
+    
+  
+   function funcGetSession(){
+         let localItem=localStorage.getItem('name');
+         console.log(localItem)
+         if(localItem==null){
+             return
+         }else{
+             $("#land").css({'display':'none'});
+             $("#foods-people").text('欢迎'+localItem+'登陆系统')
+             $("#foods-people").css({'display':'inline-block'})
+         }
+    }
+    funcGetSession();
+    //获取地址中的foodsname
+});
+
+
+
+    //创建vue实例
+    //获取sesssion
+    let userName = localStorage.getItem('name');
+    Vue.prototype.userName = userName;
+    let state= window.location.href.split('&')[0].split('=')[1];
+    let id = window.location.href.split('&')[1].split('=')[1];
+    console.log(window.location.href.split('?')[1])
+    Vue.prototype.ss = state;
+    Vue.prototype.cc = id;
+    let vm = new Vue({
+        el: '#foods-content',
+        data: {
+            id: 0,
+            foodList: [],
+            number: 1,
+            messageList: [],
+            foodName: '',
+            addfoodsNum: 1
+        },
+        created() {
+            this.foodName = this.ss;
+            this.id = this.cc;
+            //根据id值获取数据
+            axios({
+                url: '../phps/foodsConts.php',
+                method: 'get',
+                params: {
+                    id: this.id
+                }
+            }).then((res) => {
+                console.log(res.data)
+                switch (res.data[0].state) {
+                    case '1':
+                        res.data[0].text = '客官这件商品属于促销商品，价格优惠，你可以快速下单，这件商品就属于您了';
+                        break;
+                    case '2':
+                        res.data[0].text = '客官这件商品属于最新上架的商品，最新的哟！还不下单等什么呢，新品等着您召唤呢';
+                        break;
+                    case '3':
+                        res.data[0].text = '客官这件商品属于惠农产品，帮助农名伯伯，打开农产品的销售市场吧，绿色无污染哟，不试试吗？';
+                        break;
+                    case '4':
+                        res.data[0].text = '客官和您介绍这件商品，这件商品在这里属于特色，代表着这个地方的文化和蕴含，来体验一下不'
+
+                }
+                this.foodList = res.data;
+
+            }).catch((res) => {
+                console.log(res.data)
+            });
+            axios({
+                url: '../phps/getMessage.php',
+                method: 'get',
+                params: {
+                    id: this.foodName
+                }
+            }).then((res) => {
+                console.log(res.data)
+
+                this.messageList = res.data;
+
+                console.log(this.messageList)
+
+
+            }).catch((res) => {
+                console.log(res.data)
+            })
+
+        },
+        methods: {
+            addfoods(foodsNum) {
+                console.log(foodsNum)
+                this.number = foodsNum
+            },
+            //格式化时间
+            myformatter() {
+                let date = new Date()
+                var year = date.getFullYear();
+                let month = date.getMonth() + 1;
+                let day = date.getDate();
+                let hours = date.getHours();
+                let mintues = date.getMinutes();
+                let seconds = date.getSeconds();
+                if (month < 10) {
+                    month = '0' + month
+                } else {
+                    month = month
+                }
+                if (day < 10) {
+                    day = '0' + day
+                } else {
+                    day = day
+                }
+                if (hours < 10) {
+                    hours = '0' + hours
+                } else {
+                    hours = hours
+                }
+                if (mintues < 10) {
+                    mintues = '0' + mintues
+                } else {
+                    mintues = mintues
+                }
+                if (seconds < 10) {
+                    seconds = '0' + seconds
+                } else {
+                    seconds = seconds
+                }
+
+
+
+
+
+                return year + '-' + month + '-' + day + ' ' + hours + ':' + mintues + ':' + seconds;
+            },
+
+            //点击加入购物车
+            addShoppingCar() {
+
+                console.log(this.foodList, this.userName)
+                //将输入发送到后台
+                axios({
+                    method: 'post',
+                    url: '../phps/addshoppingcar.php',
+                    data: {
+                        userName: this.userName,
+                        name: this.foodList[0].name,
+                        price: this.foodList[0].price,
+                        num: this.number,
+                        time: this.myformatter()
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                }).then((res) => {
+                    alert('添加购物车成功')
+                })
+
+            },
+             //点击进行商品的购买
+        purshfoods() {
+            axios({
+                method: 'post',
+                url: '../phps/pursefoods.php',
+                data: {
+                    userName: this.userName,
+                    name: this.foodList[0].name,
+                    price: this.foodList[0].price,
+                    num: this.number,
+                    time: this.myformatter()
+                },
+                transformRequest: [function (data) {
+                    // Do whatever you want to transform the data
+                    let ret = ''
+                    for (let it in data) {
+                        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                            '&'
+                    }
+                    return ret
+                }],
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+            }).then((res) => {
+                alert('购买成功')
+            })
+        }
+
+        },
+       
+
+
+    })
+</script>
+
+</html>

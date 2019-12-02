@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品添加</title>
+    <meta http-equiv="content-type" charset="utf-8"/>
+    <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="../css/addfoods.css"/>
+
+</head>
+<script src="../../jquery/jquery-1.12.4.js"></script>
+<style>
+    .backgroundsImgs{
+        background: url('../images/conentbgi2.png') no-repeat center center;
+        background-size:cover;
+    }
+</style>
+<body class="backgroundsImgs">
+<div class="container ">
+    <div class="row">
+        <form class="col-md-offset-4 col-md-4" action="../phps/updatefoods.php" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name" class="loginFont">商品名称：
+                </label>
+                <input type="text" id="name" name="name"class="form-control input-lg" />
+            </div>
+            <div class="form-group">
+                <label for="price" class="loginFont">价格：
+                </label>
+                <input type="number" id="price" name="price"class="form-control input-lg" />
+            </div>
+            <div >
+                <label  class="loginFont">商品简介：
+                </label>
+                <textarea rows="5" cols="6"   id='describe'class="form-control input-lg"  name="describe"style="resize:none"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="num" class="loginFont">数量：
+                </label>
+                <input type="number" id="num" name="num"class="form-control input-lg" />
+            </div>
+            <div class="form-group">
+                <label for="poto" class="loginFont">商品图片：
+                </label>
+                <input type="file" id="poto" name="picture"class="form-control input-lg" />
+            </div>
+            <div class="form-group">
+                <label name="state"class="loginFont">商品状态：
+                </label>
+                <select name="state" id="state">
+                    <option value="1" selected>促销商品</option>
+                    <option value="2">新品</option>
+                    <option value="3">惠农商品</option>
+                    <option value="4">特产</option>
+                   
+                </select>
+            </div>
+            <div class="form-group">
+                <label name="fenlei"class="loginFont">商品分类：
+                </label>
+                <select name="fenlei"id="fenlei">
+                    <option value="1" selected>水果</option>
+                    <option value="2">蔬菜</option>
+                    <option value="3">禽类的蛋品</option>
+                    <option value="4">干货</option>
+                    <option value="5">特产</option>
+                </select>
+            </div>
+            <input type="text" id="id" name="id"hidden/>
+            <input type="submit" value="修改" class="form-control btn btn-success" />
+        </form>
+    </div>
+</div>
+</body>
+<script>
+
+    $(document).ready(function(){
+        function GetRequest() {
+            var url = location.search; //获取url中"?"符后的字串
+           var id=url.split('=')[1];
+            return unescape(id)
+           
+        }
+      let  id=GetRequest();
+        console.log(id);
+
+        $.ajax({
+            url:'../phps/edit.php',
+            type:'get',
+            data:{
+                id:id
+            },
+           
+            success:function(data){
+            console.log(data)
+                //将请求过来的数据进行初始化
+                var fooddata=JSON.parse(data)
+                console.log(fooddata);
+                console.log(fooddata.name)
+               //循环遍历这个对象然后进行值得修改
+                $('#name').val(fooddata[0].name);
+                $('#price').val(fooddata[0].price);
+                $('#describe').val(fooddata[0].describe);
+                $('#num').val(fooddata[0].num);
+                $('#state').val(fooddata[0].state);
+                $('#fenlei').val(fooddata[0].fenlei);
+                $("#id").val(fooddata[0].id);
+
+
+            }
+
+
+
+
+
+        });
+
+
+
+
+
+    })
+</script>
+</html>

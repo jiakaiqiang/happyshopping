@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品页面</title>
+
+    <link rel="stylesheet" href="../css/public.css"/>
+    <link rel="stylesheet" href="../css/index.css"/>
+    <link rel="stylesheet"href="../../bootstrap-3.3.7-dist/css/bootstrap.css"/>
+<script src='../../vue/vue.js'>
+
+</script>
+</head>
+<style>
+    .tops{
+       
+        width:100%;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+    }
+    .project-content{
+        /*height:300px;*/
+        width:100%;
+        flex-basis: 24%;
+
+    }
+    .project-content>span{
+        width:30px;
+        color:red;
+        font-size:23px;
+        /* text-align: center; */
+      margin-left:53px;
+    }
+    .project-content .pr-p{
+     
+        font-size:14px;
+        color:silver;
+        text-align: center;
+        height:56px;
+    }
+    .project-content .pr-num{
+        height:50px;
+        display: flex;
+        justify-content: center;
+        font-size:18px;
+    }
+    .project-content .pr-num button{
+        width:50px;
+      font-size:30px;
+    }
+    .project-content .pr-num span{
+        margin:15px 20px;
+    }
+    .pr-img{
+        height:200px;
+        text-align: center;
+
+    }
+    .project-content .pr-add{
+        margin-top:20px;
+        margin-left:80px;
+        text-align: center;
+    }
+    .project-content .oldMoney{
+        font-size: 16px;
+        color:silver;
+        margin-left:10px;
+    }
+    .project-content .foodscontent{
+        text-align: center;
+       
+    }
+    .project-content:hover{
+        
+    }
+    .container{
+        height:100%;
+    }
+    .project-content:hover{
+        width:290px;
+       
+        box-shadow: 10px 10px 5px greenyellow;
+    }
+    [v-cloak] {
+        display: none;
+    }
+</style>
+<script src="../jquery/jquery-1.12.4.js">
+
+</script>
+<script src="../axios/axios.js">
+
+</script>
+<body>
+    <div id="app">
+
+   
+<header id="header" class="header">
+    <div class="container header_fastPages">
+        <div>
+            <span class="welcome lf mainColor">欢迎您，登陆乐淘淘，淘你喜欢</span>
+            <nav class="rf a_style">
+                <span id="land">
+                    <a href="dist/login.html">登陆</a><a href="dist/resigter.html">快速注册</a>
+                </span>
+                <span id="foods-people">
+
+                </span>
+             
+                <a href="#"></a><a href="#">关注乐淘淘</a>
+                <a href="/happyShoping/index.html" target="_blank">返回首页</a>
+                
+            </nav>
+        </div>
+        <!--关注乐淘淘的二维码-->
+        <div class="le_code">
+        </div>
+        <!--乐淘淘的手机二维码-->
+        <div class="mobile"></div>
+        <!--，logo，搜索框-->
+    </div>
+
+</header>
+<div class="logodiv container">
+    <div class="row" style="border:1px solid silver;margin-right:0px">
+        <div class="logo col-md-3">
+            <img src="../images/letaotao.png" alt="淘淘乐" title="淘淘乐"/>
+        </div>
+        <div class="col-md-3" style="margin-top:30px;">
+                <h3>商品页面</h3>
+            </div>
+        <div class="serachbtn col-md-6 text-center">
+            <input type="text" class="search" name="search" placeholder="输入搜索的价格" v-model="price">
+            <button class=" btn btn-success" @click=getserchdata>搜索</button>
+        </div>
+        
+
+    </div>
+</div>
+<div >
+    
+    <div class="container" >
+            <div style="width:100%;height:30px;background-color:#E0E0E0;display:flex;margin-left:-10px;">
+                <ul style="display:flex;list-style-type: none;margin-top:5px;">
+                    <li >
+                        默认排序
+                    </li>
+                    <li >|</li>
+                    <li @click="getallfoods('price')">
+                        按照价格
+                    </li>
+                    
+                </ul>
+            </div>
+       <div class="row tops">
+       <div class="project-content" style="border:1px solid red;margin-bottom:10px" v-for="item in foodList"  @click="getfoodsname(item.foodName,item.id)">
+           <div class="pr-img"><img :src="'../'+item.picture" width="270" height="200"></div>
+           <span v-cloak>￥{{item.price}}<span class="oldMoney">原价：<del v-cloak>￥{{(item.price*1.2).toFixed(2)}}</del></span></span>
+           <p class="pr-p" v-text="item.describe" 
+           style="width:270px;height:83px;display: -webkit-box;
+
+            -webkit-box-orient: vertical;
+            
+            -webkit-line-clamp: 4;
+            
+            overflow: hidden;"></p>
+         
+          <p class="foodscontent">
+            <span  @click="getfoodsname(item.foodName,item.id)">进入商品的详情页</span>
+          </p>
+       </div>
+
+
+       </div>
+
+
+    </div>
+</div>
+</div>
+</body>
+<script>
+//页面加载的时候进行数据的获取
+let foodsName=window.location.href.split('?')[1].split('=')[1];
+Vue.prototype.ss=unescape(foodsName);
+$(function(){
+    //获取url地址
+    
+  
+   function funcGetSession(){
+         let localItem=localStorage.getItem('name');
+         console.log(localItem)
+         if(localItem==null){
+             return
+         }else{
+             $("#land").css({'display':'none'});
+             $("#foods-people").text('欢迎'+localItem+'登陆系统')
+             $("#foods-people").css({'display':'inline-block'})
+         }
+    }
+    funcGetSession();
+    //获取地址中的foodsname
+})
+let app=new Vue({
+    el:'#app',
+    data:{
+        foodName:'',
+        foodList:[],
+        price:"",
+        arrs:[],
+    },
+    created() {
+        //将url中的值添加到data中
+        this.foodName=this.ss.trim()
+      
+        //发送数据库
+        this.getallfoods('num');
+
+    },
+    methods: {
+        //根据价格进行搜索
+        getserchdata(){
+        
+            axios({
+            method:'post',
+            url:'../phps/getserchdatas.php',
+            data:{
+               price:this.price,
+               name:this.foodName
+
+            },
+            transformRequest: [function (data) {
+    // Do whatever you want to transform the data
+    let ret = ''
+    for (let it in data) {
+      ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+    }
+    return ret
+  }],
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
+            }).then((res)=>{
+               if(typeof res.data=='string'){
+                this.foodList=this.arrs;
+                alert('你搜索的价格不存在，请重新输入！')
+               }else{
+                this.foodList=res.data
+               }
+            })
+        },
+        
+
+        //根据id
+      
+        //获取物品全部的物品
+        getallfoods(orde){
+            axios({
+            method:'post',
+            url:'../phps/foodsContent.php',
+            data:{
+                name:this.foodName,
+                orde:orde
+            },
+            transformRequest: [function (data) {
+    // Do whatever you want to transform the data
+    let ret = ''
+    for (let it in data) {
+      ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+    }
+    return ret
+  }],
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
+
+        }).then((res)=>{
+        console.log(res.data)
+        //将数据的格式转换
+        this.foodList=res.data;
+        this.arrs=res.data;
+        console.log(this.foodList)
+
+        }).catch((res)=>{
+
+            console.log('ss',res.data)
+        })
+        },
+        getfoodsname:(name,id)=>{
+         console.log(name)
+         window.location.href='http://127.0.0.1:8080/happyShoping/dist/foodsConts.html?foodName='+escape(name)+'&id='+id
+        }
+    },
+})
+</script>
+</html>

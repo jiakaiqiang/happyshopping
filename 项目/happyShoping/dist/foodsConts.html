@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>商品的详情页</title>
+    <link rel="stylesheet" href="../css/public.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../css/anmiate.css">
+
+</head>
+<script src="../../vue/vue.js"></script>
+<script src="../axios/axios.js"></script>
+<script src="../jquery/jquery-1.12.4.js"></script>
+<style>
+    .logodiv {
+        border: 1px solid silver;
+    }
+
+    .main {
+        margin-top: 30px;
+        height: 100%;
+        border: 1px solid silver;
+    }
+
+    .container .show {
+        display: none;
+    }
+
+    .ss p {
+        text-align: 15px;
+    }
+
+    .shop-car .shopcar {
+        border: 1px solid seagreen;
+        border-radius: 10px;
+        color: white;
+        font-size: 28px;
+        text-shadow: 5px 2px 3px green;
+        font-style: italic;
+        margin-top: 10px;
+        line-height: 80px;
+        width: 190px;
+
+        text-align: center;
+    }
+
+    [v-cloak] {
+        display: none;
+    }
+</style>
+
+<body>
+    <div id="foods-content">
+        <header id="header" class="header">
+            <div class="container header_fastPages">
+                <div style="overflow:hidden">
+                    <span class="welcome lf mainColor">欢迎您，登陆乐淘淘，淘你喜欢</span>
+                    <nav class="rf a_style">
+                        <span id="foods-people">
+
+                        </span>
+                        <a href="#">关注乐淘淘</a>
+                        <a href="#">手机乐淘淘</a>
+                        <a href="/happyShoping/index.html" target="_blank">返回首页</a>
+                    </nav>
+                </div>
+                <!--关注乐淘淘的二维码-->
+                <div class="le_code">
+                </div>
+                <!--乐淘淘的手机二维码-->
+                <div class="mobile"></div>
+
+                <!--，logo，搜索框-->
+
+            </div>
+
+        </header>
+        <div class="logodiv container">
+            <div style="font-size:10px;position:absolute;top:57px;right:168px;width:30px;height:30px;text-align: center;background-color: red;border-radius: 50%;line-height: 30px;z-index:99999999;color:white;font-size:18px;"
+                v-text="shopcarnum">
+
+            </div>
+            <div class="row">
+                <div class="logo col-md-5">
+                    <img src="../images/letaotao.png" alt="淘淘乐" title="淘淘乐" />
+                    <span style="font-size:28px;">商品详情页</span>
+                </div>
+
+                <div class="serachbtn col-md-3 text-center col-md-offset-4">
+                    <div class="col-md-4">
+                        <div class="shop-car">
+                            <div class="shopcar">
+                                <a href="shopcar.html" target="_blank" style="color:white">我的购物车</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="container main" id="foods-content">
+            <div style="height:400px">
+                <div class="col-md-4" style="border:1px solid silver;height:380px;margin-top:10px;">
+                    <div v-for="items in foodList">
+                        <img :src="'../'+items.picture" width='340' height="280" alt="图片">
+                    </div>
+                </div>
+                <div class="col-md-7" style=" margin-left:50px;border:1px solid silver;height:380px;margin-top:10px">
+                    <div v-for="item in foodList" style="padding-top:5px;">
+                        <p v-text="item.text" style="font-size:20px;color:silver;text-align: center"></p>
+                        <div
+                            style="height:60px;width:90%;background:rgba(0,255,0,0.3);margin:0 auto;display:flex;padding-left:50px;flex-direction: column">
+                            <div> <span style="font-size:18px;font-weight:700">商品名称：</span> <span v-text="item.name" style="font-size:18px;font-weight:700;color:red"></span><span
+                                    style="margin-left:100px;font-size:18px;font-weight: bold">库存<span v-text="item.num"
+                                        style="padding-left:10px;color:red"></span>
+                                    箱
+                                </span></div>
+
+                            <div> <span style="font-size:18px;font-weight:700">现在的价格：</span> <span style="font-size:24px;color:red" >￥<span v-text="item.price"></span></span>
+                            </div>
+                        </div>
+                        <div style="width:90%;height:100px;border:1px solid greenyellow;margin:6px auto;">
+                            <div>
+                                <span style="font-size:18px;font-weight:bold">商品简介：</span>
+                                <p v-text="item.describe"></p>
+                            </div>
+                        </div>
+                        <div
+                            style="width:90%;display:flex;margin:0 auto;height:50px;line-height: 50px;justify-content: space-between">
+                            <div style="width:50%;">
+                                <button style="width:50px" @click="addfoods(--addfoodsNum)" class="btn">-</button>
+                                <span style="display:inline-block;width:50px;text-align: center" v-text="number"></span>
+                                <button style="width:50px" @click="addfoods(++addfoodsNum)" class="btn">+</button>
+                            </div>
+                            <div style="width:50%;display: flex;justify-content: end">
+                                <button @click="addShoppingCar" class="btn btn-info" :disabled="disabledd">
+                                    添加购物车</button>
+                                <button style="width:50px;text-align: center;margin-left:3px;width:100px" @click="purshfoods"
+                                    class="btn btn-danger" :disabled="disabledd">购买</button>
+                            </div>
+                        </div>
+                        <div style="padding-left:30px">
+                            <p
+                                style="font-family: Georgia, 'Times New Roman', Times, serif;font-size:18px;font-weight:500;color:yellowgreen">
+                                单品不合单，预计72小时送达</p>
+                            <div>
+                                <div style="display: flex">
+                                    <div
+                                        style="width:20px;height:20px;border-radius:50%;background-color: tomato;text-align: center;color:white">
+                                        !</div><span style="font-size:14px;color:silver">不支持7天无理由退货</span>
+                                </div>
+                                <div>满50元包邮,<span
+                                        style="color:green;font-weight: 500;font-size: 18px">14:30</span>之前下单，明天(<span
+                                        v-text="date" style="color:green;font-weight: 500;font-size: 18px"></span>)后可以送达
+                                </div>
+                            </div>
+
+
+
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div class="container" style="padding:0;border:1px solid silver;margin-top:10px">
+            <div style="display: flex;justify-content: center;height:360px">
+                <div
+                    style="display:flex;flex-basis: 50%;width:100%;text-align:center;height:310px;border:1px solid ;flex-direction: column">
+                    <div style="width:100%;">
+                        <h3>评论区</h3>
+                    </div>
+                    <div>
+                        <div style="height:50px">
+
+                            <textarea name="message" id="" style="border:1px solid silver;width:480px;height:50px;"
+                                v-model="message"></textarea>
+                            <input type="submit" value="评论" :disabled="disabledd" class="btn btn-primary"
+                                style="margin-top:-30px;" @click="addmessage">
+                        </div>
+                        <br>
+                        <div style="margin-top:-10px;overflow: auto;height:190px">
+                            <div style="width:80%;margin:10px auto;margin-left:20px;position:relative;"
+                                v-for="(item,index) in messageList" :key="item.id">
+                                <div style="display: flex;width:425px;border:1px solid silver;">
+                                    <div v-text="item.userName" style="font-size:20px;font-weight:500;width:100px">
+                                    </div>
+                                    <div style="height:50px;width:300px;overflow:auto" v-text="item.userContent">内容
+                                    </div>
+                                    <div v-text="item.userTime">评论时间</div>
+
+                                </div>
+                                <div v-show="isManager==1?true:false">
+                                    <button class="btn btn-primary"
+                                        style="height:30px;margin-bottom:10px;position: absolute;top:10px;right:-88px"
+                                        @click="sysadminmessage(item.id)">回复</button>
+                                        <button class="btn btn-danger" style="height:30px;margin-bottom:10px;position: absolute;top:10px;right:-20px" @click="deletedmessage(item.id)">删除</button>
+                                </div>
+                                <div v-if="item.businessContent">
+
+                                    <div style="display: flex;width:425px;border:1px solid silver;">
+                                        <div style="font-size:16px;color:green;width:100px">商家回复</div>
+                                        <div style="height:50px;width:300px;overflow:auto"
+                                            v-text="item.businessContent">内容</div>
+                                        <div v-text="item.businessTime">评论时间</div>
+
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div style="display: flex;flex-basis: 50%;width:100%;height:310px;border:1px solid silver;flex-direction: column;align-items: center;overflow: auto"
+                    class="ss">
+                    <h3 style="width:100%;text-align: center">售后工作</h3>
+                    <div style="width:90%;display: flex;justify-content: center;border:1px solid silver">
+                        <div style="width:100%;padding-left:10px;">
+                            <div
+                                style="width:100%;text-algin:center;font-size:34px;font-weight:500;font-family: Georgia, 'Times New Roman', Times, serif;text-align: center">
+                                本公司承诺</div>
+                            <div style="display:flex;padding-left:10px">
+                                <img src="../images/suozi.png" width="48" height='48' alt="">
+                                <div>
+                                    <div style="margin: 0 0 4px 0;
+                                    font-size: 20px;
+                                    font-weight: 700;
+                                    line-height: 22px;
+                                    color: #3c3c3c;padding-left:15px">订单险</div>
+                                    <p style="color: #666;
+                                    margin-bottom: 15px;padding-left:10px"> 卖家已为该商品投保订单险；您购买该商品每笔交易的售后将由保险公司全程担保赔付</p>
+                                </div>
+                            </div>
+                            <div style="display:flex;padding-left:10px">
+                                <img src="../images/quanyi.png" width="48" height='48' alt="">
+                                <div>
+                                    <div style="margin: 0 0 4px 0;
+                                    font-size: 20px;
+                                    font-weight: 700;
+                                    line-height: 22px;
+                                    color: #3c3c3c;padding-left:15px;">消费者保障服务</div>
+                                    <span style="padding-left:5px"> 该卖家已缴纳 11000.0 元保证金。</span>
+                                    <p style="color: #666;
+                                    margin-bottom: 15px;padding-left:10px">在确认收货 15
+                                        天内，如有商品质量问题、描述不符或未收到货等，您有权申请退款或退货，来回邮费由卖家承担。</p>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="font-size: 16px;font-weight: 400">价格说明</div>
+                                <div>
+                                    <span style="font-size:14px;color:tomato">划线价格</span>
+                                    <p style="color: #666;
+                                    margin-bottom: 15px;text-align: 15px;">
+                                        指商品的专柜价、吊牌价、正品零售价、厂商指导价或该商品的曾经展示过的销售价等，<strong>并非原价</strong>仅供参考</p>
+                                </div>
+                                <div>
+                                    <span style="font-size:14px;color:tomato">划线价格</span>
+                                    <p style="color: #666;
+                                        margin-bottom: 13px;text-align: 15px;">
+                                        指商品的<strong>实时标价</strong>，不因表述的差异改变性质。具体成交价格根据商品参加活动，或会员使用优惠券、积分等发生变化，最终以订单结算页价格为准。
+                                    </p>
+                                </div>
+                                <p style="color: #666;
+                                    margin-bottom: 13px;text-align: 15px;">
+                                    商家详情页（含主图）以图片或文字形式标注的一口价、促销价、优惠价等价格可能是在使用优惠券、满减或特定优惠活动和时段等情形下的价格，具体请以结算页面的标价、优惠条件或活动规则为准。
+                                </p>
+                                <p style="color: #666;
+                            margin-bottom: 13px;text-align: 15px;">
+                                    此说明仅当出现价格比较时有效，具体请参见《乐淘淘价格发布规范》。若商家单独对划线价格进行说明的，以商家的表述为准。</p>
+                            </div>
+                        </div>
+                        <div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+
+
+
+
+        </div>
+        <div v-show="shows" style="width:100%;height:100%;background:RGBA(102,102,102,0.9);position:fixed;bottom:0px"
+            v-cloak>
+            <div style="width:100%;height:100%;display: flex;justify-content: center;
+            align-items: center">
+
+
+                <label>
+                    <h3 style="color:red">商家评论回复:</h3>
+                </label>
+                <textarea name="message" v-model="businessContent" id=""
+                    style="border:1px solid silver;width:450px;height:50px;"></textarea>
+                <input type="submit" value="回复评论" class="btn btn-primary" @click="funBusinessContent">
+
+
+
+            </div>
+
+        </div>
+
+
+
+        <transition enter-active-class="bounceIn" leave-active-class="bounceOut" :duration="{ enter:200, leave:400 }">
+            <div v-show="anmited" class="animated"
+                style="position:fixed;right:10px;bottom:30px;font-size: 14px;height: 100px;width:260px;background-color:skyblue;border-radius: 10px;color:red;text-align:center;line-height: 50px"v-text="infos"></div>
+        </transition>
+    </div>
+
+</body>
+<script>
+    $(function () {
+        //获取url地址
+
+
+        function funcGetSession() {
+            let localItem = localStorage.getItem('name');
+            console.log(localItem)
+            if (localItem == null) {
+                return
+            } else {
+                $("#land").css({
+                    'display': 'none'
+                });
+                $("#foods-people").text('欢迎' + localItem + '登陆系统')
+                $("#foods-people").css({
+                    'display': 'inline-block'
+                })
+            }
+        }
+        funcGetSession();
+        //获取地址中的foodsname
+    });
+
+
+
+    //创建vue实例
+    //获取sesssion
+    let userName = localStorage.getItem('name');
+    let isManager = localStorage.getItem('isManager');
+    Vue.prototype.userName = userName;
+    Vue.prototype.isManager = isManager;
+    let foodsName = window.location.href.split('&')[0].split('=')[1];
+    let id = window.location.href.split('&')[1].split('=')[1];
+    console.log(window.location.href.split('?')[1])
+    console.log(foodsName)
+    Vue.prototype.ss = unescape(foodsName);
+    Vue.prototype.cc = id;
+    let vm = new Vue({
+        el: '#foods-content',
+        data: {
+            anmited: false,
+            message: '',
+            id: 0,
+            foodList: [],
+            number: 1,
+            messageList: [],
+            foodName: '',
+            addfoodsNum: 1,
+            enterprise: '',
+            shows: false,
+            businessContent: '',
+            messageid: 0,
+            shopcarnum: 0,
+            disabledd: false,
+            infos:""
+
+
+        },
+        created() {
+            //获取item
+            let userName = localStorage.getItem('name');
+            if (userName == null) {
+              
+                this.disabledd = true
+            }
+
+            this.getfooddata();
+        },
+      mounted() {
+        let userName = localStorage.getItem('name');
+            if (userName == null) {
+                alert("亲，还没有登录系统呦，返回首页进行系统登录或注册呦！")
+                
+            }
+      },
+        methods: {
+            deletedmessage(id){
+                axios({
+                    url: '../phps/exitfood/deletedmessage.php',
+                    method: 'post',
+                    data: {
+                        id: id,
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                }).then((res) => {
+                    if(res.data){
+                        this.getfooddata();
+                    }
+                    
+                })
+
+
+            },
+            getfooddata(){
+
+                //获取当前的时间
+                this.getfoodsData();
+                let year = new Date().getFullYear();
+                let month = new Date().getMonth() + 1;
+                let day = new Date().getDate() + 1;
+                this.date = year + '年' + month + '月' + day + '日';
+
+
+
+
+                this.foodName = this.ss;
+                console.log(this.foodName)
+                this.id = this.cc;
+                //根据id值获取数据
+                console.log(this.id);
+                axios({
+                    url: '../phps/foodsConts.php',
+                    method: 'get',
+                    params: {
+                        id: this.id
+                    }
+                }).then((res) => {
+                    console.log(res.data)
+                    switch (res.data[0].state) {
+                        case '1':
+                            res.data[0].text = '客官这件商品属于促销商品，价格优惠，你可以快速下单，这件商品就属于您了';
+                            break;
+                        case '2':
+                            res.data[0].text = '客官这件商品属于最新上架的商品，最新的哟！还不下单等什么呢，新品等着您召唤呢';
+                            break;
+                        case '3':
+                            res.data[0].text = '客官这件商品属于惠农产品，帮助农名伯伯，打开农产品的销售市场吧，绿色无污染哟，不试试吗？';
+                            break;
+                        case '4':
+                            res.data[0].text = '客官和您介绍这件商品，这件商品在这里属于特色，代表着这个地方的文化和蕴含，来体验一下不'
+
+                    }
+                    this.foodList = res.data;
+
+                }).catch((res) => {
+                    console.log(res.data)
+                });
+                axios({
+                    url: '../phps/getMessage.php',
+                    method: 'get',
+                    params: {
+                        id: this.foodName
+                    }
+                }).then((res) => {
+                    console.log(typeof res.data)
+
+                    if( typeof res.data!='string'){
+                        this.messageList = res.data;
+                    }else{
+                        this.messageList = []
+                    }
+
+                   
+
+
+                }).catch((res) => {
+                    console.log(res.data)
+                })
+
+            },
+            //商家进行评论的回复
+            funBusinessContent() {
+                this.shows = !this.shows;
+                console.log(this.messageid)
+                console.log(this.myformatter());
+                console.log(this.businessContent)
+
+                axios({
+                    url: '../phps/updatamessage.php',
+                    method: 'post',
+                    data: {
+                        id: this.messageid,
+                        time: this.myformatter(),
+                        content: this.businessContent,
+
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                }).then((res) => {
+                    this.getfooddata();
+                })
+            },
+            addfoods(foodsNum) {
+
+
+                if (foodsNum <= 1) {
+                    this.number = 1;
+                    alert("购买的数量不能为零呦！")
+                } else if (foodsNum >= this.foodList[0].num) {
+                    this.number = this.foodList[0].num;
+                    alert('已达到商家的库存总量了，请您稍后再进行购买！')
+
+                } else {
+                    this.number = foodsNum
+                }
+
+                console.log(foodsNum)
+                //this.number = foodsNum
+            },
+            //格式化时间
+            myformatter() {
+                let date = new Date()
+                var year = date.getFullYear();
+                let month = date.getMonth() + 1;
+                let day = date.getDate();
+                let hours = date.getHours();
+                let mintues = date.getMinutes();
+                let seconds = date.getSeconds();
+                if (month < 10) {
+                    month = '0' + month
+                } else {
+                    month = month
+                }
+                if (day < 10) {
+                    day = '0' + day
+                } else {
+                    day = day
+                }
+                if (hours < 10) {
+                    hours = '0' + hours
+                } else {
+                    hours = hours
+                }
+                if (mintues < 10) {
+                    mintues = '0' + mintues
+                } else {
+                    mintues = mintues
+                }
+                if (seconds < 10) {
+                    seconds = '0' + seconds
+                } else {
+                    seconds = seconds
+                }
+
+
+
+
+
+                return year + '-' + month + '-' + day + ' ' + hours + ':' + mintues + ':' + seconds;
+            },
+            changefooddata() {
+                console.log(this.foodList[0].num);
+                axios({
+                    method: 'post',
+                    url: '../phps/changefoodsdata.php',
+                    data: {
+                        //获取商品的id
+                        id: this.id,
+                        sunNum: this.foodList[0].num,
+                        num: this.number,
+
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+
+                }).then((res) => {
+                    console.log(res.data)
+                }).catch((res) => {
+                    console.log(res.data)
+                })
+            },
+
+            //点击加入购物车
+            addShoppingCar() {
+
+
+                console.log(localStorage.getItem('address'))
+                //根据人员的名称获取address
+                let name = localStorage.getItem('name');
+              
+
+
+                axios({
+                    method: 'get',
+                    url: '../phps/getusername.php',
+                    params: {
+                        name: name,
+                       
+                    }
+                }).then((res) => {
+                    if (res.data[0].address == null || res.data[0].phone == null) {
+                        alert("配送地址和手机号未填写请返回主页，完善个人信息后在进行购买！");
+                        return;
+                    } else {
+                        this.addshopcars(res.data[0].address,res.data[0].phone);
+                    }
+                })
+            },
+            addshopcars(address,phone) {
+                //将输入发送到后台
+                axios({
+                    method: 'post',
+                    url: '../phps/addshoppingcar.php',
+                    data: {
+                        userName: this.userName,
+                        name: this.foodList[0].name,
+                        price: this.foodList[0].price,
+                        num: this.number,
+                        time: this.myformatter(),
+                        address:address,
+                        phone:phone
+
+
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                }).then((res) => {
+                    if (res.data == 'success') {
+                        //页面刷新
+                        this.changefooddata();
+                        alert('添加购物车成功')
+                        this.getfooddata();
+                        //页面再次刷新
+                        //window.location.href='http://127.0.0.1:8080/happyShoping/dist/foodsConts.html?foodName='+escape(this.foodName)+'&id='+this.id
+                    } else {
+                        alert('添加购物车失败')
+                    }
+
+
+
+                })
+
+            },
+            //点击进行商品的购买
+            purshfoods() {
+                //根据人员的名称获取address
+                let name = localStorage.getItem('name');
+                // console.log(address);
+
+                /*   if(localStorage.getItem('address')=='null'){
+                      alert("配送地址和手机号未填写请返回主页，完善个人信息后在进行购买！");
+                      return;
+                  } */
+                axios({
+                    method: 'get',
+                    url: '../phps/getusername.php',
+                    params: {
+                        name: name
+                    }
+                }).then((res) => {
+                    if (res.data[0].address == null || res.data[0].phone == null) {
+                        alert("配送地址和手机号未填写请返回主页，完善个人信息后在进行购买！");
+                        return;
+                    } else {
+
+                        this.puser(res.data[0].address, res.data[0].phone)
+                    }
+                })
+
+
+
+
+
+
+            },
+            //进行货物的购买
+            puser(address, phone) {
+                console.log(phone)
+                axios({
+                    method: 'post',
+                    url: '../phps/pursefoods.php',
+                    data: {
+                        userName: this.userName,
+                        name: this.foodList[0].name,
+                        price: this.foodList[0].price,
+                        num: this.number,
+                        time: this.myformatter(),
+                        address: address,
+                        phone: phone,
+                        userid:localStorage.getItem('id')
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                }).then((res) => {
+                    this.infos = res.data.money;
+
+this.anmited = true;
+setTimeout(() => {
+    this.anmited = false;
+
+}, 3000)
+console.log(this.anmited)
+if (res.data.info == 'success') {
+  
+    this.changefooddata();
+    this.getfooddata();
+
+}else{
+    alert("购买失败！")
+}
+                 
+                 
+                })
+            },
+            //获取去购物车的商品的数量
+            getfoodsData() {
+                let username = localStorage.getItem('name');
+
+                //发送请求
+                axios({
+                    method: 'post',
+                    url: '/happyShoping/phps/getshopingcar.php',
+                    data: {
+                        username: username,
+                        page: 1,
+                        num: 10
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                }).then((res) => {
+
+                    console.log(res.data)
+                    if (typeof (res.data.list) == 'object') {
+                        console.log(res.data.totalsum)
+                        this.shopcarnum = res.data.totalsum;
+                    } else {
+                        this.shopcarnum = 0;
+                    }
+                }).catch((res) => {
+                    console.log('sss', res.data)
+                })
+            }, //进行留言的添加
+            addmessage() {
+                console.log(this.message)
+                if(this.message==""){
+                    alert("评论内容不能为空！")
+                    return ;
+                }
+                console.log(this.foodList[0]);
+                axios({
+                    method: 'post',
+                    url: '../phps/addmessage.php',
+                    data: {
+                        username: this.userName,
+                        name: this.foodList[0].name,
+                        price: this.foodList[0].price,
+
+                        time: this.myformatter(),
+                        content: this.message
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                }).then((res) => {
+                    if (res.data == 'success') {
+                        this.getfooddata();
+                        alert('评论成功');
+                        this.message = ''
+                    }
+                })
+            },
+            //商家回复
+            sysadminmessage(id) {
+                this.messageid = id;
+                console.log(this.messageid)
+                this.shows = !this.shows;
+
+            }
+
+
+        },
+
+
+
+    })
+</script>
+
+</html>

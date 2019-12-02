@@ -1,0 +1,286 @@
+/*设置头部样式*/
+body{
+    background-color: #F7F7F7;
+}
+.header{
+    background-color:whitesmoke;
+}
+.header>.header_fastPages{
+    height:40px;
+    text-align:center;
+    font-size:15px;
+    line-height:40px;
+  
+}
+.header>.header_fastPages a{
+    color:#666;
+    margin:0 10px;
+}
+.header>.header_fastPages a:hover{
+    color:red;
+text-decoration:none;}
+/*logodiv*/
+
+.logodiv{
+    height: 110px;
+    line-height:110px;
+
+}
+/*logo*/
+.search{
+    height:35px;
+    border:1px solid silver;
+    border-radius:5px;
+}
+.serachbtn{
+    height:120px;
+    width:300px;
+    margin:0 auto;
+
+}
+
+/*页面的主要内容*/
+.main{
+    height:500px;
+    border:1px solid ;
+
+}
+.mainleft{
+    color:white;
+
+
+}
+/*主要内容的左边部分*/
+.mainleft>li{
+    height:70px;
+   text-align: center;
+
+
+}
+.mainleft>li dt{
+    font-size:20px;
+}
+.mainleft>li dl{
+    margin-left:10px;
+    font-size:18px;
+    display:inline-block;
+    margin-bottom:0;
+}
+/*内容导航的li中的div*
+、/
+ */
+.backmangent{
+    width:100px;
+    height:100px;
+    position:absolute;
+    right:20px;
+    top:10px;
+}
+.foodlist{
+    color:green;
+font-size:20px;
+    padding-left:20px;
+    position: absolute;
+    z-index:9999;
+    top:0px;
+    left:293px;
+    display:none;
+    width:300px;
+    height:100%;
+   
+    background-color:#E6E6E7;
+    opacity:0.8;
+}
+.foodlist>dt{
+    padding-top:20px;
+    padding-left:110px;
+}
+.foodlist>dl{
+
+    font-size:16px;
+    margin:0 5px;
+    display:inline;
+}
+/*中间区域的背景图*/
+.container-fluid {
+    background: url(../images/conentbgi1.jpg) no-repeat center center;
+
+    background-size:cover;
+}
+/*四个专区*/
+.fourdiv{
+margin-top:30px;
+
+
+}
+.fourdivfirst{
+    background-color:white;
+    height:300px;
+    border-radius: 50%;
+
+}
+.fourdivfirst p{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 270px;
+    height: 57px;
+    line-height: 25px;
+    margin: 10px;
+    color: #575757;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: rgba(255, 255, 255, 0.9);
+}
+.fourdivfirst:hover{
+animation: mo 1s 1 ;
+ }
+@keyframes mo {
+    from{
+        transform:rotate(0deg);
+    }
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+.footertop{
+    height:100px;
+
+}
+.footer ul{
+    padding-top:25px;
+    list-style-type:none;
+    position: relative;
+    overflow: hidden;
+}
+.footer ul li{
+    padding-left:47px;
+    height:49px;
+    width:250px;
+    line-height:49px;
+    float:left;
+}
+.fbgimg{
+    position:absolute;
+    width:36px;
+    height:42px;
+    margin-top:5px;
+    background: url(../images/ico_service.png) no-repeat ;
+}
+.service h4{
+    padding-left:40px;
+}
+.fbgimgs{
+    position:absolute;
+    width:36px;
+    height:42px;
+    margin-top:5px;
+    background: url(../images/ico_service.png) no-repeat  0px -43px;
+}
+.fbgimgt{
+    position:absolute;
+    width:36px;
+    height:42px;
+    margin-top:5px;
+    background: url(../images/ico_service.png) no-repeat 0px -86px ;
+}
+.fbgimgf{
+    position:absolute;
+    width:36px;
+    height:42px;
+    margin-top:5px;
+    background: url(../images/ico_service.png) no-repeat  0px -130px;
+}
+.w{
+    width:1190px;
+    margin:0 auto;
+}
+.footer .fdiv{
+    height:100px;
+    border-bottom:1px solid silver;
+}
+.coperightf p{
+    color:silver;
+    height:20px;
+    line-height:20px;
+    font-size:13px;
+    text-align:center;
+}
+/*友情链接*/
+.friend{
+    padding-left:70px;
+}
+.friend>a{
+    display:inline-block;
+    width:80px;
+    height:30px;
+    line-height:30px;
+    font-size:16px;
+    color:black;
+
+}
+.youqing{
+    padding-left:70px;
+    font-size:19px;
+}
+.friend>a:hover{
+    transform:scale(2,2);
+}
+/*后台管理页面*/
+.logodiv .foodspage{
+    width:100px;
+    height:80px;
+    position: fixed;
+    right:0;
+    top:0;
+    border:1px solid red;
+}/*商品的页面展示*/
+.main .projectshow{
+   background-color:white;
+    height:500px;
+    border:2px solid red;
+}
+.main .projectshow .foodsInfo{
+    width:100%;
+    margin:0;
+    padding:10px 0;
+    text-align: center;
+    border-bottom:1px solid silver;
+}
+.top{
+    height:120px;
+    overflow:hidden;
+}
+/*购物车*/
+  .top .shop-car .shopcar{
+      border:1px solid seagreen;
+      border-radius:10px;
+      color:white;
+      font-size:28px;
+      text-shadow:5px 2px 3px green;
+      font-style:italic;
+      margin-top:10px;
+      line-height:80px;
+      
+    text-align:center;
+}
+.top.shop-car .shopcar{
+    color:white;
+}
+/* 分页的实现 */
+#projectshow .foodsInfo  .page li{
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    font-size: 12px;
+    border-radius: 5px;
+  background-color: #000;
+}
+
+
+

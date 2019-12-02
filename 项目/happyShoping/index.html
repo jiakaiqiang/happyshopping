@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <title>乐淘淘-淘你喜欢</title>
+    <meta name="keywords" content="快捷，专业，淘宝，淘你喜欢，图书，电子书，二手书" />
+    <meta name="description" content="一家专业图书销售平台，厂家直销，产品经过层层筛选将最优的产品提供给您" />
+    <link rel="stylesheet" href="css/index.css" type="text/css" />
+    <!--引入公共样式-->
+    <link href="css/public.css" rel="stylesheet" type="text/css" />
+    <!--连接出初始化css的文件-->
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="css/calendar.css">
+    <link rel="short icon" href="favicon.ico" />
+    <link rel="stylesheet" href="./css/style.css">
+    <!--将jQuery引进-->
+    <script src="jquery/jquery-1.12.4.js"></script>
+    <script src="bootstrap/js/bootstrap.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="./axios/axios.js"></script>
+    <!--  <script src="js/data-template.js"></script> -->
+    <style>
+        .backmange>div {
+            height: 40px;
+            color: white !important;
+            line-height: 40px;
+            font-size: 14px;
+            text-align: center;
+            width: 100%;
+
+
+        }
+
+        .backmange {
+            display: none;
+            /* background-color: greenyellow;
+            opacity: 0.7; */
+            background: blue;
+            width: 110px;
+            border-radius: 10px;
+        }
+
+        .hiddens {
+            display: inline-block;
+            width: 100px;
+            height: 100%;
+            background-color: aqua;
+
+        }
+
+        .hiddenss {
+            display: inline-block;
+            width: 100px;
+            height: 100%;
+            background-color: #E0E0E0;
+
+        }
+
+        .hidd {
+            display: none
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+
+<body style="background-color: #f0f3ef;">
+    <div>
+
+		<div id="carousel1" class="carousel-content">
+			<ul class="carousel">
+				<li><img src="./images/a1.png"></li>
+				<li><img src="./images/a2.png"></li>
+				<li><img src="./images/a3.png"></li>
+				<li><img src="./images/a4.png"></li>
+			
+			</ul>
+			<ul class="carousel-index"></ul>
+			<div class="carousel-prev"><img src="./images/icons/left_btn1.png"></div>
+			<div class="carousel-next"><img src="./images/icons/right_btn1.png"></div>
+		</div>
+	</div>
+    <div id="app">
+        <!--网站的头部开始-->
+        <header id="header" class="header" style="background-color:silver;">
+            <div class="container header_fastPages">
+                <div style="overflow:hidden;">
+                    <span class="welcome lf mainColor">欢迎您，登陆乐淘淘，淘你喜欢</span>
+                    <nav class="rf a_style">
+                        <span id="loginhidden"><a href="dist/login.html">登陆</a><a
+                                href="dist/resigter.html">快速注册</a></span><span id="loginpeople"></span>
+                        <a href="#"></a><a href="#">关注乐淘淘</a>
+                        <a href="#">手机乐淘淘</a><span id="backmange" style="cursor: pointer">后台管理页面</span><span id="mycontent"
+                            @click="myinformation" :class="{hiddens:showpeople}" style="cursor: pointer">个人中心</span>
+                        <span id="mycontents" :class="{hiddenss:!showmoney}" @click="addgetmoney" style="cursor: pointer">充值中心</span>
+
+                    </nav>
+
+                </div>
+                <!--关注乐淘淘的二维码-->
+                <div class="le_code">
+                </div>
+                <!--乐淘淘的手机二维码-->
+                <div class="mobile"></div>
+
+
+                <!--，logo，搜索框-->
+
+            </div>
+
+        </header>
+
+        <div v-cloak id="personEdit" :class="{hidd:!showpeople}" class="form col-md-4"
+            style="position: absolute;right:104px;background-color: springgreen;z-index:99999999;">
+
+            <h3 style="width: 100%;text-align: center">人员资料编辑</h3>
+            <div class="form-group">
+                <label for="name" class="loginFont">用户名：
+                </label>
+                <input type="text" id="name" name="name" class="form-control input-md" v-model="username" />
+            </div>
+            <div class="form-group">
+                <label for="price" class="loginFont">密码：
+                </label>
+                <input type="password" id="price" name="password" class="form-control input-md" v-model="password" />
+            </div>
+            <div class="form-group">
+                <label for="email" class="loginFont">邮箱：
+                </label>
+                <input type="email" id="email" name="email" class="form-control input-md" v-model="email" />
+            </div>
+            <div class="form-group">
+                <label for="address" class="loginFont">地址：
+                </label>
+                <input type="text" id="address" name="address" class="form-control input-md" v-model="address" />
+            </div>
+            <div class="form-group">
+                <label for="phone" class="loginFont">电话：
+                </label>
+                <input type="text" id="phone" name="phone" class="form-control input-md" v-model="phone" />
+            </div>
+            <div class="form-group">
+                <label for="describe" class="loginFont">描述：
+                </label>
+                <textarea id="describe" name="describe" class="form-control input-md" v-model="describe"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="money" class="loginFont">当前账户余额：
+                </label>
+                <input type="number" id="money" name="money" class="form-control input-md" disabled="disabled"
+                    v-model="money" />
+            </div>
+            <div style="display:flex;width:100%;justify-content: space-between;padding-bottom:20px">
+                <input type="button" value="取消编辑" class="btn btn-info" @click="showpeople=!showpeople">
+                <input type="submit" style="width:80px;height:40px" value="提交信息" class="btn btn-primary" @click="edituserdata">
+                <input type="button" value="退出系统" class=" btn btn-danger" @click="exitprogram">
+            </div>
+
+
+
+
+
+
+
+        </div>
+        <div style="width:100%;height:206%;position: absolute;top:0;background-color:rgba(192,192,192,0.7);z-index:99989898"
+            :hidden="showmoney" v-cloak>
+            <div
+                style="width:100%;height:100%;display: flex;justify-content:center;align-items: flex-start;margin-top:200px">
+                <div style="width:300px;background-color:white;border-radius:10px;height: 200px;">
+
+                    <h3 style="width:100%;text-align:center">余额充值</h3>
+                    <hr style="margin:0;">
+                    <div style="width:100%;text-align: center">
+                        <span style="font-size: 16px;height:50px;line-height: 50px">支付方式：</span>
+                        <select name="" id="" style="font-size: 16px;height:50px;line-height: 50px">
+                            <option value="">支付宝</option>
+                            <option value="">微信</option>
+                            <option value="">银行卡</option>
+                        </select><br>
+                        <span style="font-size:18px;font-weight:500;margin-right:20px">充值金额:</span>
+                        <input type="text" v-model="moneynum" class="input-sm" style="border:1px solid silver">
+
+                    </div>
+                    <div>
+                        <div style="width:100%;margin-top:20px">
+                            <button class="btn btn-danger" style="width:50%;height:50px"
+                                @click="showmoney='true'">取消</button><button style="width:50%;height:50px" class="btn btn-primary
+                            " @click="addmoney">确认充值 </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--后台管理系统-->
+        <div class="backmange" style="position:absolute;top:40px;right:90px;z-index:99999">
+            <div><a href="dist/userdata-content.html" target="_blank"style="color:white;">用户管理页面</a></div>
+            <div><a href="dist/backgroundManagerSystem.html" target="_blank" style="color:white;">商品管理页面</a></div>
+            <div style="color:white;cursor: pointer"@click="deleteuserinfo" id="editsystem">
+                退出系统
+            </div>
+        </div>
+        <div style="width:185px;height:40px;position: absolute;top:63px;right:30px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-weight: 500;font-size:20px"
+            v-text="currentdate">
+
+        </div>
+        <div class="logodiv container">
+            <div style="font-size:10px;position:absolute;top:57px;right:307px;width:30px;height:30px;text-align: center;background-color: red;border-radius: 50%;line-height: 30px;z-index:9999;color:white;font-size:18px;"
+                v-text="shopcarnum">
+
+            </div>
+            <div class="row top">
+                <div class="logo col-md-3">
+                    <img src="images/letaotao.png" alt="淘淘乐" title="淘淘乐" />
+                </div>
+                <div class="serachbtn col-md-5 text-center">
+                    <input type="text" name="name" class="search" v-model="name" name="search" placeholder="请输入搜索词"
+                        id="searchInput">
+                    <button class=" btn btn-success" @click="getFoodData">搜索</button>
+                </div>
+                <div class="col-md-2">
+                    <div class="shop-car">
+
+                        <div class="shopcar">
+
+                            <a href="dist/shopcar.html" target="_blank" style="color:white">我的购物车</a>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <!--网站的头部结束-->
+
+        <!--网站的中间位置开始-->
+        <div id="contentHidden" style="display:block">
+            <div class="container-fluid">
+                <main class="container main">
+                    <section class="row">
+                        <div class="col-md-3" style="padding:0;margin:0;background:RGBa(134,123,146,0.6);height:500px">
+                            <div class="allfoods"
+                                style="height:50px;background:green;font-size:20px;text-align:center;line-height:50px;border-radius:3px;">
+                                <span>全部商品</span></div>
+                            <ul class="mainleft ulc">
+                                <li style="height:70px;font-size:20px;line-height: 70px;text-align: center">
+                                    <span style="margin-left:20px">水果</span>
+
+                                </li>
+                                <div class="foodlist">
+                                    <dt>水果</dt>
+                                    <dl>
+                                        <!-- <a href="dist/商品页面.html">苹果</a> -->
+                                        苹果
+                                    </dl>
+                                    <dl>
+                                        猕猴桃
+                                    </dl>
+                                    <dl>毛桃
+                                    </dl>
+                                    <dl>
+                                        梨
+                                    </dl>
+                                    <dl>
+                                        石榴
+                                    </dl>
+                                    <dl>水晶柿子
+                                    </dl>
+                                    <img style="margin-top:150px;margin-left:30px" src="images/wat.png" />
+                                </div>
+
+                                <li style="height:70px;font-size:20px;line-height: 70px;text-align: center">
+                                    <span style="margin-left:20px">蔬菜</span>
+
+                                </li>
+                                <div class="foodlist ">
+                                    <dt>蔬菜</dt>
+                                    <dl>
+                                        太白甘蓝
+                                    </dl>
+                                    <dl>留坝香菇
+                                    </dl>
+                                    <dl>米脂红葱
+                                    </dl>
+                                    <dl>
+                                        富平九眼莲
+                                    </dl>
+                                    <dl>
+                                        靖边胡萝卜
+                                    </dl>
+                                    <dl>潼关酱笋
+                                    </dl>
+                                    <dl>大荔黄花菜
+                                    </dl>
+                                    <dl>
+                                        汉中冬韭
+                                    </dl>
+                                    <img style="margin-top:120px;margin-left:30px" src="images/wat.png" />
+                                </div>
+
+                                <li style="height:70px;font-size:20px;line-height: 70px;text-align: center">
+                                    <span style="margin-left:20px">禽类蛋品</span>
+
+                                </li>
+                                <div class="foodlist">
+                                    <dt>禽类蛋品</dt>
+                                    <dl>
+                                        土鸡蛋
+                                    </dl>
+                                    <dl>白山鸡
+                                    </dl>
+                                    <dl>番鸭
+                                    </dl>
+                                    <img style="margin-top:178px;margin-left:30px;" src="images/wat.png" />
+                                </div>
+
+                                <li style="height:70px;font-size:20px;line-height: 70px;text-align: center">
+                                    <span style="margin-left:20px">干货</span>
+
+                                </li>
+                                <div class="foodlist">
+                                    <dt>干货</dt>
+                                    <dl>
+                                        纸皮核桃
+                                    </dl>
+                                    <dl>木耳
+                                    </dl>
+                                    <dl>干大枣
+                                    </dl>
+                                    <dl>
+                                        南瓜子
+                                    </dl>
+                                    <dl>
+                                        洋县黑米
+                                    </dl>
+                                    <dl>米脂小米
+                                    </dl>
+
+                                    <img style="margin-top:150px;margin-left:30px" src="images/wat.png" />
+                                </div>
+
+                                <li style="height:70px;font-size:20px;line-height: 70px;text-align: center">
+                                    <span style="margin-left:20px">特产</span>
+
+                                </li>
+                                <div class="foodlist">
+                                    <dt>特产</dt>
+                                    <dl>
+                                        冰峰
+                                    </dl>
+                                    <dl>十里香腊牛肉
+                                    </dl>
+                                    <dl>琼锅糖
+                                    </dl>
+                                    <dl>
+                                        凉皮
+                                    </dl>
+                                    <dl>
+                                        荞面饸络
+                                    </dl>
+                                    <dl>牛羊肉泡馍
+                                    </dl>
+                                    <img style="margin-top:150px;margin-left:30px" src="images/wat.png" />
+                                </div>
+
+                            </ul>
+                        </div>
+                        <div class="col-md-9" style="padding:0px;margin-left:-2px;" v-cloak :style="{'display':show}">
+                            <div id="projectshow" class="projectshow" style="height:500px;
+                         border:2px solid red; ">
+                                <div class="h3 foodsInfo">商品信息展示</div>
+                                <div style="width:100%;height:405px">
+                                    <div class="col-md-3" style="border:1px solid red;height:200px;padding-bottom:5px"
+                                        v-for="item in foodsdata">
+                                        <div @click="tofoodsContes(item.foodName,item.id)"
+                                            style="width:100%;height:100%">
+                                            <div
+                                                style="width:180px;height:140px;border: 1px solid yellow;margin:0 auto">
+                                                <img v-cloak :src="item.picture" width="180" height="140" alt="图片">
+                                            </div>
+                                            <div v-cloak
+                                                style="height:30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
+                                                {{item.describe}}
+                                            </div>
+                                            <div style="display: flex;height:25px;border:1px solid green">
+                                                <div v-cloak
+                                                    style="flex-basis: 50%;width:100%;text-align: center;background-color: green;color:white">
+
+
+                                                    ￥{{item.price}}
+
+                                                </div>
+                                                <div style="flex-basis: 50%;width:100%;text-align: center">
+                                                    <del v-cloak>￥{{(1.2*item.price).toFixed(2)}}</del></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="height:95px;">
+                                    <div style="height:100%;width:100%;">
+                                        <ul class="ulc page"
+                                            style="display:flex;padding-left:510px;padding-right:50px;border:1px solid silver">
+                                            <li style=" width: 150px;
+                                        height: 30px;
+                                        text-align: center;
+                                        line-height: 30px;
+                                        font-size: 12px;
+                                        border-radius: 5px;
+                                      background-color: silver;
+                                      color:white">总共{{Math.ceil(total/8)}}页</li>
+                                            <li style=" width: 100px;
+                                       height: 30px;
+                                       text-align: center;
+                                       line-height: 30px;
+                                       font-size: 12px;
+                                       border-radius: 5px;
+                                       background-color: silver;
+                                       color:white">当前{{currentAge}}页</li>
+                                            <li style=" width: 70px;
+                                        height: 30px;
+                                        text-align: center;
+                                        line-height: 30px;
+                                        font-size: 12px;
+                                        border-radius: 5px;
+                                      background-color:silver;
+                                      color:white" @click="getPage(--currentAge)">上一页</li>
+                                            <li style=" width: 70px;
+                                        height: 30px;
+                                        text-align: center;
+                                        line-height: 30px;
+                                        font-size: 12px;
+                                        border-radius: 5px;
+                                      background-color: silver;
+                                      color:white"
+                                       @click="getPage(++currentAge)">下一页</li>
+                                            <li style=" width: 70px;
+                                       height: 30px;
+                                       text-align: center;
+                                       line-height: 30px;
+                                       font-size: 12px;
+                                       border-radius: 5px;
+                                       
+                                    ">
+                                                <input style="width:30px;height:30px;border:1px solid silver" type="text" v-model="modepage">
+                                            </li>
+                                            <li style=" width: 50px;
+                                        height: 30px;
+                                        text-align: center;
+                                        line-height: 30px;
+                                        font-size: 12px;
+                                        border-radius: 5px;
+                                      background-color:seagreen;
+                                      color:white" @click="getPage(modepage)">跳转</li>
+                                        </ul>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </section>
+                </main>
+
+            </div>
+            <div class="container fourdiv">
+                <section class="row">
+                    <div class="col-md-3 fourdivfirst" @click="getfoodsState(2)">
+                        <a href="#">
+                            <img src="images/newfood.jpg" style="margin-left:-15px">
+                            <p>
+                                <b style="font-size:19px">新品专区</b><br />
+                                探访源头产地 臻选当令时鲜
+                            </p>
+                        </a>
+                    </div>
+                    <div class="col-md-3 fourdivfirst" @click="getfoodsState(3)">
+                        <a href="#">
+                            <img src="images/huinong.jpg" width="290" height="290" style="margin-left:-15px">
+                            <p>
+                                <b style="font-size:19px">惠农专区</b><br />
+                                原有的滋味，来源于原产地
+                            </p>
+                        </a>
+                    </div>
+                    <div class="col-md-3 fourdivfirst" style="border-radius: 50%;" @click="getfoodsState(4)">
+                        <a href="#">
+                            <img src="images/drink.jpg" width="290" style="margin-left:-15px">
+                            <p>
+                                <b style="font-size:19px">特产专区</b><br />
+                                独特的味道，只有这专属
+                            </p>
+                        </a>
+                    </div>
+                    <div class="col-md-3 fourdivfirst" @click="getfoodsState(1)">
+                        <a href="#">
+                            <img src="images/tejia.jpg" height="290" style="padding-left:20px">
+                            <p>
+                                <b style="font-size:19px">特价专区</b><br />
+                                享受优惠的价格，拥有同样的体验
+                            </p>
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div id="contentShow" style="display:none;height:100px;border:1px solid red" class="container" style="">
+
+        </div>
+        <!--网站的中间位置结束-->
+
+        <!--网站的尾部开始-->
+        <footer class="footer">
+            <div class="fdiv">
+                <div class=" w service footertop">
+                    <ul>
+                        <li>
+                            <div class="fbgimg"></div>
+                            <h4>品种齐全，轻松购物</h4>
+                        </li>
+                        <li>
+                            <div class="fbgimgs"></div>
+                            <h4>品种齐全，轻松购物</h4>
+                        </li>
+                        <li>
+                            <div class="fbgimgt"></div>
+                            <h4>品种齐全，轻松购物</h4>
+                        </li>
+                        <li>
+                            <div class="fbgimgf"></div>
+                            <h4>品种齐全，轻松购物</h4>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </footer>
+        <DIV class="container" style="padding-top:20px">
+            <p class="youqing">友情链接</p>
+            <nav class="friend"><a href="http://www.taobo.com/">淘宝</a><a href="http://www.jd.com/">京东</a><a
+                    href="http://WWW.vip.com/">唯品会</a><a href="http://www.pinduoduo.com/">拼多多</a></nav>
+        </DIV>
+        <div class="coperightf">
+            <p>京公网安备 11000002000088号|京ICP证070359号|互联网药品信息服务资格证编号(京)-经营性-2014-0008|新出发京零 字第大120007号
+            </p>
+            <p>互联网出版许可证编号新出网证(京)字150号|出版物经营许可证|网络文化经营许可证京网文[2014]2148-348号|违法和不良信息举报电话：4006561155
+            </p>
+            <p>Copyright&copy2018 - 2020 乐淘淘LTT.com 版权所有|消费者维权热线：4006067733经营证照</p>
+            <p>乐淘淘旗下网站：乐淘淘支付|淘淘云</p>
+        </div>
+
+
+
+
+
+    </div>
+</body>
+<!-- 引入模板字符串 -->
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+	<script src="./js/carousel.js"></script>
+	<script>
+		$(function(){
+			$('#carousel1').carousel({
+				el : {
+					imgsContainer	: '.carousel', // 图片容器
+					prevBtn 		: '.carousel-prev', // 上翻按钮
+					nextBtn 		: '.carousel-next', // 下翻按钮
+					indexContainer	: '.carousel-index', // 下标容器
+				},conf : {
+					auto			: true, //是否自动播放 true/false 默认:true
+					needIndexNum	: true, //是否需要下标数字 true/false 默认:true
+					animateTiming	: 1000, //动画时长(毫秒) 默认:1000
+					autoTiming		: 3000, //自动播放间隔时间(毫秒) 默认:3000
+					direction 		: 'right', //自动播放方向 left/right 默认:right
+				}
+			});
+
+			$('#carousel2').carousel({
+				el : {
+					imgsContainer	: '.carousel', // 图片容器
+					prevBtn 		: '.carousel-prev', // 上翻按钮
+					nextBtn 		: '.carousel-next', // 下翻按钮
+					indexContainer	: '.carousel-index', // 下标容器
+				},conf : {
+					direction 		: 'left', //自动播放方向 left/right 默认:right
+				}
+			});
+
+			$('#carousel3').carousel({
+				el : {
+					imgsContainer	: '.carousel', // 图片容器
+					prevBtn 		: '.carousel-prev', // 上翻按钮
+					nextBtn 		: '.carousel-next', // 下翻按钮
+					indexContainer	: '.carousel-index', // 下标容器
+				},conf : {
+					auto			: false, //是否自动播放 true/false 默认:true
+					needIndexNum	: false, //是否需要下标数字 true/false 默认:true
+				}
+			});
+
+			/*以下代码按照需要添加/修改*/
+			$(".carousel-prev").hover(function(){
+				$(this).find("img").attr("src","./images/icons/left_btn2.png");
+			},function(){
+				$(this).find("img").attr("src","./images/icons/left_btn1.png");
+			});
+			$(".carousel-next").hover(function(){
+				$(this).find("img").attr("src","./images/icons/right_btn2.png");
+			},function(){
+				$(this).find("img").attr("src","./images/icons/right_btn1.png");
+			});
+
+			$("#carousel3").find('.carousel-prev,.carousel-next,.carousel-index').hide();
+			$("#carousel3").hover(function(){
+				$(this).find(".carousel-prev,.carousel-next,.carousel-index").stop().slideDown(200);
+			},function(){
+				$(this).find(".carousel-prev,.carousel-next,.carousel-index").stop().slideUp(200);
+			});
+		});
+	</script>
+<script>
+    //获取id
+    let userid = localStorage.getItem('id');
+    console.log(userid);
+    Vue.prototype.id = userid
+    let data = {
+        moneynum: 0,
+        //表单的数据
+        username: '',
+
+        show: 'none',
+        username: '',
+        password: '',
+        email: '',
+        phone: "",
+        address: '',
+        describe: '',
+        ss: 3,
+        foodsdata: [],
+        money: 0,
+        total: 150, // 记录总条数
+
+        currentAge: 1, // 当前的页数
+        name: '',
+        page: 1,
+        showpeople: false,
+        //获取所有的人员信息
+        peopleallcontent: [],
+        shopcarnum: 0,
+        modepage: 1,
+        currentdate: "",
+        showmoney: true
+
+    }
+    let vm = new Vue({
+        el: '#app',
+        data: data,
+        created() {
+            console.log(this.id)
+            //根据人员id进行人员信息的获取
+           if(localStorage.getItem('name')!=null){
+            if (localStorage.getItem('isManager') != 1) {
+                axios({
+                    url: './phps/getusercontent.php',
+                    method: 'get',
+                    params: {
+                        id: this.id
+                    },
+                }).then((res) => {
+                    console.log(res.data);
+                    if (res.data.address == null || res.data.phone == "") {
+                        alert("收货地址，手机号等未填写，请在个人中心完善，")
+                    } else if (res.data.money == 0) {
+                        alert('未进行充值请在"充值中心"进行充值');
+                    }
+
+                })
+            }
+           }
+
+
+
+
+
+
+
+
+            this.getfoodsData();
+            setInterval(funtime, 1000);
+
+            function funtime() {
+                console.log('dddd')
+                //获取年
+                let date = new Date();
+                let meek = date.getDay();
+                switch (meek) {
+                    case 1:
+                        meek = "星期一"
+                        break;
+                    case 2:
+                        meek = "星期二"
+                        break;
+                    case 3:
+                        meek = '星期三'
+                        break;
+                    case 4:
+                        meek = "星期四"
+                        break;
+                    case 5:
+                        meek = "星期五"
+                        break;
+                    case 6:
+                        meek = "星期六"
+                        break;
+                    default:
+                        meek = "星期日"
+
+                }
+                let year = date.getFullYear();
+                let month = date.getMonth()+1;
+                let day = date.getDate();
+                let hour = date.getHours();
+                let minutes = date.getMinutes();
+                let seconds = date.getSeconds();
+                //判断如果，秒大于59则分加一
+               
+                if (seconds < 10) {
+                    seconds = "0" + seconds;
+                }
+                if (minutes < 10) {
+                    minutes = "0" + minutes;
+                }
+                if (hour < 10) {
+                    hour = "0" + hour;
+                }
+                if (month < 10) {
+                    month = "0" + month;
+                }
+if(day<10){
+    day='0'+day;
+}
+                let currentdate = year + '-' + month + '-' + day + ' ' + hour + ":" + minutes + ":" + seconds +
+                    " " + meek;
+                Vue.set(data, 'currentdate', currentdate);
+
+            }
+            funtime();
+        },
+
+        methods: {
+            //删除用户的信息
+            deleteuserinfo(){
+                //清楚所有的locastroage
+                localStorage.clear();
+                console.log(window);
+           
+                //地址栏变化
+                
+            },
+            addgetmoney() {
+                this.show = 'none'
+                this.showmoney = !this.showmoney;
+                this.showpeople = false
+
+            },
+            //余额充值
+            addmoney() {
+                console.log(this.moneynum)
+                //发送请求
+                axios({
+                    method: 'post',
+                    url: '/happyShoping/phps/addmoney.php',
+                    data: {
+                        id: this.id,
+                        money: this.moneynum
+
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                }).then((res) => {
+                    if (res.data) {
+                        Vue.set(data, 'showmoney', true);
+                        alert('充值成功！请在个人详情中查看')
+                    }
+                })
+
+            },
+            gettime() {
+
+                console.log(this.currentdate)
+
+
+            },
+
+            //时间
+
+
+            //修改人员的信息
+            edituserdata() {
+                console.log(this.id);
+                localStorage.setItem('address',this.address);
+                axios({
+                    method: "post",
+                    data: {
+                        id: localStorage.getItem('id'),
+                        username: this.username,
+                        password: this.password,
+                        email: this.email,
+                        phone: this.phone,
+                        address: this.address,
+                        describe: this.describe,
+
+
+                    },
+                    url: 'phps/edituser.php',
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                }).then((res) => {
+                    alert('修改成功')
+                    this.showpeople = false
+                    //window.location = '/happyShoping/index.html'
+
+                })
+            },
+            //获取去购物车的商品的数量
+            getfoodsData() {
+
+                let username = localStorage.getItem('name');
+                console.log(username);
+
+                //发送请求
+                axios({
+                    method: 'post',
+                    url: '/happyShoping/phps/getshopingcar.php',
+                    data: {
+                        username: username,
+                        page: 1,
+                        num: 10
+
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                }).then((res) => {
+
+                    console.log(typeof (res.data))
+                    if (typeof (res.data) == 'object') {
+                        console.log(res.data.totalsum)
+                        this.shopcarnum = res.data.totalsum;
+                    } else {
+                        this.shopcarnum = 0;
+                    }
+                }).catch((res) => {
+                    console.log('sss', res.data)
+                })
+            },
+            //进行系统的退出
+            exitprogram() {
+                localStorage.clear();
+
+                window.open("/happyShoping", '_self');
+
+            },
+            ///点击的时候人员信息的显示。
+            myinformation() {
+                this.showpeople = !this.showpeople;
+                this.show = 'none'
+                //通过人员查找出该人员的信息。
+                let name = localStorage.getItem('name');
+
+                //发送
+                axios({
+                    method: 'post',
+                    data: {
+                        name: name
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    url: '/happyShoping/phps/logindata.php',
+                }).then((res) => {
+                    console.log(res.data)
+                    /*  this.peopleallcontent=res.data */
+                    for (key in res.data) {
+
+                        switch (key) {
+                            case 'username':
+                                this.username = res.data[key]
+                                break;
+                            case 'password':
+                                this.password = res.data[key]
+                                break;
+                            case 'email':
+                                this.email = res.data[key]
+                                break;
+                            case 'phone':
+                                this.phone = res.data[key]
+                                break;
+                            case 'address':
+                                this.address = res.data[key]
+                                break;
+                            case 'describe':
+                                this.describe = res.data[key]=='null'?'无':res.data[key];
+                                break;
+                            case 'id':
+                                this.id = res.data[key]
+                                break;
+                            case 'money':
+                                
+                                if(res.data[key]==null){
+                                    this.money=0;
+                                }else{
+                                    this.money = res.data[key]
+                                }
+                                break;
+                        }
+
+                    }
+                })
+
+
+
+            },
+            //当点击的时候跳转到商品详情页面
+            tofoodsContes(name, id) {
+                window.open('/happyShoping/dist/foodsConts.html?foodName=' +
+                    escape(name) + '&id=' + id, '_blank')
+            },
+
+            getfoodsState(state) {
+                window.open('/happyShoping/dist/specialArea.html?state=' + state, '_blank')
+            },
+
+
+            //上一页，下一页
+            getPage(page) {
+                if (page <= 0) {
+
+                    this.currentAge = 1;
+                }
+                if(page>Math.ceil(this.total / 8)){
+                    this.currentAge=Math.ceil(this.total / 8)
+                }
+
+                if (page > 1 && page < Math.ceil(this.total / 8) || page == 1 || page == Math.ceil(this.total /
+                        8)) {
+
+                    this.currentAge = page;
+                    axios({
+                        method: 'post',
+                        url: '../happyShoping/phps/foodsSearch.php',
+                        transformRequest: [function (data) {
+                            // Do whatever you want to transform the data
+                            let ret = ''
+                            for (let it in data) {
+                                ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[
+                                        it]) +
+                                    '&'
+                            }
+                            return ret
+                        }],
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        data: {
+                            name: this.name,
+                            page: page
+                        }
+                    }).then((res) => {
+                        this.foodsdata=res.data
+                    })
+                } else {
+                    alert('暂无其他页')
+                }
+
+            },
+            getFoodData() {
+                this.getFoodDatas();
+                this.show = 'block';
+
+                console.log(this.show)
+                console.log('ddd')
+                //点击的时候发送请求
+                axios({
+                    method: 'post',
+                    url: '../happyShoping/phps/foodsSearch.php',
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    data: {
+                        name: this.name,
+                        page: 1
+                    }
+                }).then((res) => {
+                   console.log(typeof res.data)
+                        if(typeof res.data=='string'){
+                            alert('暂无与该搜索词匹配的商品请更换搜索词！')
+this.fooddata=[]
+                        }else{
+this.foodsdata = res.data;
+                        }
+
+
+                   
+
+
+                })
+            },
+            getFoodDatas() {
+                //点击的时候发送请求
+                axios({
+                    method: 'post',
+                    url: '../happyShoping/phps/getfoodserch.php',
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    data: {
+                        name: this.name,
+
+                    }
+                }).then((res) => {
+                    console.log(res.data)
+
+                    this.total = res.data.length;
+
+
+
+                })
+            }
+        },
+        //点击搜索的时候进行获取总条数
+    })
+</script>
+<script src="js/index.js"></script>
+
+</html>

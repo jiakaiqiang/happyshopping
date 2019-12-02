@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆页面</title>
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet"/>
+    <link href="../css/login.css" rel="stylesheet"/>
+</head>
+<script src="../jquery/jquery-1.12.4.js"></script>
+<style>
+ .loginBgi .smallTip{
+    color:red;display:none;
+}
+</style>
+<body>
+<div style="width:100%;height:95px;background-color:springgreen;">
+    <img src="../images/letaotao.png" class="loginImg" style="opacity: 0.9;margin-top:10px"/>
+    <span class=loginText style="margin-top:5px;">欢迎登陆乐陶陶网站</span>
+
+</div>
+<div class="loginBgi">
+    <div class="container " style="padding-top:50px;padding-bottom: 200px">
+        <section class="row" class="loginForm">
+            <div class="col-md-4 col-md-offset-7" >
+
+                    <div class="form-group">
+                        <label for="name" class="loginFont">账号：
+                        </label>
+                        <input type="text" id="name" name="name"class="form-control input-lg" />
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="loginFont">密码：
+                        </label>
+                        <input type="password" id="password"  name="password"class="form-control input-lg" />
+
+                    </div>
+                    <small class="smallTip">账户名或者密码输入错误</small><br>
+                <input type="checkbox"><span style="color:white">记住账号</span><span style="float:right;color:forestgreen">还没有账号？点击<a href="resigter.html">注册</a></span>
+                <button class="btn btn-primary form-control" id="login">登陆</button>
+                </div>
+        </section>
+
+    </div>
+</div>
+</body>
+<script>
+$(function(){
+//获取登陆的页面的数据
+//当点击的时候发送数据
+$('#login').click(()=>{
+    let username=$('#name').val();
+let password=$('#password').val();
+  
+    console.log(username,password)
+//发送ajax请求
+$.ajax({
+    url:'../phps/logindata.php',
+    type:'POST',
+    dataType:'json',
+    data:{
+        name:username,
+        password:password
+    },
+    success:(res)=>{
+        console.log(res.password)
+        if(res.password!=password){
+           $('small').css({'display':'block'})
+        }else{
+            $('small').css({'display':'none'})
+          
+            //将用户的名称写入本地
+            console.log(res.username)
+            console.log(res.userid)
+           localStorage.setItem('name',res.username);
+         
+           localStorage.setItem('isManager',res.isManager);
+           localStorage.setItem('id',res.userid);
+          
+           // localStorage.setItem('name',res.username);
+            window.location.href="../index.html"
+        }
+    },
+    fail:(res)=>{
+        
+    }
+})
+
+
+
+});
+
+
+
+
+
+
+});
+</script>
+</html>

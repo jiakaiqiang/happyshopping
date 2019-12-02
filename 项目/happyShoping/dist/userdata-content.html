@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理页面</title>
+    <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap.css" />
+
+</head>
+<script src="../../jquery/jquery-1.12.4.js"></script>
+<script src="../../vue/vue.js"></script>
+<script src="../axios/axios.js"></script>
+<style>
+    .pageul input {
+        width: 50px;
+        height: 45px;
+        text-align: center;
+        line-height: 40px;
+    }
+
+    .pageul li {
+        width: 50px;
+        height: 50px;
+        border-right: 1px solid silver;
+        border-top: 1px solid silver;
+        border-bottom: 1px solid silver;
+        text-align: center;
+        line-height: 50px;
+    }
+
+    th,
+    td {
+        text-align: center;
+    }
+
+    .Modehidden {
+        margin-left: -118px;
+        width: 101%;
+        height: 120%;
+        position: absolute;
+        top: 0px;
+        
+        padding-top: 50px;
+        z-index: 999;
+
+    }
+</style>
+
+<body>
+   <div style="background-image: url(../images/manageruser.jpg
+   );background-size:100% 100%;background-repeat: no-repeat;">
+        <div class="container" id="app" >
+        <h3 class="h3">用户管理页面
+        </h3>
+        <a href='../dist/adduser.html' class='btn btn-primary' target="_blank" style="margin-right:300px;">用户添加</a>
+        <div style='margin-bottom:30px;display:inline-block;'>
+            <input type="text" style="border-radius: 10px;outline: green" width="100" v-model="searchValue"
+                placeholder='请输入你想要搜索的人员信息'>
+            <button class="btn btn-info" @click="searchdata">搜索</button>
+        </div>
+        <table class="table table-bordered table-hover" style="height:396px">
+            <thead class="text-center">
+                <th>账号</th>
+                <th>密码</th>
+                <th>邮箱</th>
+                <th>地址</th>
+                <th>电话</th>
+                <th>描述</th>
+                <th>操作</th>
+            </thead>
+            <tbody >
+                <tr v-for="(item, index) in handleFilterData(searchValue)">
+                    <td>{{item.username}}</td>
+                    <td>{{item.password}}</td>
+                    <td>{{item.email}}</td>
+                    <td>{{item.address==null?'无':item.address}}</td>
+                    <td>{{item.phone==null?'无':item.phone}}</td>
+                    <td>{{item.describe==null?'无':item.describe}}</td>
+                    <td><button class="btn btn-primary" v-on:click='handleEdit(item.userid)'>编辑</button><button
+                            class="btn btn-danger" @click="delectuser(item.userid)">删除</button></td>
+                </tr>
+            </tbody>
+
+        </table>
+        <div class="Modehidden" v-if="!Modehidden" style="background-image: url(../images/useredit.jpg
+        );background-size:100% 100%;background-repeat: no-repeat;">
+            <div class="col-md-offset-4 col-md-4">
+                <form action="../phps/userDataEdit.php" method="post" v-for="(item,index) in getEditData">
+                    <input type="text" name="id" v-model="item.userid" hidden>
+                    <div class="form-group">
+                        <label for="username" class="loginFont">用户名：
+                        </label>
+                        <input type="text" ref="username" id="username" v-model="item.username" name="name"
+                            class="form-control input-lg" @blur="getDate" />
+                    </div>
+                    <div class="form-group">
+                        <label for="price" class="loginFont">密码：
+                        </label>
+                        <input type="text" ref="password" id="price" name="password" v-model="item.password"
+                            class="form-control input-lg" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="loginFont">邮箱：
+                        </label>
+                        <input type="email" ref="email" id="email" name="email" v-model="item.email"
+                            class="form-control input-lg" />
+                    </div>
+                    <div class="form-group">
+                        <label for="address" class="loginFont">住址：
+                        </label>
+                        <input type="text" id="address" name="address" v-model="item.address"
+                            class="form-control input-lg" />
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" class="loginFont">电话：
+                        </label>
+                        <input type="number" id="phone" name="phone" class="form-control input-md"
+                            v-model="item.phone" />
+                    </div>
+                    <div class="form-group">
+                        <label for="describe" class="loginFont">描述：
+                        </label>
+                        <input type="text" id="describe" ref="describe" v-model="item.describe" name="describe"
+                            class="form-control input-lg" />
+                        <label for="isManager">
+                            人员身份:
+
+                            <select name="isManager" id=" idManager">
+                                <option value="0" selected>用户</option>
+                                <option value="1">管理员</option>
+                            </select>
+                        </label>
+
+                    </div>
+                   <div>
+                        <input type="button" class="btn btn-danger" @click="Modehidden=true"style="width:48%" value="取消">
+                        <input type="submit" class="btn btn-primary" style="width:50%" value="修改">
+                   </div>
+                </form>
+            </div>
+        </div>
+        <div>
+            <ul style="display:flex;list-style:none;margin-left:65px" class="pageul">
+                <li style="border-left:1px solid silver;">共<span
+                        style="font-size: 18px;font-weight:bold">{{num}}</span>页</li>
+                <li style="width:80px;">当前第<span style="font-size: 18px;font-weight:bold">{{currentpage}}</span>页</li>
+                <li @click="getfoodsData(1)">首页</li>
+                <li @click="getfoodsData(--currentpage)">上一页</li>
+                <li @click="getfoodsData(++currentpage)">下一页</li>
+                <li @click="getfoodsData(num)">尾页</li>
+                <li>
+                    <input type="number" v-model="redictivepage">
+                </li>
+                <li class="btn btn-primary" style="line-height:30px" @click="getfoodsData(redictivepage)">跳转</li>
+            </ul>
+        </div>
+    </div>
+   </div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            getdatas: "ss",
+            userdata: [],
+            userDatefinter: [],
+            searchValue: '',
+            getEditData: [],
+            Modehidden: true,
+            currentpage: 1,
+            pages: Math.ceil(this.num),
+            redictivepage: 1,
+            num: 1,
+        },
+        //页面进行初始化的时候进行数据等的请求
+        created: function () {
+            //this.convt();
+            this.getfoodsData(1);
+        },
+        mounted: function () {
+
+        },
+        methods: {
+            //进行翻页
+            getfoodsData(curPage) {
+                this.currentpage = curPage;
+                console.log('ssssssss')
+                console.log(curPage, this.num)
+                if (curPage > this.num) {
+                    this.currentpage = curPage - 1;
+                    alert("目标页不存在哟！请重新选择")
+                    return;
+                }
+                if (curPage <= 0) {
+                    this.currentpage = 1;
+                    alert("目标页不存在哟！请重新选择")
+                    return;
+                }
+                //根据当前页获取数据
+                axios({
+                    method: 'post',
+
+                    dataType: 'json',
+                    method: 'post',
+                    url: '../phps/getuserdata.php',
+                    data: {
+
+                        //传page
+                        page: curPage,
+                        //传页面数据格式
+                        num: 7
+                    },
+
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+
+                }).then((res) => {
+                    if (typeof res.data.list == 'undefined') {
+                        this.num = 1
+                    } else {
+                        this.num = Math.ceil(res.data.totalsum / 7);
+
+                    }
+                    console.log(typeof (res.data.list))
+                    if (typeof (res.data.list) == 'object') {
+                        this.userdata = res.data.list;
+                    } else {
+                        this.userdata = [];
+                    }
+
+                }).catch((res) => {
+                    console.log('sss', res.data)
+                })
+            },
+            //进行人员的搜索
+            searchdata() {
+                axios({
+                    url: '../phps/gersearch.php',
+                    method: 'post',
+                    data: {
+                        username: this.searchValue
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+
+                }).then((res) => {
+                    this.userdata = res.data;
+
+                })
+
+            },
+            //人员删除
+            delectuser(id) {
+                console.log(id)
+                axios({
+                    method: 'post',
+                    data: {
+                        id: id
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) +
+                                '&'
+                        }
+                        return ret
+                    }],
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    url: '/happyShoping/phps/deleteuser.php',
+                }).then((res) => {
+                    if (res.data == 'success') {
+                        window.location = "/happyShoping/dist/userdata-content.html"
+                    }
+                })
+            },
+
+
+            convt: function () {
+                let _this = this;
+                axios({
+                    type: 'post',
+                    url: "../phps/getuserdata.php",
+                }).then(function (res) {
+                    console.log(res.data)
+                    _this.userdata = res.data;
+
+                })
+            },
+            handleFilterData: function (val) {
+
+                return this.userdata.filter((item) => {
+                    console.log(item.username.indexOf(val))
+                    if (item.username.includes(val)) {
+                        return item
+                    }
+
+                })
+
+            },
+            //点击用户的编辑的时候
+            handleEdit: function (userid) {
+                console.log(userid);
+                //通过userid获取数据
+                axios({
+                    type: 'get',
+                    url: "../phps/getUserEdit.php?userid=" + userid,
+
+                }).then((res) => {
+                    console.log(res.data[0])
+
+                    this.getEditData = res.data;
+                    console.log(this.getEditData)
+                    console.log(this.$refs)
+                    //this.$refs.name.value=res.data[0].username
+                })
+
+                //模态框展示
+                this.Modehidden = false;
+            }, //获取对应的信息
+            getDate() {
+                console.log(this.getEditData)
+            }
+        },
+
+
+
+
+
+
+    });
+</script>
+
+</html>
