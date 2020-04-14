@@ -1,0 +1,1729 @@
+<html><head>
+  <title>会议待办</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script type="text/javascript">
+  if(typeof(Mobile_NS) == 'undefined'){
+    Mobile_NS = {};
+  }
+  if(typeof(Mobile_NS.Calendar) == 'undefined'){
+    Mobile_NS.Calendar = {};
+  }
+  var userid = "138330";
+  var roomConflictChk = "1";
+  var roomConflict = "1";
+  var memberConflictChk = "1";
+  var memberConflict = "1";
+  var showDetailid="";
+  var isOpt="true";
+</script>
+<script src="/mobilemode/js/zepto/zepto.min_wev8.js?v=2016_08_25" type="text/javascript"></script>
+<script src="/mobilemode/apps/e-cology/js/deferred.js" type="text/javascript"></script>
+<script src="/mobilemode/apps/e-cology/js/callback.js" type="text/javascript"></script>
+<script src="/mobilemode/js/zepto/toucher_wev8.js?v=2016_08_25" type="text/javascript"></script>
+<script src="/mobilemode/apps/e-cology/js/fastclick.min_wev8.js?v=2016_08_25" type="text/javascript"></script>
+<script src="/mobilemode/apps/e-cology/js/iscroll-min.js?v=2016_08_25" type="text/javascript"></script>
+<script src="/mobilemode/apps/e-cology/js/mobiscroll-2.5.2-min.js?v=2016_08_25" type="text/javascript"></script>
+<link rel="stylesheet" href="/mobilemode/apps/e-cology/css/mobiscroll-2.5.2-min.css?v=2016_08_25">
+<script src="/mobilemode/apps/e-cology/js/rainyxDate_wev8.js?v=2016_08_25" type="text/javascript"></script>
+<link rel="stylesheet" href="/mobilemode/apps/e-cology/css/calendar_wev8.css?v=2016_08_25">
+<script src="/mobilemode/apps/e-cology/js/calendar_wev8.js?v=2016_08_25" type="text/javascript"></script>
+<link rel="stylesheet" href="/mobilemode/apps/e-cology/css/idangerous.swiper-2.7_wev8.css?v=2016_08_25">
+<script src="/mobilemode/apps/e-cology/js/idangerous.swiper-2.7.min_wev8.js" type="text/javascript"></script>
+<link rel="stylesheet" href="/mobilemode/apps/e-cology/meeting/css/meetingApp_wev8.css?v=2017_11_02">
+<script src="/mobilemode/apps/e-cology/meeting/js/meetingApp_wev8.js?v=2017_03_02" type="text/javascript"></script>
+<script src="/mobilemode/apps/e-cology/meeting/js/showbrowser_wev8.js?v=2016_11_02" type="text/javascript"></script>
+<link rel="stylesheet" href="/mobilemode/apps/e-cology/meeting/css/GridTable_wev8.css?v=2016_08_25">
+<link rel="stylesheet" href="/mobilemode/apps/e-cology/meeting/css/grid.css?v=2016_08_25">
+<!-- 附件上传   -->
+<link href="/mobilemode/apps/e-cology/css/webuploader.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="/mobilemode/apps/e-cology/meeting/js/meet_work_uploader.js"></script>
+  <script type="text/javascript" src="/mobilemode/apps/e-cology/meeting/js/meet_work_uploader1.js"></script>
+<script type="text/javascript" src="/mobilemode/apps/e-cology/js/webuploader.js"></script>
+<link rel="stylesheet" href="/css/ecology8/request/seachBody_wev8.css" type="text/css">
+
+<script type="text/javascript" src="https://oss-statics.icomecloud.com/jsbridge/icome.sdk.js"></script>
+  <script type="text/javascript" src="/mobilemode/apps/browser/js/alert.js"></script>
+  <link rel="stylesheet" href="/mobilemode/apps/browser/js/alert.css">
+
+
+
+  <link rel="stylesheet" href="meetingwill/css/style.css">
+<link rel="stylesheet" href="meetingwill/css/icon.css">
+<link rel="stylesheet" href="meetingwill/css/iconfont.css">
+  <style>
+    .meetingwillNameClass {
+      font-size: 14px !important;
+      color: #999;
+      font-family: Arial;
+    }
+    .tableContainer .meetingwillContClass {
+      font-size: 14px !important;
+      color: rgba(0,0,0,.8);
+      font-family: Arial;
+    }
+    .btn-con{
+      margin-top: 4px;
+      margin-bottom: 2px;
+      margin-left: 10%;
+      display: inline-block;
+      width: 80%;
+      height: 32px;
+      line-height: 32px;
+      color: #fff;
+      cursor: pointer;
+      text-shadow: none;
+      text-decoration: none;
+      text-align: center;
+      font-size: 14px;
+      border-radius: 18px;
+      background-color: #0161c9;
+    }
+  </style>
+</head>
+<body>
+ <div id="st-container" style="display: block;">
+  <div class="st-pusher">
+          
+          <div id="main-panel" class="controlHide" style="z-index: 0; display: none;">
+          
+    
+      <div class="header">
+        <table width="100%;">
+          <colgroup>
+            <col width="20%">
+            <col width="60%">
+            <col width="20%">
+          </colgroup>
+          <tbody><tr>
+            <td class="left">
+              <span id="_m_cdar_calendarYear" class="_m_cdar_calendarYear">2020年</span><br><span id="_m_cdar_calendarMonth" class="_m_cdar_calendarMonth">3月</span>
+            </td>
+            <td style="text-align:center;" class="">
+              <ul class="tab">
+                <li class="selected" attrid="0">全部</li>
+                <li attrid="1">已结束</li>
+                <li attrid="2">进行中</li>
+                <li attrid="3">未开始</li>
+              </ul>
+            </td>
+            <td class="">
+              <div class="right addBtn"></div>
+            </td>
+          </tr>
+        </tbody></table>
+      </div>
+      <div class="pop_menu">
+        <div class="arrow"></div>
+        <ul>
+          <li class="m1" id="addMeeting" style="background-image:none;">
+              <a href="javascript:void(0);">新建会议</a>
+            </li>
+            <li id="switchViewRoom" style="display:none;">
+              <a href="javascript:void(0);">会议室</a>
+            </li>
+            <li class="m1" id="switchView">
+              <a href="javascript:void(0);">周视图</a>
+            </li>
+          </ul>
+      </div>
+      <div class="listContainerWrap">
+        <div id="meetingCalendarContainer" class="calendarContainerWrap"><div class="_m_cdar_calendarTop"><div class="_m_cdar_calendarLeft"><div id="_m_cdar_calendarYearMonth" class="_m_cdar_calendarYearMonth_noBack"></div></div><div class="_m_cdar_calendarRight"><div id="upDownCalendar" class="_m_cdar_upDownCalendar"><div class="_m_cdar_divBoxContainer"></div><div class="_m_cdar_divline _m_cdar_divline1"></div><div class="_m_cdar_divline _m_cdar_divline2"></div></div><div id="addDataByCalendarDate" class="_m_cdar_calendarAddData"><div class="_m_cdar_line _m_cdar_line1"></div><div class="_m_cdar_line _m_cdar_line2"></div></div></div><div class="_m_cdar_calendarWeek"><table class="_m_cdar_calendarHead" cellpadding="0" cellspacing="0"><tbody><tr><td class="">日</td><td class="">一</td><td class="">二</td><td class="">三</td><td class="">四</td><td class="">五</td><td class="">六</td></tr></tbody></table></div></div><div id="_m_sildeCalendar_Container" class="swiper-container" style="visibility: visible;overflow:hidden;"><div id="_m_cdar_loadCalendarDay_Container" class="_m_cdar_loadCalendarDay_Container swiper-wrapper" style="width: 4155px; transform: translate3d(-1662px, 0px, 0px); transition-duration: 0s;"><div class="swiper-slide swiper-slide-duplicate" style="width: 831px;"><table class="_m_cdar_loadCalendarDay swiper-slide"><tbody><tr><td id="2020-03-29" onclick="M_Calendar.prevMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-03-29"><div class="_m_cdar_date">29</div><div class="_m_cdar_rainyDate">初六</div></div></td><td id="2020-03-30" onclick="M_Calendar.prevMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-03-30"><div class="_m_cdar_date">30</div><div class="_m_cdar_rainyDate">初七</div></div></td><td id="2020-03-31" onclick="M_Calendar.prevMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-03-31"><div class="_m_cdar_date">31</div><div class="_m_cdar_rainyDate">初八</div></div></td><td id="2020-04-01" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-01"><div class="_m_cdar_date">1</div><div class="_m_cdar_rainyDate">愚人节</div></div></td><td id="2020-04-02" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-02"><div class="_m_cdar_date">2</div><div class="_m_cdar_rainyDate">初十</div></div></td><td id="2020-04-03" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-03"><div class="_m_cdar_date">3</div><div class="_m_cdar_rainyDate">十一</div></div></td><td id="2020-04-04" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-04"><div class="_m_cdar_date">4</div><div class="_m_cdar_rainyDate">清明</div></div></td></tr><tr><td id="2020-04-05" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-05"><div class="_m_cdar_date">5</div><div class="_m_cdar_rainyDate">十三</div></div></td><td id="2020-04-06" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-06"><div class="_m_cdar_date">6</div><div class="_m_cdar_rainyDate">十四</div></div></td><td id="2020-04-07" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-07"><div class="_m_cdar_date">7</div><div class="_m_cdar_rainyDate">十五</div></div></td><td id="2020-04-08" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-08"><div class="_m_cdar_date">8</div><div class="_m_cdar_rainyDate">十六</div></div></td><td id="2020-04-09" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-09"><div class="_m_cdar_date">9</div><div class="_m_cdar_rainyDate">十七</div></div></td><td id="2020-04-10" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-10"><div class="_m_cdar_date">10</div><div class="_m_cdar_rainyDate">十八</div></div></td><td id="2020-04-11" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-11"><div class="_m_cdar_date">11</div><div class="_m_cdar_rainyDate">十九</div></div></td></tr><tr><td id="2020-04-12" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-12"><div class="_m_cdar_date">12</div><div class="_m_cdar_rainyDate">二十</div></div></td><td id="2020-04-13" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-13"><div class="_m_cdar_date">13</div><div class="_m_cdar_rainyDate">廿一</div></div></td><td id="2020-04-14" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-14"><div class="_m_cdar_date">14</div><div class="_m_cdar_rainyDate">廿二</div></div></td><td id="2020-04-15" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-15"><div class="_m_cdar_date">15</div><div class="_m_cdar_rainyDate">廿三</div></div></td><td id="2020-04-16" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-16"><div class="_m_cdar_date">16</div><div class="_m_cdar_rainyDate">廿四</div></div></td><td id="2020-04-17" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-17"><div class="_m_cdar_date">17</div><div class="_m_cdar_rainyDate">廿五</div></div></td><td id="2020-04-18" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-18"><div class="_m_cdar_date">18</div><div class="_m_cdar_rainyDate">廿六</div></div></td></tr><tr><td id="2020-04-19" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-19"><div class="_m_cdar_date">19</div><div class="_m_cdar_rainyDate">谷雨</div></div></td><td id="2020-04-20" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-20"><div class="_m_cdar_date">20</div><div class="_m_cdar_rainyDate">廿八</div></div></td><td id="2020-04-21" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-21"><div class="_m_cdar_date">21</div><div class="_m_cdar_rainyDate">廿九</div></div></td><td id="2020-04-22" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-22"><div class="_m_cdar_date">22</div><div class="_m_cdar_rainyDate">三十</div></div></td><td id="2020-04-23" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-23"><div class="_m_cdar_date">23</div><div class="_m_cdar_rainyDate">四月</div></div></td><td id="2020-04-24" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-24"><div class="_m_cdar_date">24</div><div class="_m_cdar_rainyDate">初二</div></div></td><td id="2020-04-25" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-25"><div class="_m_cdar_date">25</div><div class="_m_cdar_rainyDate">初三</div></div></td></tr><tr><td id="2020-04-26" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-26"><div class="_m_cdar_date">26</div><div class="_m_cdar_rainyDate">初四</div></div></td><td id="2020-04-27" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-27"><div class="_m_cdar_date">27</div><div class="_m_cdar_rainyDate">初五</div></div></td><td id="2020-04-28" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-28"><div class="_m_cdar_date">28</div><div class="_m_cdar_rainyDate">初六</div></div></td><td id="2020-04-29" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-29"><div class="_m_cdar_date">29</div><div class="_m_cdar_rainyDate">初七</div></div></td><td id="2020-04-30" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-30"><div class="_m_cdar_date">30</div><div class="_m_cdar_rainyDate">初八</div></div></td><td id="2020-05-01" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-05-01"><div class="_m_cdar_date">1</div><div class="_m_cdar_rainyDate">劳动节</div></div></td><td id="2020-05-02" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-05-02"><div class="_m_cdar_date">2</div><div class="_m_cdar_rainyDate">初十</div></div></td></tr><tr><td id="2020-05-03" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-05-03"><div class="_m_cdar_date">3</div><div class="_m_cdar_rainyDate">十一</div></div></td><td id="2020-05-04" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-05-04"><div class="_m_cdar_date">4</div><div class="_m_cdar_rainyDate">青年节</div></div></td><td id="2020-05-05" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-05-05"><div class="_m_cdar_date">5</div><div class="_m_cdar_rainyDate">立夏</div></div></td><td id="2020-05-06" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-05-06"><div class="_m_cdar_date">6</div><div class="_m_cdar_rainyDate">十四</div></div></td><td id="2020-05-07" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-05-07"><div class="_m_cdar_date">7</div><div class="_m_cdar_rainyDate">十五</div></div></td><td id="2020-05-08" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-05-08"><div class="_m_cdar_date">8</div><div class="_m_cdar_rainyDate">十六</div></div></td><td id="2020-05-09" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-05-09"><div class="_m_cdar_date">9</div><div class="_m_cdar_rainyDate">十七</div></div></td></tr></tbody></table></div><div class="swiper-slide" style="width: 831px;"><table class="_m_cdar_loadCalendarDay swiper-slide"><tbody><tr><td id="2020-01-26" onclick="M_Calendar.prevMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-01-26"><div class="_m_cdar_date">26</div><div class="_m_cdar_rainyDate">初二</div></div></td><td id="2020-01-27" onclick="M_Calendar.prevMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-01-27"><div class="_m_cdar_date">27</div><div class="_m_cdar_rainyDate">初三</div></div></td><td id="2020-01-28" onclick="M_Calendar.prevMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-01-28"><div class="_m_cdar_date">28</div><div class="_m_cdar_rainyDate">初四</div></div></td><td id="2020-01-29" onclick="M_Calendar.prevMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-01-29"><div class="_m_cdar_date">29</div><div class="_m_cdar_rainyDate">初五</div></div></td><td id="2020-01-30" onclick="M_Calendar.prevMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-01-30"><div class="_m_cdar_date">30</div><div class="_m_cdar_rainyDate">初六</div></div></td><td id="2020-01-31" onclick="M_Calendar.prevMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-01-31"><div class="_m_cdar_date">31</div><div class="_m_cdar_rainyDate">初七</div></div></td><td id="2020-02-01" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-01"><div class="_m_cdar_date">1</div><div class="_m_cdar_rainyDate">初八</div></div></td></tr><tr><td id="2020-02-02" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-02"><div class="_m_cdar_date">2</div><div class="_m_cdar_rainyDate">初九</div></div></td><td id="2020-02-03" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-03"><div class="_m_cdar_date">3</div><div class="_m_cdar_rainyDate">初十</div></div></td><td id="2020-02-04" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-04"><div class="_m_cdar_date">4</div><div class="_m_cdar_rainyDate">立春</div></div></td><td id="2020-02-05" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-05"><div class="_m_cdar_date">5</div><div class="_m_cdar_rainyDate">十二</div></div></td><td id="2020-02-06" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-06"><div class="_m_cdar_date">6</div><div class="_m_cdar_rainyDate">十三</div></div></td><td id="2020-02-07" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-07"><div class="_m_cdar_date">7</div><div class="_m_cdar_rainyDate">十四</div></div></td><td id="2020-02-08" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-08"><div class="_m_cdar_date">8</div><div class="_m_cdar_rainyDate">元宵节</div></div></td></tr><tr><td id="2020-02-09" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-09"><div class="_m_cdar_date">9</div><div class="_m_cdar_rainyDate">十六</div></div></td><td id="2020-02-10" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-10"><div class="_m_cdar_date">10</div><div class="_m_cdar_rainyDate">十七</div></div></td><td id="2020-02-11" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-11"><div class="_m_cdar_date">11</div><div class="_m_cdar_rainyDate">十八</div></div></td><td id="2020-02-12" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-12"><div class="_m_cdar_date">12</div><div class="_m_cdar_rainyDate">十九</div></div></td><td id="2020-02-13" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-13"><div class="_m_cdar_date">13</div><div class="_m_cdar_rainyDate">二十</div></div></td><td id="2020-02-14" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-14"><div class="_m_cdar_date">14</div><div class="_m_cdar_rainyDate">情人节</div></div></td><td id="2020-02-15" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-15"><div class="_m_cdar_date">15</div><div class="_m_cdar_rainyDate">廿二</div></div></td></tr><tr><td id="2020-02-16" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-16"><div class="_m_cdar_date">16</div><div class="_m_cdar_rainyDate">廿三</div></div></td><td id="2020-02-17" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-17"><div class="_m_cdar_date">17</div><div class="_m_cdar_rainyDate">廿四</div></div></td><td id="2020-02-18" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-18"><div class="_m_cdar_date">18</div><div class="_m_cdar_rainyDate">廿五</div></div></td><td id="2020-02-19" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-19"><div class="_m_cdar_date">19</div><div class="_m_cdar_rainyDate">雨水</div></div></td><td id="2020-02-20" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-20"><div class="_m_cdar_date">20</div><div class="_m_cdar_rainyDate">廿七</div></div></td><td id="2020-02-21" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-21"><div class="_m_cdar_date">21</div><div class="_m_cdar_rainyDate">廿八</div></div></td><td id="2020-02-22" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-22"><div class="_m_cdar_date">22</div><div class="_m_cdar_rainyDate">廿九</div></div></td></tr><tr><td id="2020-02-23" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-23"><div class="_m_cdar_date">23</div><div class="_m_cdar_rainyDate">二月</div></div></td><td id="2020-02-24" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-24"><div class="_m_cdar_date">24</div><div class="_m_cdar_rainyDate">初二</div></div></td><td id="2020-02-25" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-25"><div class="_m_cdar_date">25</div><div class="_m_cdar_rainyDate">初三</div></div></td><td id="2020-02-26" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-26"><div class="_m_cdar_date">26</div><div class="_m_cdar_rainyDate">初四</div></div></td><td id="2020-02-27" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-27"><div class="_m_cdar_date">27</div><div class="_m_cdar_rainyDate">初五</div></div></td><td id="2020-02-28" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-28"><div class="_m_cdar_date">28</div><div class="_m_cdar_rainyDate">初六</div></div></td><td id="2020-02-29" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-29"><div class="_m_cdar_date">29</div><div class="_m_cdar_rainyDate">初七</div></div></td></tr><tr><td id="2020-03-01" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-03-01"><div class="_m_cdar_date">1</div><div class="_m_cdar_rainyDate">初八</div></div></td><td id="2020-03-02" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-03-02"><div class="_m_cdar_date">2</div><div class="_m_cdar_rainyDate">初九</div></div></td><td id="2020-03-03" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-03-03"><div class="_m_cdar_date">3</div><div class="_m_cdar_rainyDate">初十</div></div></td><td id="2020-03-04" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-03-04"><div class="_m_cdar_date">4</div><div class="_m_cdar_rainyDate">十一</div></div></td><td id="2020-03-05" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-03-05"><div class="_m_cdar_date">5</div><div class="_m_cdar_rainyDate">惊蛰</div></div></td><td id="2020-03-06" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-03-06"><div class="_m_cdar_date">6</div><div class="_m_cdar_rainyDate">十三</div></div></td><td id="2020-03-07" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-03-07"><div class="_m_cdar_date">7</div><div class="_m_cdar_rainyDate">十四</div></div></td></tr></tbody></table></div><div class="swiper-slide swiper-slide-visible swiper-slide-active" style="width: 831px;"><table class="_m_cdar_loadCalendarDay swiper-slide"><tbody><tr><td id="2020-03-01" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-03-01"><div class="_m_cdar_date">1</div><div class="_m_cdar_rainyDate">初八</div></div></td><td id="2020-03-02" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap" title="2020-03-02"><div class="_m_cdar_date">2</div><div class="_m_cdar_rainyDate">初九</div></div></td><td id="2020-03-03" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap" title="2020-03-03"><div class="_m_cdar_date">3</div><div class="_m_cdar_rainyDate">初十</div></div></td><td id="2020-03-04" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap" title="2020-03-04"><div class="_m_cdar_date">4</div><div class="_m_cdar_rainyDate">十一</div></div></td><td id="2020-03-05" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap" title="2020-03-05"><div class="_m_cdar_date">5</div><div class="_m_cdar_rainyDate">惊蛰</div></div></td><td id="2020-03-06" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap" title="2020-03-06"><div class="_m_cdar_date">6</div><div class="_m_cdar_rainyDate">十三</div></div></td><td id="2020-03-07" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap" title="2020-03-07"><div class="_m_cdar_date">7</div><div class="_m_cdar_rainyDate">十四</div></div></td></tr><tr><td id="2020-03-08" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap" title="2020-03-08"><div class="_m_cdar_date">8</div><div class="_m_cdar_rainyDate">妇女节</div></div></td><td id="2020-03-09" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap" title="2020-03-09"><div class="_m_cdar_date">9</div><div class="_m_cdar_rainyDate">十六</div></div></td><td id="2020-03-10" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap" title="2020-03-10"><div class="_m_cdar_date">10</div><div class="_m_cdar_rainyDate">十七</div></div></td><td id="2020-03-11" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap" title="2020-03-11"><div class="_m_cdar_date">11</div><div class="_m_cdar_rainyDate">十八</div></div></td><td id="2020-03-12" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap" title="2020-03-12"><div class="_m_cdar_date">12</div><div class="_m_cdar_rainyDate">植树节</div></div></td><td id="2020-03-13" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap _m_cdar_currentCalendar _m_cdar_currentSelect" title="2020-03-13"><div class="_m_cdar_date">13</div><div class="_m_cdar_rainyDate">二十</div></div></td><td id="2020-03-14" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap" title="2020-03-14"><div class="_m_cdar_date">14</div><div class="_m_cdar_rainyDate">廿一</div></div></td></tr><tr><td id="2020-03-15" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap" title="2020-03-15"><div class="_m_cdar_date">15</div><div class="_m_cdar_rainyDate">廿二</div></div></td><td id="2020-03-16" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap" title="2020-03-16"><div class="_m_cdar_date">16</div><div class="_m_cdar_rainyDate">廿三</div></div></td><td id="2020-03-17" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-03-17"><div class="_m_cdar_date">17</div><div class="_m_cdar_rainyDate">廿四</div></div></td><td id="2020-03-18" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-03-18"><div class="_m_cdar_date">18</div><div class="_m_cdar_rainyDate">廿五</div></div></td><td id="2020-03-19" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-03-19"><div class="_m_cdar_date">19</div><div class="_m_cdar_rainyDate">廿六</div></div></td><td id="2020-03-20" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-03-20"><div class="_m_cdar_date">20</div><div class="_m_cdar_rainyDate">春分</div></div></td><td id="2020-03-21" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-03-21"><div class="_m_cdar_date">21</div><div class="_m_cdar_rainyDate">廿八</div></div></td></tr><tr><td id="2020-03-22" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-03-22"><div class="_m_cdar_date">22</div><div class="_m_cdar_rainyDate">廿九</div></div></td><td id="2020-03-23" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-03-23"><div class="_m_cdar_date">23</div><div class="_m_cdar_rainyDate">三十</div></div></td><td id="2020-03-24" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-03-24"><div class="_m_cdar_date">24</div><div class="_m_cdar_rainyDate">三月</div></div></td><td id="2020-03-25" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-03-25"><div class="_m_cdar_date">25</div><div class="_m_cdar_rainyDate">初二</div></div></td><td id="2020-03-26" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-03-26"><div class="_m_cdar_date">26</div><div class="_m_cdar_rainyDate">初三</div></div></td><td id="2020-03-27" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-03-27"><div class="_m_cdar_date">27</div><div class="_m_cdar_rainyDate">初四</div></div></td><td id="2020-03-28" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-03-28"><div class="_m_cdar_date">28</div><div class="_m_cdar_rainyDate">初五</div></div></td></tr><tr><td id="2020-03-29" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-03-29"><div class="_m_cdar_date">29</div><div class="_m_cdar_rainyDate">初六</div></div></td><td id="2020-03-30" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-03-30"><div class="_m_cdar_date">30</div><div class="_m_cdar_rainyDate">初七</div></div></td><td id="2020-03-31" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-03-31"><div class="_m_cdar_date">31</div><div class="_m_cdar_rainyDate">初八</div></div></td><td id="2020-04-01" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-04-01"><div class="_m_cdar_date">1</div><div class="_m_cdar_rainyDate">愚人节</div></div></td><td id="2020-04-02" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-04-02"><div class="_m_cdar_date">2</div><div class="_m_cdar_rainyDate">初十</div></div></td><td id="2020-04-03" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-04-03"><div class="_m_cdar_date">3</div><div class="_m_cdar_rainyDate">十一</div></div></td><td id="2020-04-04" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-04-04"><div class="_m_cdar_date">4</div><div class="_m_cdar_rainyDate">清明</div></div></td></tr><tr><td id="2020-04-05" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-04-05"><div class="_m_cdar_date">5</div><div class="_m_cdar_rainyDate">十三</div></div></td><td id="2020-04-06" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-04-06"><div class="_m_cdar_date">6</div><div class="_m_cdar_rainyDate">十四</div></div></td><td id="2020-04-07" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-04-07"><div class="_m_cdar_date">7</div><div class="_m_cdar_rainyDate">十五</div></div></td><td id="2020-04-08" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-04-08"><div class="_m_cdar_date">8</div><div class="_m_cdar_rainyDate">十六</div></div></td><td id="2020-04-09" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-04-09"><div class="_m_cdar_date">9</div><div class="_m_cdar_rainyDate">十七</div></div></td><td id="2020-04-10" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-04-10"><div class="_m_cdar_date">10</div><div class="_m_cdar_rainyDate">十八</div></div></td><td id="2020-04-11" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-04-11"><div class="_m_cdar_date">11</div><div class="_m_cdar_rainyDate">十九</div></div></td></tr></tbody></table></div><div class="swiper-slide" style="width: 831px;"><table class="_m_cdar_loadCalendarDay swiper-slide"><tbody><tr><td id="2020-03-29" onclick="M_Calendar.prevMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-03-29"><div class="_m_cdar_date">29</div><div class="_m_cdar_rainyDate">初六</div></div></td><td id="2020-03-30" onclick="M_Calendar.prevMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-03-30"><div class="_m_cdar_date">30</div><div class="_m_cdar_rainyDate">初七</div></div></td><td id="2020-03-31" onclick="M_Calendar.prevMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-03-31"><div class="_m_cdar_date">31</div><div class="_m_cdar_rainyDate">初八</div></div></td><td id="2020-04-01" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-01"><div class="_m_cdar_date">1</div><div class="_m_cdar_rainyDate">愚人节</div></div></td><td id="2020-04-02" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-02"><div class="_m_cdar_date">2</div><div class="_m_cdar_rainyDate">初十</div></div></td><td id="2020-04-03" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-03"><div class="_m_cdar_date">3</div><div class="_m_cdar_rainyDate">十一</div></div></td><td id="2020-04-04" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-04"><div class="_m_cdar_date">4</div><div class="_m_cdar_rainyDate">清明</div></div></td></tr><tr><td id="2020-04-05" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-05"><div class="_m_cdar_date">5</div><div class="_m_cdar_rainyDate">十三</div></div></td><td id="2020-04-06" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-06"><div class="_m_cdar_date">6</div><div class="_m_cdar_rainyDate">十四</div></div></td><td id="2020-04-07" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-07"><div class="_m_cdar_date">7</div><div class="_m_cdar_rainyDate">十五</div></div></td><td id="2020-04-08" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-08"><div class="_m_cdar_date">8</div><div class="_m_cdar_rainyDate">十六</div></div></td><td id="2020-04-09" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-09"><div class="_m_cdar_date">9</div><div class="_m_cdar_rainyDate">十七</div></div></td><td id="2020-04-10" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-10"><div class="_m_cdar_date">10</div><div class="_m_cdar_rainyDate">十八</div></div></td><td id="2020-04-11" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-11"><div class="_m_cdar_date">11</div><div class="_m_cdar_rainyDate">十九</div></div></td></tr><tr><td id="2020-04-12" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-12"><div class="_m_cdar_date">12</div><div class="_m_cdar_rainyDate">二十</div></div></td><td id="2020-04-13" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-13"><div class="_m_cdar_date">13</div><div class="_m_cdar_rainyDate">廿一</div></div></td><td id="2020-04-14" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-14"><div class="_m_cdar_date">14</div><div class="_m_cdar_rainyDate">廿二</div></div></td><td id="2020-04-15" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-15"><div class="_m_cdar_date">15</div><div class="_m_cdar_rainyDate">廿三</div></div></td><td id="2020-04-16" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-16"><div class="_m_cdar_date">16</div><div class="_m_cdar_rainyDate">廿四</div></div></td><td id="2020-04-17" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-17"><div class="_m_cdar_date">17</div><div class="_m_cdar_rainyDate">廿五</div></div></td><td id="2020-04-18" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-18"><div class="_m_cdar_date">18</div><div class="_m_cdar_rainyDate">廿六</div></div></td></tr><tr><td id="2020-04-19" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-19"><div class="_m_cdar_date">19</div><div class="_m_cdar_rainyDate">谷雨</div></div></td><td id="2020-04-20" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-20"><div class="_m_cdar_date">20</div><div class="_m_cdar_rainyDate">廿八</div></div></td><td id="2020-04-21" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-21"><div class="_m_cdar_date">21</div><div class="_m_cdar_rainyDate">廿九</div></div></td><td id="2020-04-22" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-22"><div class="_m_cdar_date">22</div><div class="_m_cdar_rainyDate">三十</div></div></td><td id="2020-04-23" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-23"><div class="_m_cdar_date">23</div><div class="_m_cdar_rainyDate">四月</div></div></td><td id="2020-04-24" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-24"><div class="_m_cdar_date">24</div><div class="_m_cdar_rainyDate">初二</div></div></td><td id="2020-04-25" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-25"><div class="_m_cdar_date">25</div><div class="_m_cdar_rainyDate">初三</div></div></td></tr><tr><td id="2020-04-26" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-26"><div class="_m_cdar_date">26</div><div class="_m_cdar_rainyDate">初四</div></div></td><td id="2020-04-27" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-27"><div class="_m_cdar_date">27</div><div class="_m_cdar_rainyDate">初五</div></div></td><td id="2020-04-28" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-28"><div class="_m_cdar_date">28</div><div class="_m_cdar_rainyDate">初六</div></div></td><td id="2020-04-29" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-29"><div class="_m_cdar_date">29</div><div class="_m_cdar_rainyDate">初七</div></div></td><td id="2020-04-30" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-04-30"><div class="_m_cdar_date">30</div><div class="_m_cdar_rainyDate">初八</div></div></td><td id="2020-05-01" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-05-01"><div class="_m_cdar_date">1</div><div class="_m_cdar_rainyDate">劳动节</div></div></td><td id="2020-05-02" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-05-02"><div class="_m_cdar_date">2</div><div class="_m_cdar_rainyDate">初十</div></div></td></tr><tr><td id="2020-05-03" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-05-03"><div class="_m_cdar_date">3</div><div class="_m_cdar_rainyDate">十一</div></div></td><td id="2020-05-04" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-05-04"><div class="_m_cdar_date">4</div><div class="_m_cdar_rainyDate">青年节</div></div></td><td id="2020-05-05" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-05-05"><div class="_m_cdar_date">5</div><div class="_m_cdar_rainyDate">立夏</div></div></td><td id="2020-05-06" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-05-06"><div class="_m_cdar_date">6</div><div class="_m_cdar_rainyDate">十四</div></div></td><td id="2020-05-07" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-05-07"><div class="_m_cdar_date">7</div><div class="_m_cdar_rainyDate">十五</div></div></td><td id="2020-05-08" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-05-08"><div class="_m_cdar_date">8</div><div class="_m_cdar_rainyDate">十六</div></div></td><td id="2020-05-09" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-05-09"><div class="_m_cdar_date">9</div><div class="_m_cdar_rainyDate">十七</div></div></td></tr></tbody></table></div><div class="swiper-slide swiper-slide-duplicate" style="width: 831px;"><table class="_m_cdar_loadCalendarDay swiper-slide"><tbody><tr><td id="2020-01-26" onclick="M_Calendar.prevMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-01-26"><div class="_m_cdar_date">26</div><div class="_m_cdar_rainyDate">初二</div></div></td><td id="2020-01-27" onclick="M_Calendar.prevMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-01-27"><div class="_m_cdar_date">27</div><div class="_m_cdar_rainyDate">初三</div></div></td><td id="2020-01-28" onclick="M_Calendar.prevMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-01-28"><div class="_m_cdar_date">28</div><div class="_m_cdar_rainyDate">初四</div></div></td><td id="2020-01-29" onclick="M_Calendar.prevMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-01-29"><div class="_m_cdar_date">29</div><div class="_m_cdar_rainyDate">初五</div></div></td><td id="2020-01-30" onclick="M_Calendar.prevMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-01-30"><div class="_m_cdar_date">30</div><div class="_m_cdar_rainyDate">初六</div></div></td><td id="2020-01-31" onclick="M_Calendar.prevMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-01-31"><div class="_m_cdar_date">31</div><div class="_m_cdar_rainyDate">初七</div></div></td><td id="2020-02-01" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-01"><div class="_m_cdar_date">1</div><div class="_m_cdar_rainyDate">初八</div></div></td></tr><tr><td id="2020-02-02" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-02"><div class="_m_cdar_date">2</div><div class="_m_cdar_rainyDate">初九</div></div></td><td id="2020-02-03" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-03"><div class="_m_cdar_date">3</div><div class="_m_cdar_rainyDate">初十</div></div></td><td id="2020-02-04" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-04"><div class="_m_cdar_date">4</div><div class="_m_cdar_rainyDate">立春</div></div></td><td id="2020-02-05" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-05"><div class="_m_cdar_date">5</div><div class="_m_cdar_rainyDate">十二</div></div></td><td id="2020-02-06" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-06"><div class="_m_cdar_date">6</div><div class="_m_cdar_rainyDate">十三</div></div></td><td id="2020-02-07" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-07"><div class="_m_cdar_date">7</div><div class="_m_cdar_rainyDate">十四</div></div></td><td id="2020-02-08" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-08"><div class="_m_cdar_date">8</div><div class="_m_cdar_rainyDate">元宵节</div></div></td></tr><tr><td id="2020-02-09" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-09"><div class="_m_cdar_date">9</div><div class="_m_cdar_rainyDate">十六</div></div></td><td id="2020-02-10" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-10"><div class="_m_cdar_date">10</div><div class="_m_cdar_rainyDate">十七</div></div></td><td id="2020-02-11" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-11"><div class="_m_cdar_date">11</div><div class="_m_cdar_rainyDate">十八</div></div></td><td id="2020-02-12" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-12"><div class="_m_cdar_date">12</div><div class="_m_cdar_rainyDate">十九</div></div></td><td id="2020-02-13" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-13"><div class="_m_cdar_date">13</div><div class="_m_cdar_rainyDate">二十</div></div></td><td id="2020-02-14" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-14"><div class="_m_cdar_date">14</div><div class="_m_cdar_rainyDate">情人节</div></div></td><td id="2020-02-15" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-15"><div class="_m_cdar_date">15</div><div class="_m_cdar_rainyDate">廿二</div></div></td></tr><tr><td id="2020-02-16" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-16"><div class="_m_cdar_date">16</div><div class="_m_cdar_rainyDate">廿三</div></div></td><td id="2020-02-17" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-17"><div class="_m_cdar_date">17</div><div class="_m_cdar_rainyDate">廿四</div></div></td><td id="2020-02-18" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-18"><div class="_m_cdar_date">18</div><div class="_m_cdar_rainyDate">廿五</div></div></td><td id="2020-02-19" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-19"><div class="_m_cdar_date">19</div><div class="_m_cdar_rainyDate">雨水</div></div></td><td id="2020-02-20" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-20"><div class="_m_cdar_date">20</div><div class="_m_cdar_rainyDate">廿七</div></div></td><td id="2020-02-21" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-21"><div class="_m_cdar_date">21</div><div class="_m_cdar_rainyDate">廿八</div></div></td><td id="2020-02-22" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-22"><div class="_m_cdar_date">22</div><div class="_m_cdar_rainyDate">廿九</div></div></td></tr><tr><td id="2020-02-23" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-23"><div class="_m_cdar_date">23</div><div class="_m_cdar_rainyDate">二月</div></div></td><td id="2020-02-24" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-24"><div class="_m_cdar_date">24</div><div class="_m_cdar_rainyDate">初二</div></div></td><td id="2020-02-25" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-25"><div class="_m_cdar_date">25</div><div class="_m_cdar_rainyDate">初三</div></div></td><td id="2020-02-26" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-26"><div class="_m_cdar_date">26</div><div class="_m_cdar_rainyDate">初四</div></div></td><td id="2020-02-27" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-27"><div class="_m_cdar_date">27</div><div class="_m_cdar_rainyDate">初五</div></div></td><td id="2020-02-28" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-28"><div class="_m_cdar_date">28</div><div class="_m_cdar_rainyDate">初六</div></div></td><td id="2020-02-29" onclick="M_Calendar.clickDate('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap" title="2020-02-29"><div class="_m_cdar_date">29</div><div class="_m_cdar_rainyDate">初七</div></div></td></tr><tr><td id="2020-03-01" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class=""><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-03-01"><div class="_m_cdar_date">1</div><div class="_m_cdar_rainyDate">初八</div></div></td><td id="2020-03-02" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-03-02"><div class="_m_cdar_date">2</div><div class="_m_cdar_rainyDate">初九</div></div></td><td id="2020-03-03" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-03-03"><div class="_m_cdar_date">3</div><div class="_m_cdar_rainyDate">初十</div></div></td><td id="2020-03-04" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-03-04"><div class="_m_cdar_date">4</div><div class="_m_cdar_rainyDate">十一</div></div></td><td id="2020-03-05" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-03-05"><div class="_m_cdar_date">5</div><div class="_m_cdar_rainyDate">惊蛰</div></div></td><td id="2020-03-06" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-03-06"><div class="_m_cdar_date">6</div><div class="_m_cdar_rainyDate">十三</div></div></td><td id="2020-03-07" onclick="M_Calendar.nextMonth('meetingCalendarContainer',this)" class="_m_cdar_calendarPlanDiv"><div class="_m_cdar_wrap _m_cdar_notSelectMonthDay" title="2020-03-07"><div class="_m_cdar_date">7</div><div class="_m_cdar_rainyDate">十四</div></div></td></tr></tbody></table></div></div></div></div>
+        <div class="scroll_wrapper" style="top: 248px;">
+          <div class="scroll_scroller" style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, -1775px) translateZ(0px);">
+            <div id="pullDown" class="" style="display: block;">
+              <span class="pullDownIcon"></span><span class="pullDownLabel">下拉可以刷新</span>
+            </div>
+            <div id="meetingTimeLinrContainer" class="timeLinrContainer"><div class="timeLinrItemContainer" id="timeLinrFlag_2020-03-08"><div class="titleContainer"><span class="monthDaySty">03月08日</span><span class="weekSty">星期日</span></div><div class="timeLinrContent"><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3827"><div>测试会议03041556</div><div class="alarm">00:00</div></div></div><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3826"><div>测试会议03041555</div><div class="alarm">00:00</div></div></div></div></div><div class="timeLinrItemContainer" id="timeLinrFlag_2020-03-09"><div class="titleContainer"><span class="monthDaySty">03月09日</span><span class="weekSty">星期一</span></div><div class="timeLinrContent"><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3849"><div>0309-001</div><div class="alarm">16:00</div></div></div><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3920"><div>重复会议&nbsp;001</div><div class="alarm">14:00</div></div></div><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3919"><div>重复会议001</div><div class="alarm">14:00</div></div></div><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3918"><div>重复会议001</div><div class="alarm">14:00</div></div></div><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3917"><div>重复会议001</div><div class="alarm">14:00</div></div></div><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3916"><div>重复会议001</div><div class="alarm">14:00</div></div></div><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3915"><div>重复会议001</div><div class="alarm">14:00</div></div></div><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3914"><div>测试重复001</div><div class="alarm">14:00</div></div></div><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3911"><div>测试短信邮件提醒03091112</div><div class="alarm">11:25</div></div></div><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3908"><div>测试会议短信邮件通知03091056</div><div class="alarm">11:05</div></div></div><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3894"><div>criss测试&nbsp;零点</div><div class="alarm">00:00</div></div></div></div></div><div class="timeLinrItemContainer" id="timeLinrFlag_2020-03-10"><div class="titleContainer"><span class="monthDaySty">03月10日</span><span class="weekSty">星期二</span></div><div class="timeLinrContent"><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3941"><div>性能优化后变更会议处理</div><div class="alarm">09:59</div></div></div></div></div><div class="timeLinrItemContainer" id="timeLinrFlag_2020-03-11"><div class="titleContainer"><span class="monthDaySty">03月11日</span><span class="weekSty">星期三</span></div><div class="timeLinrContent"><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3861"><div>测试会议03061159</div><div class="alarm">00:00</div></div></div></div></div><div class="timeLinrItemContainer" id="timeLinrFlag_2020-03-12"><div class="titleContainer"><span class="monthDaySty">03月12日</span><span class="weekSty">星期四</span></div><div class="timeLinrContent"><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3930"><div>测试远程会议03091517</div><div class="alarm">15:22</div></div></div><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3907"><div>测试会议短信邮件通知03091053</div><div class="alarm">11:00</div></div></div></div></div><div class="timeLinrItemContainer" id="timeLinrFlag_2020-03-13"><div class="titleContainer selectTLinrTitleClass"><span class="monthDaySty">03月13日</span><span class="weekSty">星期五</span></div><div class="timeLinrContent"><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3963"><div>（汉）袁康《越绝书》越绝卷第十三&nbsp;：其终始即尊位倾万物散文武之业桀纣之迹可知矣。（引文见《越绝书》卷十三《枕中》：范子曰：”臣闻古之贤主圣君，执中和而原其终始，即位安而万物定矣；不执中和，不原其终始，即尊位倾，万物散。文武之业，桀纣之迹，可知矣。“这里”文武“指周文王和周武王，与其后之”桀纣＂相对，前”散“字与”文“字义无涉。）</div><div class="alarm">23:00</div></div></div><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3962"><div>空格&nbsp;&nbsp;里&nbsp;花&nbsp;</div><div class="alarm">23:00</div></div></div><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3973"><div>测试会议03131515</div><div class="alarm">15:20</div></div></div><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3972"><div>测试会议03131509</div><div class="alarm">15:15</div></div></div><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3971"><div>测试会议03131452</div><div class="alarm">14:58</div></div></div><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3960"><div>263</div><div class="alarm">00:00</div></div></div><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3959"><div>2323</div><div class="alarm">00:00</div></div></div></div></div><div class="timeLinrItemContainer" id="timeLinrFlag_2020-03-14"><div class="titleContainer"><span class="monthDaySty">03月14日</span><span class="weekSty">星期六</span></div><div class="timeLinrContent"><div class="listitem"><div class="status"></div><div class="sharp"></div><div class="itemContent" meetingid="3964"><div>&nbsp;新奥集团数字化战略落地规划汇报&nbsp;&nbsp;（远程）&nbsp;&nbsp;</div><div class="alarm">22:00</div></div></div></div></div></div>
+            <div class="mec_refresh_loading" style="display: none;">
+              <div class="spinner">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--新建或者查看会议-->
+    <div id="opt-meeting-panel" class="controlHide">
+      <form id="addMeetingForm">
+        <div class="detailHeader">
+          <div class="headerLeft">新建会议</div>
+          <div id="submitOk" class="headerRight okBtn">提交</div>
+        </div>
+        <div class="meetingDataContainer">	
+          <div class="form_msg"></div>
+          <div class="meetingFormContainer">
+            <table class="tableContainer">
+              <colgroup>
+                <col width="20%">
+                <col width="80%">
+              </colgroup>
+              <tbody>
+                <tr class="intervalTR">
+                  <td colspan="2" class="">
+                    <table class="tableContainer">
+                      <colgroup>
+                        <col width="50%">
+                        <col width="50%">
+                      </colgroup>
+                      <tbody>
+                        <tr class="groupHeadHide">
+                          <td class="interval">
+                            <span class="groupbg"> </span>
+                            <span class="e8_grouptitle">基本信息</span>
+                          </td>
+                          <td class="interval" colspan="2" style="text-align:right;">
+                            <span class="toolbar"></span>
+                            <span id="baseDataContainer" _status="0" class="hideBlockDiv" style="color: rgb(204, 204, 204);">
+                              <!--<img src="/mobilemode/apps/e-cology/images/up_wev8.png"> -->
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                 </tr>
+                 <tr style="height:1px;" id="baseDataLine">
+                  <td class="Line" colspan="2"></td>
+                </tr>
+                <tr id="baseDataFieldContainer" class="items intervalTR" style="display:table-row;">
+                  <td colspan="2" class="">
+                    <table class="tableContainer">
+                      <colgroup>
+                        <col width="120px">
+                        <col width="*">
+                      </colgroup>
+                      <tbody>
+                        <tr>
+                          <td class="fieldName" colspan="1">名称<span class="requiredCls">*</span></td>
+                          <td class="field" colspan="1">
+                            <input datatype="text" class="InputStyle" size="30" value="" id="name" name="name">
+                          </td>
+                        </tr> 
+                        <tr class="trLineCla">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fieldName">类型<span class="requiredCls">*</span></td>
+                          <td class="field" id="chooseMeetingtypeidTd">
+                            <input type="hidden" id="meetingtype" name="meetingtype" value="">
+                            <span id="meetingtypeidSpan" name="meetingtypeidSpan" class="browserSpanCls"></span>
+                            <div id="chooseMeetingtypeid" class="selectBrowsers" type="1"></div>
+                          </td>
+                        </tr>
+                        <tr class="trLineCla">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fieldName">发起人<span class="requiredCls">*</span></td>
+                          <td class="field" id="chooseCalleridTd">
+                            <input type="hidden" id="caller" name="caller" value="">
+                            <span id="calleridSpan" name="calleridSpan" class="browserSpanCls"></span>
+                            <div id="chooseCallerid" class="selectBrowsers" type="1"></div>
+                          </td>
+                        </tr>
+                        <!--
+                        <tr class="trLineCla">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        //李润 发起人部门
+                        <tr>
+                          <td class="fieldName">发起人部门<span class="requiredCls">*</span></td>
+                          <td class="field">
+                            <input type="hidden" id="callerDepart" name="callerDepart" value=""/>
+                            <span id="callerDepartidSpan" name="callerDepartidSpan" class="browserSpanCls"></span>
+                          </td>
+                        </tr>
+                        -->
+                        <tr class="trLineCla">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        
+                        <tr>
+                          <td class="fieldName">主持人</td>
+                          <td class="field" id="chooseContacteridTd">
+                            <input type="hidden" id="contacter" name="contacter" value="">
+                            <span id="contacteridSpan" name="contacteridSpan" class="browserSpanCls"></span>
+                            <div id="chooseContacterid" class="selectBrowsers" type="1"></div>
+                          </td>
+                        </tr>
+                        <tr class="trLineCla">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        <!--李润 增加记录人-->
+                        <tr>
+                          <td class="fieldName">记录人</td>
+                          <td class="field" id="chooseRecorderidTd">
+                            <input type="hidden" id="Recorder" name="Recorder" value="">
+                            <span id="RecorderidSpan" name="RecorderidSpan" class="browserSpanCls"></span>
+                            <div id="chooseRecorderid" class="selectBrowsers" type="1"></div>
+                            <div style="color:red;padding-top:4px;">会议记录人必须为参会人员</div>
+                          </td>
+                        </tr>
+                        <tr class="trLineCla">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        
+                        <tr>
+                          <td class="fieldName">远程会议</td>
+                          <td class="field" id="isremoteidTd">
+                            <input type="radio" name="isremote" value="0" checked="true" style="-webkit-appearance:radio;width:15px;vertical-align:middle;"><span style="vertical-align:middle;margin-right: 6px;">无</span>
+                            <input type="radio" name="isremote" value="1" style="-webkit-appearance:radio;width:15px;vertical-align:middle;"><span style="vertical-align:middle;">远程</span>
+                          </td>
+                        </tr>
+                        <tr class="trLineCla">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        <!--开始--->
+                        <!--区域部分 李润-->
+
+                        <tr>
+                          <td class="fieldName">
+                            <div class="meetingQuYu">区域<span class="requiredCls">*</span></div>
+                          </td>
+                          <td class="field" id="chooseQuYuidTd">
+                            <input type="hidden" id="quyu" name="quyu" value="23">
+                            <span id="quyuidSpan" name="quyuidSpan" class="browserSpanCls">廊坊</span>
+                            <div id="choosequyuid" class="selectBrowsers spaceCls" type="1"></div>
+                          </td>
+                        </tr>
+                        <tr class="trLineCla">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        <!--位置部分 李润-->
+                        <tr>
+                          <td class="fieldName">
+                            <div class="meetingWeiZhi">位置<span class="requiredCls">*</span></div>
+                          </td>
+                          <td class="field" id="chooseWeiZhiidTd">
+                            <input type="hidden" id="weizhi" name="weizhi" value="">
+                            <span id="weizhiidSpan" name="weizhiidSpan" class="browserSpanCls"></span>
+                            <div id="chooseweizhiid" class="selectBrowsers spaceCls" type="1"></div>
+                          </td>
+                        </tr>
+                        <tr class="trLineCla">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        <!--结束--->
+                        <tr>
+                          <td class="fieldName">
+                            <div class="meetingAddress">会议地点<span class="requiredCls">*</span></div>
+                            
+                          </td>
+                          <td class="field" id="chooseAddressidTd">
+                            <input type="hidden" id="address" name="address" value="">
+                            <span id="addressidSpan" name="addressidSpan" class="browserSpanCls"></span>
+                            <div id="chooseAddressid" class="selectBrowsers spaceCls" type="1"></div>
+                          </td>
+                        </tr>
+                        <tr class="trLineCla">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fieldName">自定义会议地点</td>
+                          <td class="field">
+                            <input type="text" id="customizeAddress" name="customizeAddress" onblur="checkMeetingPlace(this)" value="">
+                          </td>
+                        </tr>
+                        <tr class="trLineCla">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fieldName">会议内容</td>
+                          <td class="field">
+                            <textarea id="desc_n" name="desc_n" rows="" cols=""></textarea>
+                          </td>
+                        </tr>
+                        <tr class="trLineCla">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        <!--会议归属 李润-->
+                        <tr class="trLineCla">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fieldName">会议归属<span class="requiredCls">*</span></td>
+                          <td class="field">
+                            <input type="hidden" id="callerDepart" name="callerDepart" value="">
+                            <span id="callerDepartidSpan" name="callerDepartidSpan" class="browserSpanCls"></span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fieldName">相关附件</td>
+                          <td class="field">
+                            <input type="hidden" size="60" name="accessorys" id="accessorys" temptitle="相关附件" viewtype="0" value="">
+                            <!--用来存放item-->
+                            <div id="thelist" class="uploader-list"></div>
+                            <div style="display: none">
+                              <div id="filePicker" class="webuploader-container"><div class="webuploader-pick"><img style="width: 15px;height: 15px;margin-right: 0px;" src="/mobilemode/apps/e-cology/images/add_white.gif"></div><div id="rt_rt_1e39hoai01c2ctn3152l12blonm1" style="position: absolute; top: 0px; left: 0px; width: 1px; height: 1px; overflow: hidden;"><input type="file" name="file" class="webuploader-element-invisible" multiple="multiple" accept=".bmp,.pdf,.jpg,.jpeg,.text,.png,.gif,.doc,.xls,.docx,.xlsx,.ppt,.pptx,.mp3,.wav,.MIDI,.m4a,.WMA,.wma,.mp4,.rar,.zip,.tar,.jar"><label style="opacity: 0; width: 100%; height: 100%; display: block; cursor: pointer; background: rgb(255, 255, 255);"></label></div></div>
+                            </div>
+                          </td>
+                        </tr>
+                        
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <tr style="height:1px;">
+                  <td class="Line" colspan="2"></td>
+                </tr>
+                <tr class="intervalTR">
+                  <td colspan="2" class="">
+                    <table class="tableContainer">
+                      <colgroup>
+                        <col width="50%">
+                        <col width="50%">
+                      </colgroup>
+                      <tbody>
+                        <tr class="groupHeadHide">
+                          <td class="interval">
+                            <span class="groupbg"> </span>
+                            <span class="e8_grouptitle">会议时间</span>
+                          </td>
+                          <td class="interval" colspan="2" style="text-align:right;">
+                            <span class="toolbar"></span>
+                            <span id="timeDataContainer" _status="0" class="hideBlockDiv" style="color: rgb(204, 204, 204);">
+                              <!--<img src="/mobilemode/apps/e-cology/images/up_wev8.png"> -->
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                 </tr>
+                 <tr id="timeDataLine" style="height:1px;">
+                  <td class="Line" colspan="2"></td>
+                </tr>
+                <tr id="timeDataFieldContainer" class="items intervalTR" style="display: table-row;">
+                  <td colspan="2" class="">
+                    <table class="tableContainer" id="" style="table-layout:fixed;display:;width:100%;">
+                      <colgroup>
+                        <col width="120px">
+                        <col width="*">
+                      </colgroup>
+                      <tbody>
+                        <tr>
+                          <td class="fieldName" colspan="1">开始日期<span class="requiredCls">*</span></td>
+                          <td class="field" colspan="1">
+                            <input type="text" id="begindate" name="begindate" value="" class="needsclick" style="width:120px;" data-dwro="false" readonly="">
+                          </td>
+                        </tr> 
+                        <tr class="trLineCla">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fieldName">开始时间<span class="requiredCls">*</span></td>
+                          <td class="field">
+                            <input type="text" id="begintime" name="begintime" value="" class="needsclick" style="width:120px;" data-dwro="false" readonly="">
+                          </td>
+                        </tr>
+                        <tr class="trLineCla">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fieldName">结束日期<span class="requiredCls">*</span></td>
+                          <td class="field">
+                            <input type="text" id="enddate" name="enddate" value="" class="needsclick" style="width:120px;" data-dwro="false" readonly="">
+                          </td>
+                        </tr>
+                        <tr class="trLineCla">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fieldName">结束时间<span class="requiredCls">*</span></td>
+                          <td class="field">
+                            <input type="text" id="endtime" name="endtime" value="" class="needsclick" style="width:120px;" data-dwro="false" readonly="">
+                          </td>
+                        </tr>
+                        <tr class="trLineCla">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fieldName">提醒方式</td>
+                          <td class="field" id="chooseRemindidTypeTd">
+                            <input type="checkbox" name="remindTypeNew1" value="3" checked="true" disabled="" style="-webkit-appearance:checkbox;width:15px;vertical-align:middle;"><span style="vertical-align:middle;">邮件提醒</span>
+                            <input type="checkbox" name="remindTypeNew2" value="6" checked="true" disabled="" style="-webkit-appearance:checkbox;width:15px;vertical-align:middle;"><span style="vertical-align:middle;">iCome提醒</span>
+                            <input type="checkbox" name="remindTypeNew3" id="remindTypeNew3" value="2" style="-webkit-appearance:checkbox;width:15px;vertical-align:middle;"><span style="vertical-align:middle;">短信提醒</span>
+                            <!--
+                            <input type="hidden" id="remindTypeNew" name="remindTypeNew" value=""/>
+                            <span id="remindTypeNewSpan" name="remindTypeNewSpan" class="browserSpanCls"></span>
+                            <div id="chooseRemindidType" class="selectBrowsers" type="1"></div>
+                            -->
+                          </td>
+                        </tr>
+                        <!--
+                        <tr id="lineFlag" class="trLineCla" style="display:none;">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        <tr id="remindType" style="display: none;">
+                          <td class="fieldName"></td>
+                          <td class="field" id="remindTypedivTd">
+                            <span id="selectedRtypeSpan" class="browserSpanCls"></span>
+                            <div id="remindTypediv" class="selectOptions"></div>
+                          </td>
+                        </tr>
+                        <tr name="remindTypeLine" class="trLineCla" style="display:none;">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        -->
+                        <!--
+                        <tr id="immediatelyRemind" style="display:none;">
+                          <td class="fieldName">立即提醒</td>
+                          <td class="field">
+                            <div id="remindImme" class="FCheckContainer toggle">
+                              <div class="toggle-handle"></div>
+                            </div>
+                            <input type="hidden" id="remindImmediately" name="remindImmediately" value=""/>
+                          </td>
+                        </tr>
+                        <tr name="remindTypeLine" class="trLineCla" style="display:none;">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        -->
+                        <tr id="remindStartBefore" style="">
+                          <td class="fieldName">开始前提醒</td>
+                          <td class="field">
+                            <div id="startbeforeenable" style="float: left;margin-right:8px;" class="FCheckContainer toggle">
+                              <div class="toggle-handle"></div>
+                            </div>
+                            <input type="hidden" id="remindBeforeStart" name="remindBeforeStart" value="">
+                            <div style="float: left;">
+                              <span>开始前</span>
+                              <input type="number" id="remindHoursBeforeStart" name="remindHoursBeforeStart" value="" onblur="checkint(this);" style="width:40px;">
+                              <span>小时</span>
+                              <input type="number" id="remindTimesBeforeStart" name="remindTimesBeforeStart" value="" onblur="checkint(this);" style="width:40px;">
+                              <span>分钟</span>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr name="remindTypeLine" class="trLineCla" style="display:none;">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        <tr id="remindEndBefore" style="">
+                          <td class="fieldName">结束前提醒</td>
+                          <td class="field">
+                            <div id="endbeforeenable" style="float: left;margin-right:8px;" class="FCheckContainer toggle">
+                              <div class="toggle-handle"></div>
+                            </div>
+                            <input type="hidden" id="remindBeforeEnd" name="remindBeforeEnd" value="">
+                            <div style="float: left;">
+                              <span>结束前</span>
+                              <input type="number" id="remindHoursBeforeEnd" name="remindHoursBeforeEnd" value="" onblur="checkint(this);" style="width:40px;">
+                              <span>小时</span>
+                              <input type="number" id="remindTimesBeforeEnd" name="remindTimesBeforeEnd" value="" onblur="checkint(this);" style="width:40px;">
+                              <span>分钟</span>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <tr style="height:1px;">
+                  <td class="Line" colspan="2"></td>
+                </tr>
+                <tr class="intervalTR">
+                  <td colspan="2" class="">
+                    <table class="tableContainer">
+                      <colgroup>
+                        <col width="50%">
+                        <col width="50%">
+                      </colgroup>
+                      <tbody>
+                        <tr class="groupHeadHide">
+                          <td class="interval">
+                            <span class="groupbg"> </span>
+                            <span class="e8_grouptitle">参会者</span>
+                          </td>
+                          <td class="interval" colspan="2" style="text-align:right;">
+                            <span class="toolbar"></span>
+                            <span id="attenDataContainer" _status="0" class="hideBlockDiv" style="color: rgb(204, 204, 204);">
+                              <!--<img src="/mobilemode/apps/e-cology/images/up_wev8.png"> -->
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                 </tr>
+                 <tr id="attenDataLine" style="height:1px;">
+                  <td class="Line" colspan="2"></td>
+                </tr>
+                <tr id="attenDataFieldContainer" class="items intervalTR" style="display: table-row;">
+                  <td colspan="2" class="">
+                    <table class="tableContainer" id="" style="table-layout:fixed;display:;width:100%;">
+                      <colgroup>
+                        <col width="120px">
+                        <col width="*">
+                      </colgroup>
+                      <tbody>
+                        <tr>
+                          <td class="fieldName" colspan="1">参会人员<span class="requiredCls">*</span></td>
+                          <td class="field" colspan="1" id="chooseHrmmembersidTd">
+                            <input type="hidden" id="hrmmembers" name="hrmmembers" value="">
+                            <span id="hrmmembersidSpan" name="hrmmembersidSpan" class="browserSpanCls"></span>
+                            <div id="chooseHrmmembersid" class="selectBrowsers" type="1"></div>
+                          </td>
+                        </tr> 
+                        <tr class="trLineCla">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fieldName">其他人员</td>
+                          <td class="field">
+                            <input datatype="text" class="InputStyle" size="30" value="" id="othermembers" name="othermembers" style="display: none;">
+                          </td>
+                        </tr>
+                        <tr class="trLineCla">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fieldName">应到人数</td>
+                          <td class="field">
+                            <input type="number" id="totalmember" name="totalmember" value="" onblur="checkint(this);" style="width:120px;">
+                          </td>
+                        </tr>
+                        <tr class="trLineCla">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        <!--
+                        <tr>
+                          <td class="fieldName">参会客户</td>
+                          <td class="field" id="chooseCrmmembersidTd">
+                            <input type="hidden" id="crmmembers" name="crmmembers" value=""/>
+                            <span id="crmmembersidSpan" name="crmmembersidSpan" class="browserSpanCls"></span>
+                            <div id="chooseCrmmembersid" class="selectBrowsers" type="1"></div>
+                          </td>
+                        </tr>
+                        <tr class="trLineCla">
+                          <td class="paddingLeft18" colspan="2">
+                            <div class="intervalDivClass"></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="fieldName">应到客户数</td>
+                          <td class="field">
+                            <input type="number" id="crmtotalmember" name="crmtotalmember" value="" onblur="checkint(this);" style="width:120px;"/>
+                          </td>
+                        </tr>
+                        -->
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+            </tbody></table>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- 提醒方式 -->
+    <div id="alarmway-panel" class="controlHide">
+      <div class="detailHeader">
+        <div class="headerLeft">选择提醒方式</div>
+        <div id="alarmwayOk" class="headerRight okBtn">提交</div>
+      </div>
+      <div class="remindWayDataContainer">	
+        <div class="wayOptionContainer">
+          <div class="typeItem" attrval="3">
+            <span>邮件提醒</span>
+            <div></div>
+          </div>
+          <div class="typeItem" attrval="6">
+            <span>iCome提醒</span>
+            <div></div>
+          </div>
+          <!--
+          <div class="typeItem" attrVal="0">
+            <span>不提醒</span>
+            <div></div>
+          </div>
+          -->
+          <div class="typeItem" attrval="2">
+            <span>短信提醒</span>
+            <div></div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <!--查看会议室使用情况-->
+    <div id="main-panel-3" class="controlHide">
+      <div id="NMEC_panel3" class="listContainerWrap">
+        <ul id="listpanel3" class="listContainer" swipetype="1" swipe="true">
+          <li>
+            <div class="GridTableContainer" data-groupsum="0" data-assearch="0" data-fixedcolumn="1" style="display: block;">
+              <div class="optToorbarContainer">
+                <div id="prevDay" class="calHdBtn sfprevbtn" title="上一个时段"></div>
+                <div id="txtdatetimeshow" class="calHdBtn txtbtncls" curselectdate="2020-03-13">2020年03月13日</div>
+                <div id="nextDay" class="calHdBtn sfnextbtn" title="下一个时段"></div>
+              </div>
+              <div id="meetingRoomContainer">
+                <div class="scrollerDiv">
+                  <div class="gtWrap">
+                    <table class="gtTitle" style="width:100%;" id="showContent">
+                      <tbody><tr class="title_tr complate">
+                        <td class="beFixedCol" style="width:100px;"></td>
+                      </tr>
+                    </tbody></table>
+                    <div class="gtContentWrap" style="">
+                      <div class="fixedGtContentWrapMapping">
+                        
+                      </div>
+                      <table class="gtContent" style="width: 100%;">
+                        <tbody><tr class="content_tr complate" style="height:35px;">
+                          <td class="beFixedCol" style="width:100px;">
+                            <span class="field_viewTitle"></span>
+                          </td>
+                          <td class="reportvalue">
+                            <span class="field_viewText"></span>
+                          </td>
+                        </tr>
+                      </tbody></table>
+                    </div>
+                  </div>
+                  <div class="fixedGtWrap">
+                      <div class="fixedGtTitleWrap">
+                        <table class="gtTitle" style="width: 100%;">
+                          <tbody>
+                            <tr class="title_tr">
+                              <td class="beFixedCol" style="width: 100px;"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="fixedGtContentWrap" style="visibility: visible;">
+                        <table class="gtContent" style="width: 100%;">
+                          <tbody>
+                            <tr class="content_tr complate" dataurl_bind="true" style="height:35px;">
+                              <td class="reportvalue"><span class="field_viewText"></span></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                  </div>
+                </div>
+                <div class="nodata_border" style="display:none;">
+                  <div class="nodata_content">
+                    <div class="nodata_img"></div>
+                    没有可显示的数据
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div class="mec_refresh_loading" style="display: none;">
+          <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+          </div>
+        </div>
+      </div>
+      <div id="NMEC_panel3_1" class="hide"></div>
+      <div class="meetingTakeUpContainer">
+        <table cellpadding="0" cellspacing="0">
+          <colgroup>
+            <col width="25%">
+            <col width="25%">
+            <col width="25%">
+            <col width="25%">
+          </colgroup>
+          <thead>
+            <tr>
+              <td class="">名称</td>
+              <td class="">地点</td>
+              <td class="">开始日期</td>
+              <td class="">结束日期</td>
+            </tr>
+          </thead>
+          <tbody>
+            
+          </tbody>
+        </table>
+        <div class="mec_refresh_loading" style="display: none;">
+          <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--查看会议-->
+    <div id="detail-panel" class="controlHide">
+      <div class="detailHeader">
+        <div class="headerLeft">会议信息</div>
+      </div>
+      <div id="mainDataContainer">
+        <div class="form_msg"></div>
+        <div id="noMeetingData" class="noMeetingData">
+          <div>当前无会议安排</div>
+        </div>
+        <div class="lines meetingNameContainer">
+          <img src="/mobile/plugin/5/images/title_wev8.png">
+          <div class="meetingName">2323</div>
+        </div>
+        <div class="line"></div>
+        <div class="lines meetingDateContainer">
+          <img src="/mobile/plugin/5/images/time_wev8.png">
+          <div class="meetingBegindate">
+            <div id="beginDate">2020-03-13</div>
+            <div id="beginTime">00:00</div>
+          </div>
+          <div class="meetingDateSplit">~</div>
+          <div class="meetingEnddate">
+            <div id="endDate">2020-03-13</div>
+            <div id="endTime">23:59</div>
+          </div>
+          <div style="clear: both;"></div>
+        </div>
+        <div class="line"></div>
+        <div class="lines">
+          <img src="/mobile/plugin/5/images/person_wev8.png">
+          <div class="ptitle">发起人</div>
+          <div id="callerFlag" class="pcontent">阳梅芳</div>
+        </div>
+        <div class="line"></div>
+
+        <div class="line"></div>
+        <div class="lines">
+          <img src="/mobile/plugin/5/images/person_wev8.png">
+          <div class="ptitle">主持人</div>
+          <div id="contacterFlag" class="pcontent">阳梅芳</div>
+        </div>
+        <div class="line"></div>
+        <!--李润  会议详情展示记录人-->
+        <div class="lines">
+          <img src="/mobile/plugin/5/images/person_wev8.png">
+          <div class="ptitle">记录人</div>
+          <div id="recorderFlag" class="pcontent">阳梅芳</div>
+        </div>
+        <div class="line"></div>
+        <div class="lines">
+          <img src="/mobile/plugin/5/images/person_wev8.png">
+          <div class="ptitle">参会人员</div>
+          <div id="othermemberstrFlag" class="pcontent">阳梅芳 </div>
+        </div>
+                  <!--李润  远程会议部分-->
+                  <div class="line isremoteContainer"></div>
+                  <div class="lines isremoteContainer">
+                      <img src="">
+                      <div class="ptitle">远程会议</div>
+                      <div id="isremoteFlag" class="pcontent">
+                          <input type="radio" name="isremote" id="remoteone" value="0" style="-webkit-appearance:radio;width:15px;vertical-align:middle;" checked="true" disabled="true"><span id="remoteonespan" style="vertical-align:middle;">无</span>
+                          <input type="radio" name="isremote" id="remotetwo" value="1" style="-webkit-appearance:radio;width:15px;vertical-align:middle;" disabled="true"><span id="remotetwospan" style="vertical-align:middle;">远程</span>
+                          <div id="joinremote" style="vertical-align: middle; float: right; display: none;" onclick="joinRemoteMeeting()">加入视频会议</div>
+            <div type="button" id="copyremotelink" style="vertical-align: middle; color: rgb(89, 176, 242); width: 40%; display: none;" onclick="copyLink()">复制参会链接</div>
+                          
+                          <input id="copyremotelink_input" value="" style="position: absolute;left: -10000px;padding-top: 3px;">
+                          
+                          <input id="conferenceId" value="" style="position: absolute;left: -10000px;padding-top: 3px;">
+                      </div>
+                  </div>
+        <!--李润  区域部分-->
+        <div class="line"></div>
+        <div class="lines addressContainer">
+          <div></div>
+          <div class="ptitle">区域</div>
+          <div id="quyuFlag" class="pcontent"></div>
+        </div>
+        <!--李润  位置部分-->
+        <div class="line"></div>
+        <div class="lines addressContainer">
+          <div></div>
+          <div class="ptitle">位置</div>
+          <div id="weizhiFlag" class="pcontent"></div>
+        </div>
+        <div class="line"></div>
+        <div class="lines addressContainer">
+          <div></div>
+          <div class="ptitle">会议地点</div>
+          <div id="addressFlag" class="pcontent"></div>
+        </div>
+        <div class="line"></div>
+        <div class="lines cusAddressContainer">
+          <div></div>
+          <div class="ptitle">自定义会议地点</div>
+          <div id="customizeAddressFlag" class="pcontent">123</div>
+        </div>
+
+        <div class="line"></div>
+        <div class="lines cusAddressContainer">
+          <div></div>
+          <div class="ptitle">提醒方式</div>
+          <div id="remindTypeNewFlg" class="pcontent">短信提醒 邮件提醒 iCome提醒</div>
+        </div>
+        <!--
+        <div id="remindImmediatelyDiv" style="display:none">
+          <div class="line"></div>
+          <div class="lines cusAddressContainer">
+            <div></div>
+            <div class="ptitle"></div>
+            <div id="remindImmediatelyFlg" class="pcontent">立即提醒</div>
+          </div>
+        </div>
+        -->
+        <div id="remindBefore" style="display: none;">
+          <div class="line"></div>
+          <div class="lines cusAddressContainer">
+            <div></div>
+            <div class="ptitle"></div>
+            <div id="remindTypeBeforeFlg" class="pcontent"></div>
+          </div>
+        </div>
+
+        <div id="remindAfter" style="display: none;">
+          <div class="line"></div>
+          <div class="lines cusAddressContainer">
+            <div></div>
+            <div class="ptitle"></div>
+            <div id="remindTypeAfterFlg" class="pcontent"></div>
+          </div>
+        </div>
+
+        <div class="line"></div>
+        <div class="lines meetingstatusContainer">
+          <div></div>
+          <div class="ptitle">状态</div>
+          <div id="meetingstatusFlag" class="pcontent">结束</div>
+        </div>
+        <div class="line"></div>
+        <div style="padding: 5px 0px;"></div>
+        <div class="lines decisionContainer">
+          <div></div>
+          <div class="ptitle">描述</div>
+          <div id="decisionFlag" class="pcontent"></div>
+        </div>
+
+        <!--李润  添加会议归属-->
+        <div class="lines">
+          <div class="ptitle">会议归属</div>
+          <div id="callerDepartFlag" class="pcontent"></div>
+        </div>
+
+        <div class="line"></div>
+        <div class="lines ">
+          <div></div>
+          <div class="ptitle">相关附件</div>
+          <div id="accessorysFlag" class="pcontent"></div>
+        </div>
+        
+        <div id="membertype1" style="">
+          <div class="reTitleChd">
+            <div>参会人员 (应到人数<span id="membertype1Flag">1</span>)</div>
+          </div>
+          <div class="line"></div>
+          <div class="reTitleChdDetail"><div class="reDiv"><div class="reName">阳梅芳</div><div class="reAttend"></div></div></div>
+        </div>
+        <div id="membertype2" style="display: none;">
+          <div class="reTitleChd">
+            <div>参会客户 (应到客户数<span id="membertype2Flag"></span>)</div>
+          </div>
+          <div class="line"></div>
+          <div class="reTitleChdDetail">
+            
+          </div>
+        </div>
+        <div id="othermembers" style="display: none;">
+          <div class="reTitle"><div class="reTitleChd">外部人员</div></div>
+            <div class="reTitleChdDetail otherclass">
+            
+          </div>
+        </div>
+        <div class="reTitleChd">
+
+                      已确定参会人员总计<font class="fontred" id="totalPerson">0</font>人，其中公司员工<font class="fontred" id="internalCount">0</font>人，外部人员<font class="fontred" id="externalCount">0</font>人
+        </div>
+        <div id="remarkInfo" style="display: none;">
+          <div class="reTitleChd">备注信息</div>
+          <div class="reTitleChdDetail textareaContainer">
+            <textarea id="recRemark" name="recRemark" placeholder="回执备注信息"></textarea>
+          </div>
+        </div>
+        <div class="fButtons" style="display: none;"> 
+          <input type="hidden" id="meetingid" name="meetingid" value="3959">
+          <input type="hidden" id="receiptId" name="receiptId" value="">
+          <div id="attend" class="fButton fSubmitButton">参加</div>
+          <div id="noattend" class="fButton fResetButton">不参加</div>
+        </div> 
+        <!--个人意见-->
+        
+        <div class="lines allPersonIdeaContainer">
+          <div></div>
+          <div class="ptitle">个人意见</div>
+          <div id="allPersonIdeaFlag" class="pcontent">
+            <a href="javascript:getPersonIdeas()" id="personIdeas" style="color: #59b0f2;float: right;">查看全部意见</a>
+          </div>
+        </div>
+
+        
+        <div class="lines personIdeaContainer">
+          <div></div>
+          <div id="personIdeaFlag" class="">
+            <textarea id="personIdea" name="personIdea" rows="" cols="" placeholder="输入您的个人意见，留下创值足迹（只保留最后一次记录）" style="border: #59b0f2 1px solid;border-radius: 10px;"></textarea><br>
+            <a id="personIdeaBtn" class="btn-con" onclick="saveDiscuss()">提交</a>
+          </div>
+        </div>
+        <!--会议结论-->
+        
+        <div class="lines conclusionContainer">
+          <div></div>
+          <div class="ptitle">会议结论</div>
+          <div id="conclusionFlag">
+            <textarea id="conclusion" name="conclusion" rows="" cols="" placeholder="" style="border: #59b0f2 1px solid;border-radius: 10px;" readonly="readonly"></textarea><br>
+                          
+                              
+                                  <input type="hidden" size="60" name="accessorys1" id="accessorys1" temptitle="相关附件" viewtype="0" value="">
+                                  
+                                  <div style="display: none">
+                                      <div id="filePicker1" class="webuploader-container" style="display: none;"><div class="webuploader-pick"><img style="width: 15px;height: 15px;margin-right: 0px;" src="/mobilemode/apps/e-cology/images/add_white.gif"></div><div id="rt_rt_1e39hoajjtri115n1mc71cv8ckl4" style="position: absolute; top: 0px; left: 0px; width: 1px; height: 1px; overflow: hidden;"><input type="file" name="file" class="webuploader-element-invisible" multiple="multiple" accept=".bmp,.pdf,.jpg,.jpeg,.text,.png,.gif,.doc,.xls,.docx,.xlsx,.ppt,.pptx,.mp3,.wav,.MIDI,.m4a,.WMA,.wma,.mp4,.rar,.zip,.tar,.jar"><label style="opacity: 0; width: 100%; height: 100%; display: block; cursor: pointer; background: rgb(255, 255, 255);"></label></div></div>
+                                  </div>
+                <div>
+                  <a id="conclusionBtn" class="btn-con" onclick="saveConclusion()" style="display: none;">提交</a>
+                </div>
+                              
+                          
+          </div>
+        </div>
+        
+        <div class="lines thelist1FlagContainer">
+          <div></div>
+          <div class="ptitle" style="float: none">会议附件</div>
+          <div id="thelist1" class="pcontent" style="padding-left: 0px"></div>
+        </div>
+        
+        <div class="lines decvalueFlagContainer">
+          <div></div>
+          <div class="ptitle" style="float: none">会议纪要</div>
+          <div id="decvalueFlag" class="pcontent" style="padding-left: 0px"></div>
+        </div>
+                  <!--会议待办-->
+                  
+                  <div class="lines meetingWillContainer">
+                      <div></div>
+                      <div class="ptitle">会议待办</div>
+                      <div id="meetingWillFlag" class="pcontent">
+                          <span id="newspan" onclick="newMeetingWill()" style="color: rgb(89, 176, 242); display: none;">新建会议待办</span><span id="showspan" style="color: #59b0f2;margin-left: 20px;float:right;" onclick="showMeetingWillList()">查看会议待办</span>
+                      </div>
+                  </div>
+        
+      </div>
+    </div>
+    <!--人员选择-->
+    <div id="browserFrames" class="controlHide">
+      <iframe id="hrmBrowserFrame" class="st-frame st-frame1 lazy-frame" frameborder="0" scrolling="auto" src="/mobilemode/apps/browser/hrmBrowser.jsp?noHeader=1&amp;isOpenedOnTopfloor=1" style="opacity: 1;"></iframe>
+    </div>
+    <!--会议室/会议类型选择-->
+    <div id="commonFrames" class="controlHide">
+      <iframe id="commonBrowserFrame" class="st-frame st-frame1 lazy-frame" frameborder="0" scrolling="auto" src="/mobilemode/apps/browser/commonBrowser.jsp?noHeader=1&amp;isOpenedOnTopfloor=1" style="opacity: 1;"></iframe>
+    </div>
+          <!--个人意见-->
+    <div id="ideaFrames" class="controlHide" style="position:absolute;height: 100%;width: 100%">
+      
+    </div>
+          <!--新建会议待办-->
+          <div id="meetingWillFrames" class="controlHide" style="position: absolute; height: 100%; width: 100%; display: none;">
+              <div class="detailHeader" style="z-index: 0">
+                  <div class="headerLeft">新建会议待办</div>
+                  <div id="submitOk1" class="headerRight okBtn" onclick="saveMeetingWill()">提交</div>
+              </div>
+              <div class="meetingDataContainer">
+                  <div class="meetingFormContainer">
+                      <div id="MeetingWillContainer">
+                          <table class="tableContainer" id="tableContainer0">
+                              <tbody><tr>
+                                  <td class="fieldName meetingwillNameClass" colspan="1">待办事项<span class="requiredCls">*</span></td>
+                                  <td class="field meetingwillContClass" colspan="1">
+                                      <input datatype="text" class="InputStyle meetingwillContClass" size="30" value="" id="meetingwillname0" name="meetingwillname0" style="width: 85%">
+                  <span onclick="deleteMeetingWill(0)" class="meetingwillContClass">删除</span>
+                                  </td>
+                              </tr>
+                              <tr class="trLineCla">
+                                  <td class="paddingLeft18" colspan="2">
+                                      <div class="intervalDivClass"></div>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td class="fieldName meetingwillNameClass" colspan="1">完成时间<span class="requiredCls">*</span></td>
+                                  <td class="field meetingwillContClass" colspan="1">
+                                      <!-- <input type="date" id="begindate" name="begindate" value="" class="needsclick" style="width:120px;" data-dwro="false" readonly=""> -->
+                                      <input type="date" calss="meetingwillContClass" id="meetingwilldate0" name="meetingwilldate0" value="" style="width:100%;font-size: 14px" onchange="judgeDate(event)">
+                                  </td>
+                              </tr>
+                              <tr class="trLineCla">
+                                  <td class="paddingLeft18" colspan="2">
+                                      <div class="intervalDivClass"></div>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td class="fieldName meetingwillNameClass">承接人<span class="requiredCls">*</span></td>
+                                  <td class="field meetingwillContClass" id="chooseRecipientidTd0">
+                                      <input type="hidden" id="Recipien0" name="Recipien0" value="">
+                                      <span id="RecipienidSpan0" name="RecipienidSpan0" class="browserSpanCls"></span>
+                                      <div id="chooseRecipienid0" class="chooseRecipienid0" type="1"></div>
+                                  </td>
+                              </tr>
+                          </tbody></table>
+                          <div style="background-color: #ccc;margin-top: 10px;height:10px;"></div>
+                      </div>
+          <div style="color: #59b0f2;margin-left: 20px;" onclick="addMeetingWill()">添加会议待办</div>
+                  </div>
+              </div>
+          </div>
+    <!--会议待办列表-->
+    <div id="meetingwillList" class="" style="position: absolute; height: 100%; width: 100%; overflow: auto; display: block;">
+      
+        
+      
+      <div class="listContainer1" style="margin: 20px 0 0 0;"><div style="margin-left: 24px;margin-right: 10px;border-bottom:1px solid #ccc;postion:relative;height:160px;overflow:auto;"><div class="meetingwillListName" style="margin-bottom:10px;display: flex;margin-top: 6px"><span style="width:100%;font-weight:bold;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;">这是一个美丽的早晨</span></div><div class="meetingwillListContent" style="height: 20px;margin-bottom:10px;"><span>2020-03-13</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>阳梅芳</span><div class="meetingwillListDetails" style="height: 20px;margin-bottom:10px;"><div style="font-weight:bold;display: flex;justify-content: space-between;"><span>最新进展</span><span style="width:20%;display: inline;color: #59b0f2;margin-left: 10%;" id="status_290">进行中</span><span onclick="onChangeTarget(event,290)" style="color: #59b0f2;transform: translateX(-20px);margin-right: 10%;" class="iconfont"></span></div><div id="firstShow_290"></div> <div id="processDiv_290" style="display:none"> 暂无进展</div><div style="margin-top:10px;postion:relative;bottom:0px" id="btnStatus_290"><span style="border:1px solid #59b0f2;border-radius:15px;width:100px;height:30px;line-height:30px;text-align:center;display:inline-block" onclick="finsh(290)" id="btn_finsh_290">完成</span><span style="border:1px solid #59b0f2;border-radius:15px;width:100px;height:30px;line-height:30px;text-align:center;display:inline-block" onclick="update(290)" id="btn_update_290">更新进展</span></div></div></div></div><div style="margin-left: 24px;margin-right: 10px;border-bottom:1px solid #ccc;postion:relative;height:160px;overflow:auto;"><div class="meetingwillListName" style="margin-bottom:10px;display: flex;margin-top: 6px"><span style="width:100%;font-weight:bold;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;">待办</span></div><div class="meetingwillListContent" style="height: 20px;margin-bottom:10px;"><span>2020-03-13</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>阳梅芳</span><div class="meetingwillListDetails" style="height: 20px;margin-bottom:10px;"><div style="font-weight:bold;display: flex;justify-content: space-between;"><span>最新进展</span><span style="width:20%;display: inline;color: #59b0f2;margin-left: 10%;" id="status_289">进行中</span><span onclick="onChangeTarget(event,289)" style="color: #59b0f2;transform: translateX(-20px);margin-right: 10%;" class="iconfont"></span></div><div id="firstShow_289" style=""></div> <div id="processDiv_289" style="display: none;"> 暂无进展</div><div style="margin-top:10px;postion:relative;bottom:0px" id="btnStatus_289"><span style="border:1px solid #59b0f2;border-radius:15px;width:100px;height:30px;line-height:30px;text-align:center;display:inline-block" onclick="finsh(289)" id="btn_finsh_289">完成</span><span style="border:1px solid #59b0f2;border-radius:15px;width:100px;height:30px;line-height:30px;text-align:center;display:inline-block" onclick="update(289)" id="btn_update_289">更新进展</span></div></div></div></div><div style="margin-left: 24px;margin-right: 10px;border-bottom:1px solid #ccc;postion:relative;height:160px;overflow:auto;"><div class="meetingwillListName" style="margin-bottom:10px;display: flex;margin-top: 6px"><span style="width:100%;font-weight:bold;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;">曾经有人说过，人生就是一场戏，我们都是戏中的一个过客，在这短暂的舞台上扮演着自己的角色，可能有时候会身不由己，但只要我们做到最真实的那个角色，就会发现，人生虽然带着面具，但绝对是最美丽的一个！人生道路上得到的不是目的，而是过程。虽然苦，平淡成功心态</span></div><div class="meetingwillListContent" style="height: 20px;margin-bottom:10px;"><span>2020-03-13</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>阳梅芳</span><div class="meetingwillListDetails" style="height: 20px;margin-bottom:10px;"><div style="font-weight:bold;display: flex;justify-content: space-between;"><span>最新进展</span><span style="width:20%;display: inline;color: #59b0f2;margin-left: 10%;" id="status_288">进行中</span><span onclick="onChangeTarget(event,288)" style="color: #59b0f2;transform: translateX(-20px);margin-right: 10%;" class="iconfont"></span></div><div id="firstShow_288" style="display: none;"><p>进展</p><p>2020-03-13 15:59:35</p></div> <div id="processDiv_288" style=""> <div><p>进展</p><p>2020-03-13 15:59:35</p></div><span class="before"></span><span class="after"></span><div><p>纽扣陪你醉哦热</p><p>2020-03-13 13:40:04</p></div><span class="before"></span><span class="after"></span><div><p>啊河北丰宁啊河北丰宁啊河北丰宁啊河北丰宁啊河北丰宁啊河北丰宁</p><p>2020-03-12 23:46:44</p></div><span class="before"></span><span class="after"></span><div><p>这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展这是进展</p><p>2020-03-12 23:45:14</p></div><span class="before"></span><span class="after"></span></div><div style="margin-top:10px;postion:relative;bottom:0px" id="btnStatus_288"><span style="border:1px solid #59b0f2;border-radius:15px;width:100px;height:30px;line-height:30px;text-align:center;display:inline-block" onclick="finsh(288)" id="btn_finsh_288">完成</span><span style="border:1px solid #59b0f2;border-radius:15px;width:100px;height:30px;line-height:30px;text-align:center;display:inline-block" onclick="update(288)" id="btn_update_288">更新进展</span></div></div></div></div></div>
+    </div>
+
+  </div>
+ </div>
+ 
+<script>
+  var meetingIcome = "";
+//李润  初始化区域为廊坊
+  $(function () {
+    $.ajax({
+              url: "/meeting/data/meetingroom/AjaxGetQyId.jsp?qybm=316",
+              type: "post",
+              dataType: "json",
+              async: false,
+              success: function (data) {
+        $("#quyu").val(data.qyid);
+        $("#quyuidSpan").text(data.qymc);
+              }
+          })
+    //会议详情页
+    if("meetingUrl"==""){
+      var meetingid ="";
+      if(!(""==meetingid)){
+        openDetail(meetingid,this);
+      }
+    }
+    //新建会议
+    if("newMeeting"==""){
+      $("#opt-meeting-panel").removeClass("controlHide");
+              // addMeeting();
+              // $(".headerLeft",$("#opt-meeting-panel")).text("新建会议");
+          }
+    $("#remindStartBefore").show();
+     $("#remindEndBefore").show();
+          // getPersonIdea();
+  })
+//李润 发起人、主持人、记录人联动到参会人员
+function personLink(obj){
+  var idSpan = obj.id+"idSpan";//选中人员名字标签的id
+  var selectId = obj.value;//当前选中人员的id
+  var ArrSelectId = [];
+   var selectName = $("#"+idSpan).html();//当前选中人的名字
+  var ArrselectName = [];
+  if(selectId!="" && selectId!=null && selectId!=undefined){
+    ArrSelectId = selectId.split(",");
+    ArrselectName = selectName.split(",");
+  }
+  var hrmmembersId = $("#hrmmembers").val();//参会人员的value值
+  var hrmmembersName = $("#hrmmembersidSpan").html();//参会人员的span值
+  var ArrHrmmembersId = [];
+  var ArrHrmmembersName = [];
+  if(hrmmembersId!="" && hrmmembersId!=null && hrmmembersId!=undefined){
+    ArrHrmmembersId = hrmmembersId.split(",");
+    ArrHrmmembersName = hrmmembersName.split(",");
+  }
+
+  //判断参会人员是否已经包含被选中的人员
+  for(var i=0;i<ArrSelectId.length;i++){
+    if(!(ArrHrmmembersId.indexOf(ArrSelectId[i]) > -1)){
+      if(hrmmembersId!="" && hrmmembersId!=null && hrmmembersId!=undefined){
+        hrmmembersId = hrmmembersId + "," + ArrSelectId[i];
+        hrmmembersName = hrmmembersName + "," + ArrselectName[i];
+      }else {
+        hrmmembersId = ArrSelectId[i];
+        hrmmembersName = ArrselectName[i];
+      }
+    }else {
+      continue;
+    }
+  }
+  $("#hrmmembers").val(hrmmembersId);
+  $("#hrmmembersidSpan").html(hrmmembersName);
+}
+$("#caller").change(function(e){
+  personLink(e.target);
+  getHrmmembers();
+  getCallerDepart(e.target);
+})
+$("#contacter").change(function(e){
+  personLink(e.target);
+  getHrmmembers();
+})
+$("#Recorder").change(function(e){
+  personLink(e.target);
+  getHrmmembers();
+})
+$("#hrmmembers").change(function(e){
+  getHrmmembers();
+})
+//获取参会人员数量
+function getHrmmembers(){
+  var hrmmembersVal = $("#hrmmembers").val();
+  if(hrmmembersVal != ""){
+    var hrmmembersArray = hrmmembersVal.split(",");
+    $("#totalmember").val(hrmmembersArray.length);
+  }else{
+    $("#totalmember").val(0);
+  }
+}
+//获取发起人部门
+function getCallerDepart(obj){
+  $.ajax({
+    url:"/cloudstore/app/no0000032/AjaxGetDepart.jsp?callerId="+obj.value,
+    type:"post",
+    dataType:"json",
+    async:true,
+    success:function(data){
+      $("#callerDepart").val(data.departId);
+      $("#callerDepartidSpan").html(data.departmentname);
+    }
+  })
+}
+//存储个人意见
+function saveDiscuss(){
+
+  // 	alert("测试");
+  //
+  // var a =confirm("neirong")
+  // console.log(a);
+  // 	return;
+  var text = $("#personIdea").val();//个人意见
+  var meetingid = $("#meetingid").val();//会议id
+  $.ajax({
+    url:"/cloudstore/app/no0000032/PersonIdeaOperation.jsp",
+    data:{
+      "meetingid":meetingid,
+      "text":text
+    },
+    type:"post",
+    dataType:"json",
+    async:true,
+    success:function(data){
+
+      showAlert1("提交成功","个人创值内容随时变更，系统仅显示最新记录！");
+      // alert("提交成功");
+      // console.log(data.res);
+              // window.location.href
+              // location.reload();
+    }
+  })
+}
+//页面加载获取当前会议当前登录人的个人意见
+  var canjueyi = false;
+function getPersonIdea() {
+  var meetingid = $("#meetingid").val();
+  $.ajax({
+    url:"/cloudstore/app/no0000032/PersonIdeaOperation.jsp",
+    data:{
+      "meetingid":meetingid,
+      "method":"selectIdea"
+    },
+    type:"post",
+    dataType:"json",
+    async:true,
+    success:function(data){
+      if(data.res){
+        $("#personIdea").val(data.remark);
+        $("#conclusion").val(data.conclusion);
+                  $("#thelist1").html(data.showvalue);
+      }
+      if("true"==isOpt){
+        if("1"==data.meetingstatus){
+          if("2"==data.isdecision){
+            $("#conclusion").attr("readonly","readonly");
+            $("#filePicker1").css("display","none");
+            $(".icon-remove").html("");
+            $("#newspan").css("display","none");
+            $("#conclusionBtn").css("display","none");
+          }else{
+            if((data.canjueyi).indexOf(","+userid+",") != -1){
+              canjueyi = true;
+              console.log("有决议权限");
+            }else {
+              $(".conclusionContainer").css("display","none");
+              $(".meetingWillContainer").css("display","none");
+              $(".decvalueFlagContainer").css("display","none");
+              $(".thelist1FlagContainer").css("display","none");
+
+            }
+            if((data.hrmmembers).indexOf(","+userid+",") == -1){
+              $(".personIdeaContainer").css("display","none");
+            }
+          }
+        }else if("0"==data.meetingstatus){
+          //会议没有结束，会议结论、会议待办不显示
+          $(".conclusionContainer").css("display","none");
+          $(".meetingWillContainer").css("display","none");
+          $(".decvalueFlagContainer").css("display","none");
+          $(".thelist1FlagContainer").css("display","none");
+        }
+      }else {
+        $(".personIdeaContainer").css("display","none");
+        $(".conclusionContainer").css("display","none");
+        $(".meetingWillContainer").css("display","none");
+        $(".allPersonIdeaContainer").css("display","none");
+        $(".decvalueFlagContainer").css("display","none");
+        $(".thelist1FlagContainer").css("display","none");
+        $("#remarkInfo").css("display","none");
+        $(".fButtons").css("display","none");
+      }
+
+    }
+
+  })
+}
+//获取所有人的意见
+function getPersonIdeas() {
+  document.title = '全部参会意见';
+  $("#detail-panel").addClass("controlHide");
+  $("#ideaFrames").removeClass("controlHide");
+  var meetingid = $("#meetingid").val();
+  let src="/mobile/plugin/queryOfficialDocument/DocsMain.jsp?meetingid="+meetingid;
+  $("#ideaFrames").html('<iframe id="ideaBrowserFrame" class="st-frame st-frame1 lazy-frame"  width=100% height=100% frameborder="0" scrolling="auto"  src='+src+'></iframe>');
+      $("#ideaFrames").css("z-index","2");
+  pushHistoryState({url:"z"});
+}
+//保存结论
+  function saveConclusion() {
+  if ($("#thelist1").children().length > 0) {
+    uploader1.upload();
+    // $(".icon-remove").html("");
+  }else {
+      save();
+      }
+  }
+//保存会议结论
+function save(fileids) {
+  var meetingid = $("#meetingid").val();
+  var conclusion = $("#conclusion").val();
+  if(""==conclusion){
+    showAlert("会议结论不能为空！");
+  }else {
+      if(confirm("会议结论提交后将无法新建会议待办,您确定要提交吗?")){
+              $.ajax({
+                  url:"/cloudstore/app/no0000032/ConclusionOperation.jsp",
+                  data:{
+                      "meetingid":meetingid,
+                      "fileids":fileids,
+                      "conclusion":conclusion
+                  },
+                  type:"post",
+                  dataType:"json",
+                  async:true,
+                  success:function(data){
+                      if(data.res){
+                          showAlert("会议结论提交成功！");
+                          $("#newspan").css("display","none");
+                          $("#conclusionBtn").css("display","none");
+                          $("#filePicker1").css("display","none");
+                          $("#conclusion").attr("readonly","readonly");
+                          $(".icon-remove").css("display","none");
+                      }
+                  }
+              })
+          }
+
+  }
+
+}
+//新建会议待办页面
+  function newMeetingWill() {
+    if(canjueyi){
+          var conclusion = $("#conclusion").val();
+          if(""==conclusion){
+              showAlert("请先填写会议结论");
+          }else {
+              document.title = '新建会议待办';
+              $("#detail-panel").addClass("controlHide");
+              $("#meetingWillFrames").removeClass("controlHide");
+              $("#meetingWillFrames").css("z-index","1");
+              $("#meetingwillList").css("display","none");
+              $("#meetingWillFrames").css("display","block");
+              pushHistoryState({url:"y"});
+          }
+      }else {
+    showAlert("您没有操作权限");
+      }
+
+  }
+  //查看会议待办
+function showMeetingWillList(){
+  document.title = '会议待办';
+  $(".listContainer1").html("");
+  $("#main-panel").addClass("controlHide");
+  $("#detail-panel").addClass("controlHide");
+  $("#meetingwillList").removeClass("controlHide");
+  $("#main-panel").css("z-index","0");
+  $("#meetingWillFrames").css("display","none");
+  $("#main-panel").css("display","none");
+  $("#meetingwillList").css("display","block");
+  pushHistoryState({url:"x"});
+      var meetingid = $("#meetingid").val();
+      $.ajax({
+          url:"/cloudstore/app/no0000032/meetingwill/MeetingWillListOperation.jsp",
+          data:{
+              "meetingid":meetingid
+          },
+          type:"post",
+          dataType:"json",
+          async:true,
+    cache:true,
+          success:function(data){
+              if(data.res){
+                  var temp = "";
+                  if(data.list.length>0){
+                      var a = 0;
+                      for(var i=0;i<data.list.length;i++){
+                          var meetingWill = data.list[i];
+                          var detailsList = data.list[i].detailsList;
+                          var liList = "";
+                          var firstList = "";
+                          var btnDiv = "";
+            $.each(detailsList,function (index,item) {
+              if("0"==index){
+                firstList = "<p>"+item.content+"</p><p>"+item.cjrq +" "+ item.cjsj+"</p>";
+              }
+              liList += "<div><p>"+item.content+"</p><p>"+item.cjrq +" "+ item.cjsj+"</p></div><span class=\"before\"></span><span class=\"after\"></span>";
+            })
+            if(detailsList.length==0){
+              liList = "暂无进展";
+            }
+                        if("进行中"==meetingWill.status){
+              if(userid==meetingWill.cjrid){
+                btnDiv ='<div style="margin-top:10px;postion:relative;bottom:0px" id="btnStatus_'+meetingWill.id+'">' +
+                  '<span style="border:1px solid #59b0f2;border-radius:15px;width:100px;height:30px;line-height:30px;text-align:center;display:inline-block" onclick="finsh('+meetingWill.id+')" id="btn_finsh_'+meetingWill.id+'">完成</span>' +
+                  '<span style="border:1px solid #59b0f2;border-radius:15px;width:100px;height:30px;line-height:30px;text-align:center;display:inline-block" onclick="update('+meetingWill.id+')" id="btn_update_'+meetingWill.id+'">更新进展</span>' +
+                  '</div>';
+              }
+            }
+                          temp = '<div style="margin-left: 24px;margin-right: 10px;border-bottom:1px solid #ccc;postion:relative;height:160px;overflow:auto;">' +
+                              '<div class="meetingwillListName" style="margin-bottom:10px;display: flex;margin-top: 6px">' +
+                              '<span style="width:100%;font-weight:bold;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;">'+meetingWill.dbsx+'</span>' +
+                              '</div>' +
+                              '<div class="meetingwillListContent" style="height: 20px;margin-bottom:10px;">' +
+                              '<span>'+meetingWill.wcrq+'</span>' +
+                              '&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span>&nbsp;&nbsp;&nbsp;&nbsp;' +
+                              '<span>'+meetingWill.cjr+'</span>' +
+                              '<div class="meetingwillListDetails" style="height: 20px;margin-bottom:10px;">' +
+                              '<div style="font-weight:bold;display: flex;justify-content: space-between;">' +
+                '<span>最新进展</span>' +
+                '<span style="width:20%;display: inline;color: #59b0f2;margin-left: 10%;" id="status_'+meetingWill.id+'">'+meetingWill.status+'</span>' +
+                '<span onclick="onChangeTarget(event,'+meetingWill.id+')" style="color: #59b0f2;transform: translateX(-20px);margin-right: 10%;" class="iconfont">&#xe74d;</span>' +
+              '</div>' +
+              '<div id="firstShow_'+meetingWill.id+'">'+firstList+'</div> '+
+              '<div id="processDiv_'+meetingWill.id+'"  style="display:none" > '+
+
+                liList+
+              '</div>'+
+                                btnDiv +
+                              '</div>' +
+                              '</div>';
+                          $('.listContainer1').append(temp);
+                      }
+                  }else {
+          temp += '<p style="text-align:center;">暂无待办</p>';
+                      $('.listContainer1').html(temp);
+                  }
+
+              }
+          }
+      })
+}
+//保存会议待办
+var commitStatus = false;
+  function saveMeetingWill() {
+  if(commitStatus==false){
+    //提交表单后，讲提交状态改为true
+    commitStatus = true;
+    var arr=new Array();
+    var table = $("#MeetingWillContainer .tableContainer");
+    for(var i=0;i<table.length;i++){
+      var tableid = $("#MeetingWillContainer .tableContainer")[i].id;
+      tableid = tableid.substring(tableid.length-1);
+      var meetingwillname = $("#meetingwillname"+tableid).val();
+      var meetingwilldate = $("#meetingwilldate"+tableid).val();
+      var Recipien = $("#Recipien"+tableid).val();
+      if(""==meetingwillname||""==meetingwilldate||""==Recipien){
+        showAlert("必填项没有填写");
+        return;
+      }
+      var data1={"meetingwillname":meetingwillname,"meetingwilldate":meetingwilldate,"Recipien":Recipien};
+      arr.push(data1);
+    }
+    var meetingid = $("#meetingid").val();
+    $.ajax({
+      url:"/cloudstore/app/no0000032/meetingwill/MeetingWillOperation.jsp",
+      data:{
+        "meetingid":meetingid,
+        "table":JSON.stringify(arr)
+      },
+      type:"post",
+      dataType:"json",
+      async:true,
+      success:function(data){
+        if(data.res){
+          showAlert("保存成功");
+          doHistoryBack();
+        }
+      }
+    })
+    return true;
+  }else{
+    return false;
+  }
+  }
+  var meetingWillid = "";
+function update(id) {
+  $(".prompt-text").val("");//清空更新进展框
+  //先判断是否有权限更新进展
+    $.ajax({
+      url:"/cloudstore/app/no0000032/meetingwill/MeetingWillStatusOperation.jsp",
+      data:{
+        "id":id
+      },
+      type:"post",
+      dataType:"json",
+      async:false,
+      success:function(data){
+        if(data.res){
+          $("#jq-alert").css("display","block");
+                      meetingWillid = id;
+        }else {
+          showAlert("您没有操作权限！");
+        }
+      }
+    })
+      }
+      //更新进展保存方法
+  function btnSave() {
+      var id = meetingWillid;
+  // alert("会议待办id:"+meetingWillid);
+          var content = $(".prompt-text").val();
+          $.ajax({
+              url:"/cloudstore/app/no0000032/meetingwill/MeetingWillStatusOperation.jsp",
+              data:{
+                  "id":id,
+                  "method":"update",
+                  "content":content
+              },
+              type:"post",
+              dataType:"json",
+              async:false,
+              success:function(data){
+                  if(data.res){
+                      $("#firstShow_"+id).html("");
+                      $("#processDiv_"+id).html("");
+                      // $("#firstShow_"+id).append("<p>"+data.content+"</p><p>"+data.cjrq+"  "+data.cjsj+"</p>");
+                      var detailsList = data.detailsList;
+                      var liList = "";
+                      var firstList = "";
+                      var btnDiv = "";
+                      $.each(detailsList,function (index,item) {
+                          if("0"==index){
+                              firstList = "<p>"+item.content+"</p><p>"+item.cjrq +" "+ item.cjsj+"</p>";
+                          }
+                          liList += "<div><p>"+item.content+"</p><p>"+item.cjrq +" "+ item.cjsj+"</p></div><span class=\"before\"></span><span class=\"after\"></span>";
+                      })
+                      $("#firstShow_"+id).html(firstList);
+                      $("#processDiv_"+id).html(liList);
+                      $("#jq-alert").css("display","none");
+          showAlert("更新进展成功！");
+                  }else {
+          showAlert("您没有操作权限！");
+                  }
+              }
+          })
+  }
+
+  //会议待办完成
+      function finsh(id) {
+          $.ajax({
+              url:"/cloudstore/app/no0000032/meetingwill/MeetingWillStatusOperation.jsp",
+              data:{
+                  "id":id,
+                  "method":"finsh"
+              },
+              type:"post",
+              dataType:"json",
+              async:false,
+              success:function(data){
+                  if(data.res){
+          $("#status_" + id).html("已完成");
+          $("#btnStatus_"+id).html("");
+          showAlert("待办状态更新成功！");
+                  }else {
+          showAlert("您没有操作权限！");
+        }
+              }
+          })
+      }
+//展开、收缩转换
+function onChangeTarget(event,id){
+
+  var item =  event.target;
+  if(item.type==1){
+    $("#processDiv_"+id).hide();
+    item.type=0;
+    $("#firstShow_"+id).show();
+    item.innerHTML="&#xe74d;";
+  }else{
+    $("#processDiv_"+id).show();
+    item.type=1;
+    $("#firstShow_"+id).hide();
+    item.innerHTML="&#xe64a;";
+  }
+}
+//添加多个会议待办的div
+  var num = 1;
+  function addMeetingWill(){
+      // alert(num);
+      var temp = "";
+      temp = '<table class="tableContainer" id="tableContainer'+num+'">' +
+          '                        <tr>' +
+          '                            <td class="fieldName meetingwillNameClass" colspan="1">待办事项<span class="requiredCls">*</span></td>' +
+          '                            <td class="field meetingwillContClass" colspan="1">' +
+          '                                <input datatype="text" class="InputStyle meetingwillContClass" size="30" value="" id="meetingwillname'+num+'" name="meetingwillname'+num+'" style="width:85%">' +
+    '								 <span class="meetingwillContClass" onclick="deleteMeetingWill('+num+')">删除</span>'+
+          '                            </td>' +
+          '                        </tr>' +
+          '                        <tr class="trLineCla">' +
+          '                            <td class="paddingLeft18" colspan="2">' +
+          '                                <div class="intervalDivClass"></div>' +
+          '                            </td>' +
+          '                        </tr>' +
+          '                        <tr>' +
+          '                            <td class="fieldName meetingwillNameClass" colspan="1">完成时间<span class="requiredCls">*</span></td>' +
+          '                            <td class="field meetingwillContClass" colspan="1">' +
+          '                                <!-- <input type="date" id="begindate" name="begindate" value="" class="needsclick" style="width:120px;" data-dwro="false" readonly=""> -->\n' +
+          '                                <input type="date" class="meetingwillContClass" id="meetingwilldate'+num+'" name="meetingwilldate'+num+'" value="" style="width:100%;" onchange="judgeDate(event)">' +
+          '                            </td>' +
+          '                        </tr>' +
+          '                        <tr class="trLineCla">' +
+          '                            <td class="paddingLeft18" colspan="2">' +
+          '                                <div class="intervalDivClass"></div>' +
+          '                            </td>' +
+          '                        </tr>' +
+          '                        <tr>' +
+          '                            <td class="fieldName meetingwillNameClass">承接人<span class="requiredCls">*</span></td>' +
+          '                            <td class="field meetingwillContClass" id="chooseRecipientidTd'+num+'" onclick="selectCjr('+num+')">' +
+          '                                <input type="hidden" id="Recipien'+num+'" name="Recipien'+num+'" value=""/>' +
+          '                                <span id="RecipienidSpan'+num+'" name="RecipienidSpan'+num+'" class="browserSpanCls"></span>' +
+          '                                <div id="chooseRecipienid'+num+'" class="chooseRecipienid'+num+'" type="1"></div>' +
+          '                            </td>' +
+          '                        </tr>' +
+          '                    </table>' +
+          '                    <div style="background-color: #ccc;margin-top: 10px;height:10px;"></div>';
+      $("#MeetingWillContainer").append(temp);
+      num++;
+  }
+  //获取当前日期
+function getNowFormatDate() {
+  var date = new Date();
+  var seperator1 = "-";
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var strDate = date.getDate();
+  if (month >= 1 && month <= 9) {
+    month = "0" + month;
+  }
+  if (strDate >= 0 && strDate <= 9) {
+    strDate = "0" + strDate;
+  }
+  var currentdate = year + seperator1 + month + seperator1 + strDate;
+  return currentdate;
+ }
+  //判断完成日期不能小于当前日期
+  function judgeDate(event) {
+  var date = event.target.value;
+  var nowDate = getNowFormatDate();
+  if(nowDate>date){
+    showAlert("完成日期不能小于当前时间！");
+    event.target.value = "";
+  }
+}
+  //承接人选择框
+  function selectCjr(num) {
+      openBrowser('Recipien'+num,'RecipienidSpan'+num,2,'','','','');
+  }
+  function cancelBtn() {
+  $("#jq-alert").css("display","none");
+  // $("#meetingwillList").removeClass("controlHide");
+}
+//删除新建页面会议待办
+function deleteMeetingWill(id) {
+  $("#tableContainer"+id).next().remove();
+  $("#tableContainer"+id).remove();
+}
+</script>
+ <div class="jq-alert" id="jq-alert" style="display: none">
+   <div class="alert" style="margin-top: 25%;margin-left: 10%;">
+     <div class="content">
+       <div class="prompt"><p class="prompt-content">请填写进展内容</p><textarea class="prompt-text"></textarea></div>
+     </div>
+     <div class="fd-btn">
+       <a href="javascript:void(0);" data-role="cancel" class="cancel" onclick="cancelBtn()">取消</a>
+       <a href="javascript:void(0);" class="confirm" id="yes_btn" onclick="btnSave()">提交</a></div>
+   </div>
+ </div>
+
+</body></html>
